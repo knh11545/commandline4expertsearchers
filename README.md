@@ -1,47 +1,37 @@
-GNU core utilities for expertsearchers
-============================================================
+Command line tools for the expert searcher: Some applied library carpentry
+==========================================================================
 
 Author: Helge Knüttel
 
-Towards a poster/article
+Towards a poster presentation at [EAHIL 2020](https://eahil2020.wordpress.com/).
 
-TODO: Find definitive scope and title. Should we cover editors such as vim?
 
-# Introduction
+## General
 
-work of the expert searcher/information specialist is often tied closely to a limited range of (GUI based) software products that shape the way one works and thinks
+TODO: Should we cover editors such as vim?
 
-# Use cases
+https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox
 
-## Checking search results
+## Use cases
 
-## Comparing search results
+### Checking search results
+
+### Comparing search results
 
 See 
 
 * https://catonmat.net/set-operations-in-unix-shell-simplified
 * https://www.gnu.org/software/coreutils/manual/html_node/Set-operations.html
 
-## Postprocessing search result for easier import
+### Postprocessing search result for easier import
 
-Unite search results that ha to be exported in chunks.
+Unite search results that had to be exported in chunks.
 
 See D:\dimdi\_templates\unite_wos_files.bash
 
-## Building query strings
+### Building query strings
 
-## Updating searches
+### Updating searches
 
-## Documenting searches
-
-## Conclusions
-
-avoid errors
-save time
-
-But also a matter of philosophy:
-save you from the repetitive tasks that computers were built for and concentrate on the things that (currently) only people can do
-enhance your skill set
-make you happier and more confident
-set you on a path that will lead to new ideas (more automation, new analyses)
+### Documenting searches
 
