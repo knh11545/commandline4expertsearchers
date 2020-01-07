@@ -35,3 +35,13 @@ See D:\dimdi\_templates\unite_wos_files.bash
 
 ### Documenting searches
 
+### Searching for patterns that are not supported by search interfaces
+
+* Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
+* Use local phrase searching using eDirect and a local copy of PubMed
+
+### Build custom export formats
+
+The new PubMed interface does not support the rich MEDLINE export format. Convert XML records to MEDLINE format?
+
+
