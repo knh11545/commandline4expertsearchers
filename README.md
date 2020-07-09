@@ -92,6 +92,14 @@ For more info see <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
 
 ### Documenting searches
 
+#### Document database accession numbers
+
+Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendorsi which might be ths case when publishing whole database records containing text.
+
+#### Convert Ovid search history to table
+
+Use a vim script.
+
 ### Searching for patterns that are not supported by search interfaces
 
 * Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
