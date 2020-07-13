@@ -127,3 +127,20 @@ To share a directory:
 
 ```{bash}
 ```
+
+### Where could I publish a protocol for a systematic review?
+
+Journals in which many SR protocols are published may be suitable for submission.
+
+* Find PubMed records of protocols of systematic reviews.
+* Extract the journal title.
+* Group by journal, count records and sort by rank.
+
+```{bash}
+
+esearch -db pubmed -query '("systematic review"[TI]) AND ("protocol"[TI])' | efetch -format xml > SR_protocols.xml
+
+cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
+
+```
+
