@@ -1,0 +1,46 @@
+﻿#!/bin/sh
+# Convert a list of PubMed-IDs (PMIDs) to a search string for Ovid MEDLINE
+# 
+# Either the name of a file containing the PMIDs can be given as an argument 
+# or the list of PMIDs will be read from STDIN.
+# 
+# Each PMID must be on an individual line.
+# 
+# Input is not checked for correct PMIDs but whitespace at beginning 
+# or end of lines as well as empty lines will be deleted.
+#
+# Output will be writen to STDOUT.
+#
+# Author: Helge Knüttel, <helge.knuettel@ur.de>
+# Date: 2020
+
+# Fields to search for in Ovid
+OVID_FIELD_LIST=ui,pm
+
+if test -n "$1" ; then
+    PMID_FILE=$1
+    if ! test -r "$PMID_FILE" ; then
+	>&2 echo "Cannot read from file \"${PMID_FILE}\". Abort!"
+	exit 1
+    fi
+else
+    PMID_FILE=-
+fi
+
+# Steps: 
+#  * Add "(" to beginning of file
+#  * Delete empty lines or lines containig only whitespace.
+#  * Add '"' to beginning of each line of the input.
+#  * Add '"' to end of each line of the input.
+#    Whitespace at beginning or end of line will be deleted.
+#  * Add ' OR ' to end of each line except the last one.
+#  * Add ")" and field specification to end of file
+sed\
+  -e '1 i ('\
+  -e '/^\s*$/d'\
+  -e 's/^\s*/"/'\
+  -e 's/\s*$/"/'\
+  -e '$! s/$/ OR /'\
+  -e "\$ a ).${OVID_FIELD_LIST}."\
+  $PMID_FILE
+
