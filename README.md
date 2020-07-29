@@ -12,6 +12,11 @@ TODO: Should we cover editors such as vim?
 
 https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox
 
+Für Webseite mit Doku als mögliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
+
+Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf der Seite [Kollaboration und RMarkdown](https://user.uni-frankfurt.de/~tstraube/datascience/18_kollaboration_rmarkdown/).
+
+
 ## Use cases
 
 ### Retrieving search results
@@ -102,8 +107,28 @@ Use a vim script.
 
 ### Searching for patterns that are not supported by search interfaces
 
-* Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
-* Use local phrase searching using eDirect and a local copy of PubMed
+#### Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
+
+Example: Find PubMed records that contain information about equally contributing authors.
+
+This information is not searchable in PubMed but the information is contained in the XML format of PubMed records. See [Equal Contribution for Authors in PubMed](https://www.nlm.nih.gov/pubs/techbull/so17/so17_contrib_equal_author_pubmed.html).
+
+```bash
+esearch -db pubmed -query "Regensburg[AD] AND 2018:2020[DP]" | efetch -format xml > regensburg_2018-2020.xml
+cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID | wc -l
+# 4113
+root@71a097f1c1ef:/edirect# cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep "[Y|N]" | cut -f 1 | wc -l
+# 158
+cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep Y | cut -f 1 | wc -l
+# 42
+root@71a097f1c1ef:/edirect# cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep N | cut -f 1 | wc -l
+# 122
+
+```
+
+
+
+#### Use local phrase searching using eDirect and a local copy of PubMed
 
 ### Build custom export formats
 
