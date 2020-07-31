@@ -15,7 +15,8 @@
 # Date: 2020
 
 # Fields to search for in Ovid
-OVID_FIELD_LIST=ui,pm
+# This is the part in between the periods in a search statement.
+OVID_FIELD_LIST=ui
 
 if test -n "$1" ; then
     PMID_FILE=$1
