@@ -1,0 +1,99 @@
+﻿#!/bin/env bash --norc
+# Extract accession numbers from database search results
+
+# Author: Helge Knüttel
+# Date: 2020
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Extract accession numbers from database search results.
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+
+Options
+
+  --format          Export format. Mandatory option. 
+  
+
+Export formats
+
+  Known export formats are:
+
+  ovid_medline       Export from Ovid MEDLINE as:
+                      - Format: Citavi, Endnote or ReferenceManager
+		      - Fields: Complete Reference
+
+  ovid_embase       Export from Ovid Embase as:
+                      - Format: Citavi, Endnote or ReferenceManager
+		      - Fields: Complete Reference
+
+  ovid_ris          Export from Ovid Embase or Ovid MEDLINE as:
+                      - Format: RIS
+		      - Fields: Complete Reference
+
+Examples
+
+  cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | wc -l
+  
+EOF
+}
+
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing. Try '${0} --help'" >&2
+    exit 1
+fi
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+	--format )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		export_format="$1"
+		shift
+	    else
+		echo "ERROR: Missing --format argument" >&2
+		exit 1
+	    fi
+	    ;;
+	-h|--help )
+	    PrintHelp
+	    exit 0
+	    ;;    
+	* )
+	    # unknown argument
+	    unknown_arg=$1
+	    echo "ERROR: Unknown argument ${unknown_arg}" >&2
+	    exit 1
+	    ;;
+    esac
+done
+
+
+case "$export_format" in
+   ovid_medline|ovid_embase )
+	grep "^UI  - " - | sed -e 's/^UI  - //' -e 's/\r//g'
+	;;
+   ovid_ris )
+	grep "^ID  - " - | sed -e 's/^ID  - //' -e 's/\r//g'
+	;;
+    * )	
+	echo "ERROR: Unknown export format ${export_format}" >&2
+	exit 1
+	;;
+esac
+
