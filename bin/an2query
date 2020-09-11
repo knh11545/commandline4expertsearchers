@@ -1,0 +1,187 @@
+﻿#!/bin/env bash --norc
+# Convert a list of database accession numbers or other IDs into a search string
+
+# Author: Helge Knüttel
+# Date: 2020
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Convert a list of database accession numbers or other IDs into a search string
+
+  Each accession number/ID must be on an individual line.
+  
+  Input is not checked for correct accession numbers/IDs but whitespace at beginning 
+  or end of lines as well as empty lines will be deleted.
+
+  The ID types known are specific for a database syntax.
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+
+Options
+
+  --syntax          Database syntax. Mandatory option. 
+  
+  --idtype          Type of acession number/ID. Mandatory option.
+  
+
+Database syntax formats and ID types
+
+  Known syntax formats are host and database specific:
+
+  ovid_medline      ID types: pmid, doi, pii
+  ovid_embase       ID types: an, eu, pmid, doi
+
+Examples
+
+  cat pmid.txt | an2query --syntax ovid_medline --idtype pmid > query.txt
+  cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
+  
+EOF
+}
+
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing. Try '${0} --help'" >&2
+    exit 1
+fi
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+	--syntax )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		syntax="$1"
+		shift
+	    else
+		echo "ERROR: Missing --syntax argument" >&2
+		exit 1
+	    fi
+	    ;;
+	--idtype )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		idtype="$1"
+		shift
+	    else
+		echo "ERROR: Missing --idtype argument" >&2
+		exit 1
+	    fi
+	    ;;
+	-h|--help )
+	    PrintHelp
+	    exit 0
+	    ;;    
+	* )
+	    # unknown argument
+	    unknown_arg=$1
+	    echo "ERROR: Unknown argument ${unknown_arg}" >&2
+	    exit 1
+	    ;;
+    esac
+done
+
+
+case "$syntax" in
+
+    ovid_medline )
+	# grep "^UI  - " - | sed -e 's/^UI  - //' -e 's/\r//g'
+	# Fields to search for in Ovid MEDLINE
+	# This is the part in between the periods in a search statement.
+	case "$idtype" in
+	    pmid )
+		OVID_FIELD_LIST=ui
+		;;
+	    doi )
+		OVID_FIELD_LIST=do,id
+		;;
+	    pii )
+	        OVID_FIELD_LIST=id
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "(" to beginning of file
+	#  * Add ")" and field specification to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e '1 i (' \
+	    -e "\$ a ).${OVID_FIELD_LIST}."
+	;;
+
+    ovid_embase )
+	# Fields to search for in Ovid Embase
+	# This is the part in between the periods in a search statement.
+	case "$idtype" in
+	    an )
+		OVID_FIELD_LIST=an
+		;;
+	    eu )
+		OVID_FIELD_LIST=eu
+		;;
+	    pmid )
+		OVID_FIELD_LIST=pm
+		;;
+	    doi )
+		OVID_FIELD_LIST=do,id
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "(" to beginning of file
+	#  * Add ")" and field specification to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e '1 i (' \
+	    -e "\$ a ).${OVID_FIELD_LIST}."
+	;;
+
+    * )	
+	echo "ERROR: Unknown database syntax ${syntax}" >&2
+	exit 1
+	;;
+esac
+
+
