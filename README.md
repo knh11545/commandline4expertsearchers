@@ -10,7 +10,11 @@ Towards a poster presentation at [EAHIL 2020](https://eahil2020.wordpress.com/).
 
 TODO: Should we cover editors such as vim?
 
-https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox
+### Tutorials for learning the command line
+
+* [FLOSS Manuals: Command line](http://write.flossmanuals.net/command-line/introduction/): An introduction into using the command line.
+* [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit od combining many small tools to acheive what you need.
+* [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
 Für Webseite mit Doku als mögliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
 
