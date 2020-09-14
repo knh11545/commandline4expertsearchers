@@ -1,4 +1,4 @@
-Command line tools for the expert searcher: Some applied library carpentry
+Command-line tools for the expert searcher: Some applied library carpentry
 ==========================================================================
 
 Author: Helge Knüttel
@@ -10,10 +10,12 @@ Towards a poster presentation at [EAHIL 2020](https://eahil2020.wordpress.com/).
 
 TODO: Should we cover editors such as vim?
 
-### Tutorials for learning the command line
+What do I mean by the "command-line" here? Two things, actually: One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command-line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
 
-* [FLOSS Manuals: Command line](http://write.flossmanuals.net/command-line/introduction/): An introduction into using the command line.
-* [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit od combining many small tools to acheive what you need.
+### Tutorials for learning the command-line
+
+* [FLOSS Manuals: Command line](http://write.flossmanuals.net/command-line/introduction/): An introduction into using the command-line.
+* [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit of combining many small tools to acheive what you need.
 * [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
 Für Webseite mit Doku als mögliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
@@ -29,7 +31,7 @@ The new PubMed no longer supports downloading records in MEDLINE or XML format. 
 
 
 1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
-2. On the command line with bash run
+2. On the command-line with bash run
 
 ```{bash}
 cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
@@ -111,7 +113,7 @@ Use a vim script.
 
 ### Searching for patterns that are not supported by search interfaces
 
-#### Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
+#### Use command-line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
 
 Example: Find PubMed records that contain information about equally contributing authors.
 
