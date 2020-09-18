@@ -173,3 +173,21 @@ cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | so
 
 ```
 
+
+## Build reusable scripts
+
+Write down the commands that worked well in a shell script. Such a script is a convenient means to store the functionality for easy reuse. The gory details that are hard to remember are hidden away in the script.
+
+Examples:
+
+```bash
+# Count the records in an exported search result by accession numbers.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | wc -l
+
+# Extract the accession numbers from an exported search result to a file for purposes of documentation and reuse.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase > ovid_embase_export_uid.txt
+
+# Extract the accession numbers from an exported search result and build a database query to find these records.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
+
+```
