@@ -11,7 +11,7 @@ Medical librarians/information specialists providing mediated, systematic search
 
 ## Methods
 
-A number of typical tasks in systematic searching was identified where additional software support was wanted and a solution seemed feasible with limited resources. These tasks and the need arose from the author's own practice and communication with colleagues. Commands to be entered at the command line were developed that work on simple text files containing text data such as query strings, database accession numbers, search results and search strategies exported form search interfaces.
+A number of typical tasks in systematic searching was identified where additional software support was wanted and a solution seemed feasible with limited resources. These tasks and the need arose from the author's own practice and communication with colleagues. Commands to be entered at the command line were developed that work on simple text files containing text data such as query strings, database accession numbers, search results and search strategies exported from search interfaces.
 
 ## Results
 
