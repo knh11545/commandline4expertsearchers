@@ -1,7 +1,7 @@
 Command-line tools for the expert searcher: Some applied library carpentry
 ==========================================================================
 
-Author: Helge Knüttel
+Author: Helge KnÃ¼ttel
 
 Towards a poster presentation at [EAHIL 2020](https://eahil2020.wordpress.com/).
 
@@ -18,7 +18,7 @@ What do I mean by the "command-line" here? Two things, actually: One of the [she
 * [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit of combining many small tools to acheive what you need.
 * [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
-Für Webseite mit Doku als mögliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
+FÃ¼r Webseite mit Doku als mÃ¶gliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
 
 Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf der Seite [Kollaboration und RMarkdown](https://user.uni-frankfurt.de/~tstraube/datascience/18_kollaboration_rmarkdown/).
 
@@ -33,7 +33,7 @@ The new PubMed no longer supports downloading records in MEDLINE or XML format. 
 1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
 2. On the command-line with bash run
 
-```{bash}
+```bash
 cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
 ```
 
@@ -65,7 +65,7 @@ Split a RIS export file into records (with perl):
 
 (From Perl Cookbook, Chapter 6.7. Reading Records with a Pattern Separator)
 
-```{bash}
+```bash
 cat huge_CINAHL.ris | perl -e '{ local $/ = undef; @chunks = split(/\nER  -\s*\n/, <>); } print "I read ", scalar(@chunks), " c
 hunks.\n";'
 ```
@@ -73,12 +73,12 @@ TODO: Load a list of PMIDs (DOIs or other such numbers) and remove matching reco
 
 Auf dem Weg dahin: 
 
-```{bash}
+```bash
 cat huge_CINAHL.ris | perl -e 'my $findme = "NLM31125709"; my $matches = 0; { local $/ = undef; @chunks = split(/\nER  -\s*\n/, <>); foreach (@chunks) { if (m/\Q$findme/) { print "Found ", $findme, "\n"; $matches++; } } } print "I read ", scalar(@chunks), " chunks.\nI found ", $matches, " matches\n";'
 # Use \Q if $findme may contain special chars for a regexp
 ```
 
-Auch die perl-Funktion grep ansehen, vielleicht kann man damit viele Pattern überprüfen?
+Auch die perl-Funktion grep ansehen, vielleicht kann man damit viele Pattern Ã¼berprÃ¼fen?
 Siehe die erste Antwort in <https://www.perlmonks.org/?node_id=391416>
 
 
@@ -153,10 +153,10 @@ docker run -it --rm ncbi/edirect
 
 To share a directory:
 
-```{bash}
+```bash
 ```
 
-```{bash}
+```bash
 ```
 
 ### Where could I publish a protocol for a systematic review?
@@ -167,7 +167,7 @@ Journals in which many SR protocols are published may be suitable for submission
 * Extract the journal title.
 * Group by journal, count records and sort by rank.
 
-```{bash}
+```bash
 
 esearch -db pubmed -query '("systematic review"[TI]) AND ("protocol"[TI])' | efetch -format xml > SR_protocols.xml
 
