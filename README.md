@@ -25,21 +25,139 @@ Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf
 
 ## Use cases
 
-### Retrieving search results
-
-The new PubMed no longer supports downloading records in MEDLINE or XML format. But we can do this with [EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/):
-
-
-1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
-2. On the command-line with bash run
-
-```bash
-cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
-```
-
-This yields the records in MEDLINE format in the file medline.txt. This works for large numbers of records.
 
 ### Checking search results
+
+Search results are ususally exported from databases and then imported in to reference management software or other systematic review software. It is helpful to be able to do some basic data sanity checks on the structured text files that were exported due to a number of reasons. The export process may yield erroneous results especially when restrictions by the host interface force the expert searcher to download larger result sets in smaller chunks (a tedious and error-prone process). There may be duplicate records even when exporting from a single database (which stands in contrast to vendor's documentation). And some records may be corrupt or formatted in a way such that the import filter of reference management software fails.
+
+
+#### Ovid MEDLINE and Ovid Embase
+
+Count the records in a single export file in Citavi (\*.ovd), Endnote (\*.cgi) or ReferenceManager (\*.ovd) format (Fields: _Complete Reference_). This works for ovd- and cgi-files:
+
+```bash
+grep --count "^DB  - Embase" myproject_EMBASE_2018-12-13_records-combined.ovd
+```
+
+```
+3831
+```
+
+
+After exporting results in portions of the allowed maximum of 1,000 records count the records in each export file:
+
+```bash
+for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.cgi' -print` ; do echo $file;  grep "^DB  - Embase" $file | wc -l ; done
+```
+
+```
+./myproject_EMBASE_2018-12-13_r0001-1000.ovd
+1000
+./myproject_EMBASE_2018-12-13_r1001-2000.ovd
+1000
+./myproject_EMBASE_2018-12-13_r2001-3000.ovd
+1000
+./myproject_EMBASE_2018-12-13_r3001-3831.ovd
+831
+```
+
+Result: The individual files contain the expected numbers of records with a total of 3831 records.
+
+Usually, in larger result sets there are duplicate records, i.e. records that carry identical accession numbers. This is in contrast to the database description. First, we check for duplicates _in each export file_. Accession numbers are in the UI field:
+
+```bash
+for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.ovd' -print` ; do echo $file;  grep "^UI  - " $file | sort | uniq | wc -l ; done
+```
+
+```
+./myproject_EMBASE_2018-12-13_r0001-1000.ovd
+983
+./myproject_EMBASE_2018-12-13_r1001-2000.ovd
+1000
+./myproject_EMBASE_2018-12-13_r2001-3000.ovd
+1000
+./myproject_EMBASE_2018-12-13_r3001-3831.ovd
+831
+```
+
+Result: 17 duplicate records were omitted when counting unique accession numbers in the first export file.  
+
+Finally, we count the unique records _accross all export files_. This number of unique records should not be off to far from the total number of records, say at most a few dozen. If the unique records are below the total by 1,000 or more chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
+
+```bash
+grep --no-filename "^UI  - " myproject_EMBASE_2018-12-13_r*-*.ovd | sort | uniq | wc -l
+```
+
+```
+3813
+```
+
+Result: In the 3831 records of the search result there are 3813 unique records. We did not fail to export a chunk.
+
+
+
+#### CINAHL???
+
+
+#### Web of Science (Core Collection)
+
+Count the records in a single export file (export format _Other reference software_, record content _Full record_):
+
+```
+grep --count "^ER$" myproject1_WoS_records.txt
+```
+
+```
+152
+```
+
+After exporting a larger result set in portions of the allowed maximum of 500 records count the records in each export file:
+
+```bash
+for file in `find . -name 'myproject_WoS_2018-12-13_r*-*.txt' -print` ; do echo $file;  grep --count "^ER$" $file ; done
+```
+
+```
+./myproject_WoS_2018-12-13_r0001-0500.txt
+500
+./myproject_WoS_2018-12-13_r0501-1000.txt
+500
+./myproject_WoS_2018-12-13_r1001-1500.txt
+500
+./myproject_WoS_2018-12-13_r1501-1584.txt
+84
+```
+
+Result: The individual files contain the expected numbers of records with a total of 1584 records.
+
+Then, we count the unique accession numbers of the records _accross all export files_. This number of unique records should be identical to the total number of records. If not chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
+
+```bash
+grep --no-filename "^UT " myproject_WoS_2018-12-13_r*-*.txt | sort | uniq | wc -l
+```
+
+```
+1584
+```
+
+Result: In the 1584 records of the search result there are 1584 unique records. We did not fail to export a chunk.
+
+
+
+#### PubMed
+
+Count the records in an export file in PubMed format (called MEDLINE format in legacy PubMed):
+
+```bash
+grep --count "^PMID- " medline.txt
+```
+
+Count the records in an export file in XML format:
+
+```bash
+grep -c "^<PubmedArticle>$" medline.xml
+```
+
 
 ### Comparing search results
 
@@ -54,9 +172,53 @@ See
 
 ### Postprocessing search result for easier import
 
-Unite search results that had to be exported in chunks.
+Unite search results that had to be exported in chunks into a single file. This saves time and is less prone to errors from repetitive import tasks.
 
-See D:\dimdi\_templates\unite_wos_files.bash
+#### Ovid MEDLINE and Ovid Embase
+
+For the Ovid files we just need to concatenate the individual export files into a single one:
+
+
+```bash
+cat myproject_EMBASE_2018-12-13_r*-*.ovd > myproject_EMBASE_2018-12-13_records-combined.ovd
+```
+
+Check the generated file for coḿpleteness:
+
+```bash
+grep --count "^DB  - Embase" myproject_EMBASE_2018-12-13_records-combined.ovd
+```
+
+```
+3831
+```
+
+Result: A total of 3831 records is in the generated file.
+
+Count the unique records in the file:
+
+```bash
+grep "^UI  - " myproject_EMBASE_2018-12-13_records-combined.ovd | sort | uniq | wc -l
+```
+
+```
+3813
+```
+
+Result: The expected number of unique records is in the file. We are safe to import this file into the reference manager.
+
+
+#### Web of Science
+
+Web of Science export files contain a header and footer. As we need to take care of this we cannot just concatenate files as with other formats. But a [small skript](./bin/unite_wos_files) takes care of this:
+
+
+```bash
+unite_wos_files myproject_WoS_2018-12-13_r*.*.txt > myproject_WoS_2018-12-13_records-combined.txt
+```
+
+FIXME: unite_wos_files creates no output
+TODO: Refactor ./bin/unite_wos_files
 
 
 #### Deduplicating search results (partially)
@@ -92,7 +254,7 @@ Search interfaces often show the lines in a search strategy such that the last s
 tac my_old_stategy.txt > stategy_with_lines_reversed.txt
 ```
 
-In vim there basically are two options:
+When editing a file in the `vim` editor there basically are two options:
 
 * Call `tac`, e.g. `:%!tac` for the wole buffer.
 * Use vim's features: `:g/^/m0`
@@ -101,17 +263,82 @@ For more info see <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
 
 ### Updating searches
 
+
+
+
 ### Documenting searches
+
 
 #### Document database accession numbers
 
-Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendorsi which might be ths case when publishing whole database records containing text.
+Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendorsi which might be the case when publishing whole database records containing text.
+
+
+Extract PMIDs from Ovid MEDLINE export file into a text file:
+
+```bash
+grep "^UI  - " myproject_MEDLINE_2018-12-13_records-combined.ovd | sed -e 's/^UI  - //' -e 's/\r//g' > myproject_MEDLINE_2018-12-13_records-combined_pmid.txt
+```
+
+Extract Embase accession numbers from Ovid Embase export file into a text file:
+
+```bash
+grep "^UI  - " myproject_EMBASE_2018-12-13_records-combined.ovd | sed -e 's/^UI  - //' -e 's/\r//g' > myproject_EMBASE_2018-12-13_records-combined_uid.txt
+```
+These text files can also be used for deduplicating search results and especially so when running update searches.
+
 
 #### Convert Ovid search history to table
 
 Use a vim script.
 
+
+## Build reusable scripts
+
+It is helpful to write down the commands that worked well in a shell script. Such a script is a convenient means to store the functionality for easy reuse. The gory details that are hard to remember are hidden away in the script. Some skripts are contained in the [bin ](./bin/) folder.
+
+Examples:
+
+```bash
+# Count the records in an exported search result by accession numbers.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | wc -l
+
+# Extract the accession numbers from an exported search result to a file for purposes of documentation and reuse.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase > ovid_embase_export_uid.txt
+
+# Extract the accession numbers from an exported search result and build a database query to find these records.
+cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
+
+```
+
+
+## Use NLM's Entrez Direct (EDirect)
+
+The [EDirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) provided by [NLM's](https://www.nlm.nih.gov/) [NCBI](https://www.ncbi.nlm.nih.gov/) are a set of very powerful tools to be used at the Unix command line. They 
+
+
+### Retrieving search results from PubMed
+
+The new PubMed no longer supports downloading records in XML format. But we can do this with [EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/):
+
+
+1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
+2. On the command-line with bash run
+
+```bash
+cat pmid.txt | epost -db pubmed | efetch -format xml > medline.xml
+```
+
+This yields the records in XML format in the file medline.xml. This also works for large numbers of records. Downloading in PubMed format (called MEDLINE format in legacy PubMed) is possible, too:
+
+
+```bash
+cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
+```
+
+
 ### Searching for patterns that are not supported by search interfaces
+
 
 #### Use command-line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
 
@@ -136,11 +363,8 @@ root@71a097f1c1ef:/edirect# cat regensburg_2018-2020.xml  | xtract -pattern Pubm
 
 #### Use local phrase searching using eDirect and a local copy of PubMed
 
-### Build custom export formats
 
-The new PubMed interface does not support the rich MEDLINE export format. Convert XML records to MEDLINE format?
-
-## Installation of Entrez Direct
+### Installation of Entrez Direct
 
 Entrez Direct (EDirect) needs to be installed. This is easy with a Linux or Macintosh system where the prerequisites already are available (a bash shell and Perl). For my Windows 10 PC I found it easiest to go via [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows) and then use the [official NCBI/NLM Docker image for edirect](https://hub.docker.com/r/ncbi/edirect). 
 
@@ -159,7 +383,10 @@ To share a directory:
 ```bash
 ```
 
-### Where could I publish a protocol for a systematic review?
+### Search and analyze results
+
+
+#### Where could I publish a protocol for a systematic review?
 
 Journals in which many SR protocols are published may be suitable for submission.
 
@@ -172,24 +399,5 @@ Journals in which many SR protocols are published may be suitable for submission
 esearch -db pubmed -query '("systematic review"[TI]) AND ("protocol"[TI])' | efetch -format xml > SR_protocols.xml
 
 cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
-
-```
-
-
-## Build reusable scripts
-
-Write down the commands that worked well in a shell script. Such a script is a convenient means to store the functionality for easy reuse. The gory details that are hard to remember are hidden away in the script.
-
-Examples:
-
-```bash
-# Count the records in an exported search result by accession numbers.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | wc -l
-
-# Extract the accession numbers from an exported search result to a file for purposes of documentation and reuse.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase > ovid_embase_export_uid.txt
-
-# Extract the accession numbers from an exported search result and build a database query to find these records.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
 
 ```
