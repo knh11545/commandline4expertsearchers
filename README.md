@@ -1,20 +1,18 @@
-Command-line tools for the expert searcher: Some applied library carpentry
+Command line tools for the expert searcher: Some applied library carpentry
 ==========================================================================
 
 Author: Helge Knüttel
 
-Towards a poster presentation at [EAHIL 2020](https://eahil2020.wordpress.com/).
+This repository started to give more information and code as a background for a poster presented at the [2020 conference](https://eahil2020.wordpress.com/) of [EAHIL](http://eahil.eu/) intended to happen in Lodz, Poland but was then held as an online event due to the COVID-19 pandemic. It is intendend that the use-cases and code sections will be extended in the future.
 
 
 ## General
 
-TODO: Should we cover editors such as vim?
+What do I mean by the term "command line" here? Two things, actually: One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
 
-What do I mean by the "command-line" here? Two things, actually: One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command-line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
+### Tutorials for learning the command line
 
-### Tutorials for learning the command-line
-
-* [FLOSS Manuals: Command line](http://write.flossmanuals.net/command-line/introduction/): An introduction into using the command-line.
+* [FLOSS Manuals: Command line](http://write.flossmanuals.net/command-line/introduction/): An introduction into using the command line.
 * [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit of combining many small tools to acheive what you need.
 * [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
@@ -24,6 +22,29 @@ Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf
 
 
 ## Use cases
+
+```mermaid
+
+graph TD
+  A(Database search) -.->|Export to text file| R[Search results]
+  R --> D(Check search results)
+  D -->|Count records| D1[Record count]
+  D1 --> I
+  D -->|Count non-duplicates| D2[Single-database duplicate count]
+  D2 --> I
+  R ----->|Combine export files| E[Single import file]
+  R -->|Extract| F[Set of accession numbers]
+  F -->|Generate query| Q[Query string for known records]
+  F ----> I
+  Q --> U("Deduplication in update search (NOT)")
+  U --> A
+  A(Database search) -.->|Export to text file| S[Search strategy]
+  S ---->|Reformat| I[Documentation]
+  classDef Result fill:#ffffde,stroke:#aaaa33,stroke-width:4px;
+  class A,I,E Result;
+
+```
+
 
 
 ### Checking search results
@@ -323,7 +344,7 @@ The new PubMed no longer supports downloading records in XML format. But we can 
 
 
 1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
-2. On the command-line with bash run
+2. On the command line with bash run
 
 ```bash
 cat pmid.txt | epost -db pubmed | efetch -format xml > medline.xml
@@ -340,7 +361,7 @@ cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
 ### Searching for patterns that are not supported by search interfaces
 
 
-#### Use command-line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
+#### Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
 
 Example: Find PubMed records that contain information about equally contributing authors.
 
