@@ -5,6 +5,7 @@ Author: Helge Knüttel
 
 This repository started to give more information and code as a background for a poster presented at the [2020 conference](https://eahil2020.wordpress.com/) of [EAHIL](http://eahil.eu/) intended to happen in Lodz, Poland but was then held as an online event due to the COVID-19 pandemic. It is intendend that the use-cases and code sections will be extended in the future.
 
+All stuff related to the actual poster incl. the [poster pfd](./poster/Poster_EAHIL_2020.pdf) and the [abstract](./poster/abstract_submitted.md) are found in the `poster` folder.
 
 ## General
 
