@@ -332,9 +332,9 @@ sed\
 Extract the PMIDs from the export files of first search:
 
 ```bash
-grep "^UI  - " my-patron-order-number_MEDLINE_2018-04-25.cgi  | \
+grep "^UI  - " myproject_MEDLINE_2018-04-25.cgi  | \
 sed -e 's/^UI  - //' -e 's/\r//g' \
-> my-patron-order-number_MEDLINE_2018-04-25_uid.txt
+> myproject_MEDLINE_2018-04-25_uid.txt
 ```
 
 Construct a query string for these PMIDs (or several to do it in batches of say a 1,000). Steps: 
@@ -350,7 +350,7 @@ Construct a query string for these PMIDs (or several to do it in batches of say 
  * Write result to a text file.
 
 ```bash
-cat my-patron-order-number_MEDLINE_2018-04-25_uid.txt | \
+cat myproject_MEDLINE_2018-04-25_uid.txt | \
 sed\
     -e '/^\s*$/d' - | \
 sed\
@@ -360,7 +360,7 @@ sed\
 sed\
     -e '1 i (' \
     -e "\$ a ).${OVID_FIELD_LIST}." \
-> my-patron-order-number_MEDLINE_2018-04-25_query.txt
+> myproject_MEDLINE_2018-04-25_query.txt
 ```
 
 ### Documenting searches
