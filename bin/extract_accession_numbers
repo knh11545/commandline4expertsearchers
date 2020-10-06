@@ -29,6 +29,8 @@ Export formats
 
   Known export formats are:
 
+  pubmed             Export from PubMed as format 'PubMed' (formerly 'MEDLINE')
+
   ovid_medline       Export from Ovid MEDLINE as:
                       - Format: Citavi, Endnote or ReferenceManager
 		      - Fields: Complete Reference
@@ -85,6 +87,9 @@ done
 
 
 case "$export_format" in
+   pubmed )
+	grep "^PMID- " - | sed -e 's/^PMID- //'
+	;;
    ovid_medline|ovid_embase )
 	grep "^UI  - " - | sed -e 's/^UI  - //' -e 's/\r//g'
 	;;

@@ -38,9 +38,9 @@ Database syntax formats and ID types
 
   Known syntax formats are host and database specific:
 
+  pubmed            ID types: pmid, pmcid, doi, lid
   ovid_medline      ID types: pmid, doi, pii
   ovid_embase       ID types: an, eu, pmid, doi
-  pubmed            ID types: pmid, pmcid, doi, lid
 
 Examples
 
@@ -98,6 +98,42 @@ done
 
 
 case "$syntax" in
+
+    pubmed )
+	# Fields to search for in PubMed
+	case "$idtype" in
+	    pmid )
+		PUBMED_FIELD=UID
+		;;
+	    pmcid )
+		PUBMED_FIELD=PMCID
+		;;
+	    doi )
+		PUBMED_FIELD=AID
+		;;
+	    lid )
+		# Location ID
+		PUBMED_FIELD=LID
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' and field specification to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e "s/\s*$/\"\[${PUBMED_FIELD}\]/" \
+	    -e '$! s/$/ OR /'
+	;;
 
     ovid_medline )
 	# grep "^UI  - " - | sed -e 's/^UI  - //' -e 's/\r//g'
@@ -179,48 +215,11 @@ case "$syntax" in
 	    -e "\$ a ).${OVID_FIELD_LIST}."
 	;;
 
-    pubmed )
-	# Fields to search for in PubMed
-	case "$idtype" in
-	    pmid )
-		PUBMED_FIELD=PMID
-		;;
-	    pmcid )
-		PUBMED_FIELD=PMCID
-		;;
-	    doi )
-		PUBMED_FIELD=AID
-		;;
-	    lid )
-		# Location ID
-		PUBMED_FIELD=LID
-		;;
-	    * )
-	        # unknown argument
-		echo "ERROR: Unknown idtype ${idtype}" >&2
-		exit 1
-		;;
-	esac
-	# Steps: 
-	#  * Delete empty lines or lines containig only whitespace.
-	#  * Add '"' to beginning of each line of the input.
-	#  * Add '"' to end of each line of the input.
-	#    Whitespace at beginning or end of line will be deleted.
-	#  * Add ' OR ' to end of each line except the last one.
-	#  * Add "(" to beginning of file
-	#  * Add ")" and field specification to end of file
-	sed\
-	    -e '/^\s*$/d' - | \
-	sed\
-	    -e 's/^\s*/"/' \
-	    -e "s/\s*$/\"\[${PUBMED_FIELD}\]/" \
-	    -e '$! s/$/ OR /'
-	;;
-
     * )	
 	echo "ERROR: Unknown database syntax ${syntax}" >&2
 	exit 1
 	;;
+
 esac
 
 

@@ -7,6 +7,10 @@ This repository started to give more information and code as a background for a 
 
 All stuff related to the actual poster incl. the [poster pfd](./poster/Poster_EAHIL_2020.pdf) and the [abstract](./poster/abstract_submitted.md) are found in the `poster` folder.
 
+
+[[_TOC_]]
+
+
 ## General
 
 What do I mean by the term "command line" here? Two things, actually: One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
@@ -285,8 +289,79 @@ For more info see <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
 
 ### Updating searches
 
+The approach in general is to work with accession numbers of database records:
 
+1. Extract the PMIDs from the export files of first search, 
+2. construct a query string for these PMIDs (or several to do it in batches of say a 1,000),
+3. run the update search,
+4. search the records of the old search (using the query strings created as above),
+5. NOT the old records out of the new search result.
 
+Steps 1 and 2 are a matter of seconds when using command line tools.
+
+Examples are given here for PubMed and Ovid MEDLINE. There are two scripts, [`extract_accession_numbers`](./bin/extract_accession_numbers) and [`an2query`](./bin/an2query) that make this easier.
+
+#### PubMed
+
+Extract the PMIDs from the export files of first search:
+
+```bash
+grep "^PMID- " pubmed-export-set.txt | sed -e 's/^PMID- //' > pubmed-export-set_pmid.txt
+```
+
+Construct a query string for these PMIDs (or several to do it in batches of say a 1,000). Steps: 
+
+ * Pipe content of file with PMIDs to `sed` for processing.
+ * Add '"' to beginning of each line of the input.
+ * Add '"' and field specification to end of each line of the input.
+   Whitespace at beginning or end of line will be deleted.
+ * Add ' OR ' to end of each line except the last one.
+ * Write result to a text file.
+
+```bash
+cat pubmed-export-set_pmid.txt | \
+sed\
+    -e 's/^\s*/"/' \
+    -e "s/\s*$/\"\[UID\]/" \
+    -e '$! s/$/ OR /' \
+> pubmed-export-set_query.txt
+```
+
+#### Ovid MEDLINE
+
+Extract the PMIDs from the export files of first search:
+
+```bash
+grep "^UI  - " my-patron-order-number_MEDLINE_2018-04-25.cgi  | \
+sed -e 's/^UI  - //' -e 's/\r//g' \
+> my-patron-order-number_MEDLINE_2018-04-25_uid.txt
+```
+
+Construct a query string for these PMIDs (or several to do it in batches of say a 1,000). Steps: 
+
+ * Pipe content of file with PMIDs to `sed` for processing.
+ * Delete empty lines or lines containig only whitespace.
+ * Add '"' to beginning of each line of the input.
+ * Add '"' to end of each line of the input.
+   Whitespace at beginning or end of line will be deleted.
+ * Add ' OR ' to end of each line except the last one.
+ * Add "(" to beginning of file
+ * Add ")" and field specification to end of file
+ * Write result to a text file.
+
+```bash
+cat my-patron-order-number_MEDLINE_2018-04-25_uid.txt | \
+sed\
+    -e '/^\s*$/d' - | \
+sed\
+    -e 's/^\s*/"/' \
+    -e 's/\s*$/"/' \
+    -e '$! s/$/ OR /' | \
+sed\
+    -e '1 i (' \
+    -e "\$ a ).${OVID_FIELD_LIST}." \
+> my-patron-order-number_MEDLINE_2018-04-25_query.txt
+```
 
 ### Documenting searches
 
@@ -336,7 +411,9 @@ cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an
 
 ## Use NLM's Entrez Direct (EDirect)
 
-The [EDirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) provided by [NLM's](https://www.nlm.nih.gov/) [NCBI](https://www.ncbi.nlm.nih.gov/) are a set of very powerful tools to be used at the Unix command line. They 
+The [EDirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) provided by [NLM's](https://www.nlm.nih.gov/) [NCBI](https://www.ncbi.nlm.nih.gov/) are a set of very powerful tools to be used at the Unix command line. They ...
+
+**This is all still work inprogress!**
 
 
 ### Retrieving search results from PubMed
