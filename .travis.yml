@@ -1,0 +1,5 @@
+﻿language: bash
+
+script:
+            - ./test.sh
+
