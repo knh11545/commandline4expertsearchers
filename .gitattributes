@@ -1,0 +1,4 @@
+﻿# More sane checkouts on Windows
+* text=auto
+*.sh eol=lf
+bin/* eol=lf
