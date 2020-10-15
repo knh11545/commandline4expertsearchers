@@ -39,7 +39,7 @@ Database syntax formats and ID types
   Known syntax formats are host and database specific:
 
   pubmed            ID types: pmid, pmcid, doi, lid
-  ovid_medline      ID types: pmid, doi, pii
+  ovid_medline      ID types: pmid, pmcid, doi, pii
   ovid_embase       ID types: an, eu, pmid, doi
 
 Examples
@@ -142,6 +142,9 @@ case "$syntax" in
 	case "$idtype" in
 	    pmid )
 		OVID_FIELD_LIST=ui
+		;;
+	    pmcid )
+		OVID_FIELD_LIST=pm
 		;;
 	    doi )
 		OVID_FIELD_LIST=do,id
