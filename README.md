@@ -487,7 +487,7 @@ To share a directory:
 
 #### Where could I publish a protocol for a systematic review?
 
-Journals in which many SR protocols are published may be suitable for submission.
+Journals in which many SR protocols are published may be particularly suitable for submission.
 
 * Find PubMed records of protocols of systematic reviews.
 * Extract the journal title.
@@ -500,3 +500,20 @@ esearch -db pubmed -query '("systematic review"[TI]) AND ("protocol"[TI])' | efe
 cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
 
 ```
+Results:
+
+```
+1253    Medicine
+1022    BMJ open
+1016    Systematic reviews
+504     JBI database of systematic reviews and implementation reports
+89      JBI evidence synthesis
+81      JMIR research protocols
+22      Acta anaesthesiologica Scandinavica
+19      JBI library of systematic reviews
+18      International journal of surgery protocols
+18      Journal of advanced nursing
+```
+
+
+
