@@ -1,4 +1,4 @@
-﻿#!/bin/env bash --norc
+#!/usr/bin/env bash
 # Extract accession numbers from database search results
 
 # Author: Helge Knüttel

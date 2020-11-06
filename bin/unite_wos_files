@@ -1,4 +1,4 @@
-#!/bin/env bash --norc
+#!/usr/bin/env bash 
 # unite_wos_files: Unite files exported from Web of Science
 # 
 # Web of Science allows to export bibliographic records only in portions of up to 500 records. This script will unite such files into a single one.

@@ -1,4 +1,4 @@
-﻿#!/bin/env bash --norc
+#!/usr/bin/env bash
 # Convert a list of database accession numbers or other IDs into a search string
 
 # Author: Helge Knüttel
