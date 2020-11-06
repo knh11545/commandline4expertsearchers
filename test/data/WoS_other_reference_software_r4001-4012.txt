@@ -1,0 +1,961 @@
+﻿FN Clarivate Analytics Web of Science
+VR 1.0
+PT J
+AU Asampong, E
+   Gyeke, MDP
+   Oduro, R
+AF Asampong, Emmanuel
+   Gyeke, Mavis Dako Plusminus
+   Oduro, Razak
+TI Caregivers' views on stigmatization and discrimination of people
+   affected by leprosy in Ghana
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID MENTAL-HEALTH; STIGMA; INDIA
+AB Background
+   Leprosy is a condition that has long been associated with stigma and discrimination, even when infected persons have been cured. This paper describes stigma and discrimination as viewed by caregivers who are associated with people affected by leprosy in Ghana.
+   Methods
+   A qualitative interview with semi-structured interviews were conducted for twenty caregivers.
+   Results
+   Findings indicated that caregivers were of the view that people affected by leprosy in Ghana are stigmatized and discriminated against by the larger society thus making their movements and interactions restricted to the Leprosarium. Besides, employments opportunities are unavailable to them thus making them exposed to financial challenges. The livelihood Empowerment Against poverty (LEAP) money given them is not sufficient for their daily upkeep.
+   Conclusion
+   People affected by leprosy in Ghana are stigmatized and therefore find it difficult to interact freely with the public. The associated physical deformities with the disease also tend to impede their ability to relate to the general public. The LEAP cash given to people affected by leprosy is helpful however, it could be enhanced to keep pace with prevailing economic conditions in the country.
+C1 [Asampong, Emmanuel] Univ Ghana, Sch Publ Hlth, Dept Social & Behav Sci, Legon, Accra, Ghana.
+   [Gyeke, Mavis Dako Plusminus] Univ Ghana, Dept Social Work, Legon, Accra, Ghana.
+   [Oduro, Razak] Univ Alberta, Dept Human Ecol, Edmonton, AB, Canada.
+RP Asampong, E (corresponding author), Univ Ghana, Sch Publ Hlth, Dept Social & Behav Sci, Legon, Accra, Ghana.
+EM easampong@ug.edu.gh
+FU Office of Research, Innovation and Development (ORID), University of
+   Ghana
+FX The Office of Research, Innovation and Development (ORID), University of
+   Ghana, provided grant for this study. The funders had no role in study
+   design, data collection and analysis, decision to publish, or
+   preparation of the manuscript.
+NR 35
+TC 4
+Z9 4
+U1 0
+U2 3
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006219
+DI 10.1371/journal.pntd.0006219
+PG 12
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700066
+PM 29377890
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Delea, MG
+   Solomon, H
+   Solomon, AW
+   Freeman, MC
+AF Delea, Maryann G.
+   Solomon, Hiwote
+   Solomon, Anthony W.
+   Freeman, Matthew C.
+TI Interventions to maximize facial cleanliness and achieve environmental
+   improvement for trachoma elimination: A review of the grey literature
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Review
+ID DEVELOPING-COUNTRIES; RANDOMIZED-TRIAL; HEALTH BEHAVIORS; STRATEGY;
+   IMPACT; FACE; DISEASE; WATER
+AB Background
+   Efforts are underway to scale-up the facial cleanliness and environmental improvement (F&E) components of the World Health Organization's SAFE strategy for elimination of trachoma as a public health problem. Improving understanding of the F&E intervention landscape could inform advancements prior to scale-up, and lead to more effective and sustained behavior change.
+   Methods/findings
+   We systematically searched for relevant grey literature published from January 1965 through August 2016. Publications were eligible for review if they described interventions addressing F&E in the context of trachoma elimination programs. Subsequent to screening, we mapped attributes of F&E interventions. We then employed three behavior change frameworks to synthesize mapped data and identify potential intervention gaps. We identified 27 documents meeting inclusion criteria. With the exception of some recent programming, F&E interventions have largely focused on intermediate and distal antecedents of behavior change. Evidence from our analyses suggests many interventions are not designed to address documented determinants of improved F&E practices. No reviewed documents endorsed inclusion of intervention components related to behavioral maintenance or resilience-factors critical for sustaining improved behaviors.
+   Conclusions
+   If left unaddressed, identified gaps in intervention content may continue to challenge uptake and sustainability of improved F&E behaviors. Stakeholders designing and implementing trachoma elimination programs should review their F&E intervention content and delivery approaches with an eye toward improvement, including better alignment with established behavior change theories and empirical evidence. Implementation should move beyond information dissemination, and appropriately employ a variety of behavior change techniques to address more proximal influencers of change.
+C1 [Delea, Maryann G.; Solomon, Hiwote; Freeman, Matthew C.] Emory Univ, Dept Environm Hlth, Rollins Sch Publ Hlth, Atlanta, GA 30322 USA.
+   [Delea, Maryann G.] London Sch Hyg & Trop Med, Dept Dis Control, Fac Infect & Trop Dis, London, England.
+   [Solomon, Anthony W.] WHO, Dept Control Neglected Trop Dis, Geneva, Switzerland.
+RP Delea, MG (corresponding author), Emory Univ, Dept Environm Hlth, Rollins Sch Publ Hlth, Atlanta, GA 30322 USA.; Delea, MG (corresponding author), London Sch Hyg & Trop Med, Dept Dis Control, Fac Infect & Trop Dis, London, England.
+EM mdelea@emory.edu
+OI Solomon, Anthony/0000-0001-7101-6649
+FU World Health OrganizationWorld Health Organization [2015/578209-0]
+FX This review as supported by the World Health Organization
+   (http://www.who.int/) through Registration 2015/578209-0. MCF and MGD
+   received the funding. Other than the personal contribution of AWS, who
+   was a study investigator list employed by the World Health Organization
+   (and is therefore a co-author of this article), the funders had no role
+   in study design, data collection and analysis, decision to publish, or
+   preparation of the manuscript.
+NR 83
+TC 15
+Z9 15
+U1 0
+U2 1
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006178
+DI 10.1371/journal.pntd.0006178
+PG 26
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700040
+PM 29370169
+OA DOAJ Gold, Green Accepted, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Fritzell, C
+   Raude, J
+   Kazanji, M
+   Flamand, C
+AF Fritzell, Camille
+   Raude, Jocelyn
+   Kazanji, Mirdad
+   Flamand, Claude
+TI Emerging trends of Zika apprehension in an epidemic setting
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID MAD-COW-DISEASE; RISK PERCEPTION; VIRUS; TRANSMISSION; ISLAND
+AB Background
+   French Guiana is a territory that has a decades-long history of dengue outbreaks and more recently, in 2014, a chikungunya outbreak. Zika virus (ZIKV) emerged in late 2015 and subsequently led to an important outbreak.
+   Methodology/Principal findings
+   A cross-sectional phone survey was conducted among the general population during the outbreak in June 2016 with a total of 1,129 individuals interviewed to assess perceptions, knowledge and behaviors regarding zika infection. The population seemed aware of zika, and perceived the infection as a more serious health threat than other common mosquito-borne diseases. Furthermore, both the perceptions and behaviors related to zika and its prevention were found to vary considerably among different social groups, geographic areas and gender; less educated female participants were found to perceive the disease as more worrisome and were less likely to adopt protective behaviors. Moreover, female population has been particularly responsive to awareness campaigns and rapidly understood the extent of risks associated with ZIKV infection.
+   Conclusions/Significance
+   These results revealed that ZIKV appeared at the time of the survey as a new health threat that concerns the public more than chikungunya and dengue fever with differences observed among subgroups of population. These results have implications for the development of multifaceted infection control programs, including strategies for prevention and awareness, helping the population to develop an accurate perception of the threat they are facing and encouraging behavior changes.
+C1 [Fritzell, Camille; Kazanji, Mirdad; Flamand, Claude] Pasteur Inst French Guiana, Cayenne, France.
+   [Raude, Jocelyn] Univ Aix Marseille, IRD 190, INSERM 1207, EHESP,UMR Emergence Pathol Virales, Marseille, France.
+   [Raude, Jocelyn] Univ La Reunion, UMR Proc Infect Milieu Insulaire Trop, INSERM 1187, CNRS 9192,IRD 249, St Denis, Reunion, France.
+RP Fritzell, C (corresponding author), Pasteur Inst French Guiana, Cayenne, France.
+EM cfritzell@pasteur-cayenne.fr
+OI Flamand, Claude/0000-0002-8064-445X
+FU Regional Health Agency of French Guiana; European Union's Horizon
+   research and innovation program under ZIKAlliance grant [734548];
+   Pasteur Institut Department of International Affairs
+FX This study was supported by the Regional Health Agency of French Guiana
+   and the European Unions Horizon 2020 research and innovation program
+   under ZIKAlliance grant agreement No 734548. The funders had no role in
+   study design, data collection and analysis, decision to publish, or
+   preparation of the manuscript. CF also acknowledges funding from the
+   doctoral grant Calmette and Yersin allocated by the Pasteur Institut
+   Department of International Affairs.
+NR 36
+TC 3
+Z9 4
+U1 0
+U2 4
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006167
+DI 10.1371/journal.pntd.0006167
+PG 14
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700035
+PM 29370170
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Garn, JV
+   Boisson, S
+   Willis, R
+   Bakhtiari, A
+   al-Khatib, T
+   Amer, K
+   Batcho, W
+   Courtright, P
+   Dejene, M
+   Goepogui, A
+   Kalua, K
+   Kebede, B
+   Macleod, CK
+   IIunga, K
+   Madeleine, M
+   Mbofana, MSA
+   Mpyet, C
+   Ndjemba, J
+   Olobio, N
+   Pavluck, AL
+   Sokana, O
+   Southisombath, K
+   Taleo, F
+   Solomon, AW
+   Freeman, MC
+AF Garn, Joshua V.
+   Boisson, Sophie
+   Willis, Rebecca
+   Bakhtiari, Ana
+   al-Khatib, Tawfik
+   Amer, Khaled
+   Batcho, Wilfrid
+   Courtright, Paul
+   Dejene, Michael
+   Goepogui, Andre
+   Kalua, Khumbo
+   Kebede, Biruck
+   Macleod, Colin K.
+   IIunga, Kouakou
+   Madeleine, Marie
+   Mbofana, Mariamo Saide Abdala
+   Mpyet, Caleb
+   Ndjemba, Jean
+   Olobio, Nicholas
+   Pavluck, Alexandre L.
+   Sokana, Oliver
+   Southisombath, Khamphoua
+   Taleo, Fasihah
+   Solomon, Anthony W.
+   Freeman, Matthew C.
+TI Sanitation and water supply coverage thresholds associated with active
+   trachoma: Modeling cross-sectional data from 13 countries
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID CLUSTER-RANDOMIZED TRIAL; MAPPING PROJECT; PREVALENCE SURVEYS; LATRINE
+   PROMOTION; HERD PROTECTION; RISK-FACTORS; ETHIOPIA; STATE; PROGRAM;
+   REGION
+AB Background
+   Facial cleanliness and sanitation are postulated to reduce trachoma transmission, but there are no previous data on community-level herd protection thresholds. We characterize associations between active trachoma, access to improved sanitation facilities, and access to improved water sources for the purpose of face washing, with the aim of estimating community-level or herd protection thresholds.
+   Methods and findings
+   We used cluster-sampled Global Trachoma Mapping Project data on 884,850 children aged 1 +/- 9 years from 354,990 households in 13 countries. We employed multivariable mixed-effects modified Poisson regression models to assess the relationships between water and sanitation coverage and trachomatous inflammation-follicular (TF). We observed lower TF prevalence among those with household-level access to improved sanitation (prevalence ratio, PR = 0.87; 95% CI: 0.83-0.91), and household-level access to an improved washing water source in the residence/yard (PR = 0.81; 95% CI: 0.75-0.88). Controlling for household-level water and latrine access, we found evidence of community-level protection against TF for children living in communities with high sanitation coverage (PR80-90% = 0.87; 95% CI: 0.73-1.02; PR90-100% = 0.76; 95% CI: 0.67-0.85). Community sanitation coverage levels greater than 80% were associated with herd protection against TF (PR = 0.77; 95% CI: 0.62-0.97)-that is, lower TF in individuals whose households lacked individual sanitation but who lived in communities with high sanitation coverage. For community-level water coverage, there was no apparent threshold, although we observed lower TF among several of the higher deciles of community-level water coverage.
+   Conclusions
+   Our study provides insights into the community water and sanitation coverage levels that might be required to best control trachoma. Our results suggest access to adequate water and sanitation can be important components in working towards the 2020 target of eliminating trachoma as a public health problem.
+C1 [Garn, Joshua V.; Freeman, Matthew C.] Emory Univ, Rollins Sch Publ Hlth, Dept Environm Hlth, Atlanta, GA 30322 USA.
+   [Boisson, Sophie] WHO, Dept Publ Hlth Environm & Social Determinants Hlt, Geneva, Switzerland.
+   [Willis, Rebecca; Bakhtiari, Ana; Pavluck, Alexandre L.] Task Force Global Hlth, Int Trachoma Initiat, Decatur, GA USA.
+   [al-Khatib, Tawfik] Sanaa Univ, Dept Ophthalmol, Sanaa, Yemen.
+   [Amer, Khaled] Minist Hlth Cairo, Dept Ophthalmol, Cairo, Egypt.
+   [Batcho, Wilfrid] Minist Sante, Programme Natl Lutte Malad Transmissibles, Cotonou, Benin.
+   [Courtright, Paul; Mpyet, Caleb] Univ Cape Town, Kilimanjaro Ctr Community Ophthalmol Int, Div Ophthalmol, Cape Town, South Africa.
+   [Dejene, Michael] Michael Dejene Publ Hlth Consultancy Serv, Addis Ababa, Ethiopia.
+   [Goepogui, Andre] Minist Sante, Programme Onchocecite MTN, Conakry, Guinea.
+   [Kalua, Khumbo] Blantyre Inst Community Ophthalmol, Coll Med, Dept Ophthalmol, Blantyre, Malawi.
+   [Kebede, Biruck] Fed Minist Hlth, Dis Prevent & Control Directorate, Addis Ababa, Ethiopia.
+   [Macleod, Colin K.] Sightsavers, Melksham, England.
+   [IIunga, Kouakou] Programme Natl Sante Oculaire & Lutte Onchocercos, Abidjan, Cote Ivoire.
+   [Mbofana, Mariamo Saide Abdala] Programa Nacl Oftalmol, Maputo, Mozambique.
+   [Mpyet, Caleb] Univ Jos, Dept Ophthalmol, Jos, Nigeria.
+   [Mpyet, Caleb] Sightsavers, Kaduna, Nigeria.
+   [Ndjemba, Jean] Minist Sante Publ, Direct Lutte Maladie, Kinshasa, DEM REP CONGO.
+   [Olobio, Nicholas] Fed Minist Hlth, Dept Publ Hlth, Abuja, Nigeria.
+   [Sokana, Oliver] Minist Hlth & Med Serv, Eye Dept, Honiara, Solomon Islands.
+   [Southisombath, Khamphoua] Natl Ophthalmol Ctr, Minist Hlth, Vientiane, Lao, DEM REP CONGO.
+   [Taleo, Fasihah] WHO, Port Vila, Vanuatu.
+   [Solomon, Anthony W.] London Sch Hyg & Trop Med, Clin Res Dept, London, England.
+   [Solomon, Anthony W.] WHO, Dept Control Neglected Trop Dis, Geneva, Switzerland.
+RP Freeman, MC (corresponding author), Emory Univ, Rollins Sch Publ Hlth, Dept Environm Hlth, Atlanta, GA 30322 USA.
+EM matthew.freeman@emory.edu
+OI Solomon, Anthony/0000-0001-7101-6649
+FU World Health Organization (WHO)World Health Organization; United
+   Kingdom's Department for International Development; United Kingdom's
+   Department for International Development [ARIES: 203145]; United States
+   Agency for International Development (USAID), through the ENVISION
+   projectUnited States Agency for International Development (USAID)
+   [AID-OAA-A-11-00048]; END in Asia project [OAA-A-10-00051];
+   PfizerPfizer; WHOWorld Health Organization
+FX JVG was supported by the World Health Organization (WHO) with funding
+   from the United Kingdom's Department for International Development. The
+   Global Trachoma Mapping Project (GTMP) was principally funded by a grant
+   from the United Kingdom's Department for International Development
+   (ARIES: 203145) to Sightsavers, which led a consortium of
+   non-governmental organizations and academic institutions to support
+   health ministries to complete baseline trachoma mapping worldwide. The
+   GTMP was also funded by the United States Agency for International
+   Development (USAID), through the ENVISION project implemented by RTI
+   International under cooperative agreement number AID-OAA-A-11-00048, and
+   the END in Asia project implemented by FHI360 under cooperative
+   agreement number OAA-A-10-00051. A committee established in March 2012
+   to examine issues surrounding completion of global trachoma mapping was
+   initially funded by a grant from Pfizer to the International Trachoma
+   Initiative. AWS was a Wellcome Trust Intermediate Clinical Fellow
+   (098521) at the London School of Hygiene & Tropical Medicine, and is now
+   a staff member of WHO. SB and AWS are employees of WHO, and JVG received
+   funding from WHO to do this project. MCF has received funding as a
+   consultant for WHO as part of separate assessments of sanitation on
+   health. The authors alone are responsible for the views expressed in
+   this article and they do not necessarily represent the views, decisions
+   or policies of the institutions with which they are affiliated. None of
+   these funders had any role in project design, in project implementation
+   or analysis or interpretation of data, in the decisions on where, how or
+   when to publish in the peer reviewed press, or in preparation of the
+   manuscript.
+NR 57
+TC 25
+Z9 25
+U1 0
+U2 5
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006110
+DI 10.1371/journal.pntd.0006110
+PG 20
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700013
+PM 29357365
+OA DOAJ Gold, Green Published, Green Accepted
+DA 2020-11-06
+ER
+
+PT J
+AU Means, AR
+   Ajjampur, SSR
+   Bailey, R
+   Galactionova, K
+   Gwayi-Chore, MC
+   Halliday, K
+   Ibikounle, M
+   Juvekar, S
+   Kalua, K
+   Kang, G
+   Lele, P
+   Luty, AJF
+   Pullan, R
+   Sarkar, R
+   Schar, F
+   Tediosi, F
+   Weiner, BJ
+   Yard, E
+   Walson, J
+AF Means, Arianna Rubin
+   Ajjampur, Sitara S. R.
+   Bailey, Robin
+   Galactionova, Katya
+   Gwayi-Chore, Marie-Claire
+   Halliday, Katherine
+   Ibikounle, Moudachirou
+   Juvekar, Sanjay
+   Kalua, Khumbo
+   Kang, Gagandeep
+   Lele, Pallavi
+   Luty, Adrian J. F.
+   Pullan, Rachel
+   Sarkar, Rajiv
+   Schar, Fabian
+   Tediosi, Fabrizio
+   Weiner, Bryan J.
+   Yard, Elodie
+   Walson, Judd
+CA DeWorm3 Implementation Sci Team
+TI Evaluating the sustainability, scalability, and replicability of an STH
+   transmission interruption intervention: The DeWorm3 implementation
+   science protocol
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID SOIL-TRANSMITTED HELMINTHS; SCHISTOSOMIASIS; PERCEPTIONS
+AB Hybrid trials that include both clinical and implementation science outcomes are increasingly relevant for public health researchers that aim to rapidly translate study findings into evidence- based practice. The DeWorm3 Project is a series of hybrid trials testing the feasibility of interrupting the transmission of soil transmitted helminths (STH), while conducting implementation science research that contextualizes clinical research findings and provides guidance on opportunities to optimize delivery of STH interventions. The purpose of DeWorm3 implementation science studies is to ensure rapid and efficient translation of evidence into practice. DeWorm3 will use stakeholder mapping to identify individuals who influence or are influenced by school-based or community-wide mass drug administration (MDA) for STH and to evaluate network dynamics that may affect study outcomes and future policy development. Individual interviews and focus groups will generate the qualitative data needed to identify factors that shape, contextualize, and explain DeWorm3 trial outputs and outcomes. Structural readiness surveys will be used to evaluate the factors that drive health system readiness to implement novel interventions, such as community-wide MDA for STH, in order to target change management activities and identify opportunities for sustaining or scaling the intervention. Process mapping will be used to understand what aspects of the intervention are adaptable across heterogeneous implementation settings and to identify contextually- relevant modifiable bottlenecks that may be addressed to improve the intervention delivery process and to achieve intervention outputs. Lastly, intervention costs and incremental cost-effectiveness will be evaluated to compare the efficiency of community-wide MDA to standard-of-care targeted MDA both over the duration of the trial and over a longer elimination time horizon.
+C1 [Means, Arianna Rubin; Gwayi-Chore, Marie-Claire; Weiner, Bryan J.; Walson, Judd] Univ Washington, Dept Global Hlth, Seattle, WA 98195 USA.
+   [Means, Arianna Rubin; Schar, Fabian; Yard, Elodie; Walson, Judd] Nat Hist Museum, Div Life Sci, London, England.
+   [Ajjampur, Sitara S. R.; Kang, Gagandeep; Sarkar, Rajiv] Christian Med Coll & Hosp, Div Gastrointestinal Sci, Vellore, Tamil Nadu, India.
+   [Bailey, Robin; Halliday, Katherine; Pullan, Rachel] London Sch Hyg & Trop Med, Fac Infect & Trop Dis, London, England.
+   [Galactionova, Katya; Ibikounle, Moudachirou; Tediosi, Fabrizio] Swiss Trop & Publ Hlth Inst, Dept Epidemiol & Publ Hlth, Basel, Switzerland.
+   [Galactionova, Katya; Tediosi, Fabrizio] Univ Basel, Basel, Switzerland.
+   [Ibikounle, Moudachirou] Univ Abomey Calavi, Fac Sci & Tech, Dept Zool, Cotonou, Benin.
+   [Juvekar, Sanjay; Lele, Pallavi] KEM Hosp Res Ctr, Vadu Rural Hlth Program, Pune, Maharashtra, India.
+   [Kalua, Khumbo] Lions Sight First Eye Hosp, Blantyre Inst Community Outreach, Blantyre, Malawi.
+   [Luty, Adrian J. F.] Univ Paris, IRD, MERIT, Paris, France.
+RP Means, AR (corresponding author), Univ Washington, Dept Global Hlth, Seattle, WA 98195 USA.; Means, AR (corresponding author), Nat Hist Museum, Div Life Sci, London, England.
+EM aerubin@u.washington.edu
+RI Tediosi, Fabrizio/ABC-7880-2020; Walson, Judd/R-7269-2019; SOUNDRARAJAN,
+   JOYSON/I-1779-2019
+OI Tediosi, Fabrizio/0000-0001-8671-9400; Walson, Judd/0000-0003-4836-720X;
+   Moudachirou, IBIKOUNLE/0000-0002-3517-1729; Luty,
+   Adrian/0000-0001-8830-3425; Halliday, Katherine/0000-0001-5307-2823;
+   Schaer, Fabian/0000-0002-1182-051X; Weiner, Bryan/0000-0002-6996-9480
+FU Bill & Melinda Gates FoundationBill & Melinda Gates Foundation
+   [OPP1129535]
+FX Funding for the DeWorm3 Project is provided by The Bill & Melinda Gates
+   Foundation (OPP1129535). The funders had no role in study design, data
+   collection and analysis, decision to publish, or preparation of the
+   manuscript.
+NR 32
+TC 4
+Z9 4
+U1 0
+U2 2
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0005988
+DI 10.1371/journal.pntd.0005988
+PG 13
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700008
+PM 29346376
+OA DOAJ Gold, Green Published, Green Accepted
+DA 2020-11-06
+ER
+
+PT J
+AU Napp, S
+   Chevalier, V
+   Busquets, N
+   Calistri, P
+   Casal, J
+   Attia, M
+   Elbassal, R
+   Hosni, H
+   Farrag, H
+   Hassan, N
+   Tawfik, R
+   Abd Elkader, S
+   Bayomy, S
+AF Napp, Sebastian
+   Chevalier, Veronique
+   Busquets, Nuria
+   Calistri, Paolo
+   Casal, Jordi
+   Attia, Mohamed
+   Elbassal, Rehab
+   Hosni, Heba
+   Farrag, Hatem
+   Hassan, Noura
+   Tawfik, Rasha
+   Abd Elkader, Sohair
+   Bayomy, Shahin
+TI Understanding the legal trade of cattle and camels and the derived risk
+   of Rift Valley Fever introduction into and transmission within Egypt
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID NILE DELTA; DIPTERA-CULICIDAE; VIRUS; MOSQUITOS; OUTBREAK; VECTOR;
+   PATHOGENESIS; MADAGASCAR; EPIDEMIC; ANIMALS
+AB Rift Valley Fever (RVF) is a mosquito-borne zoonosis, which may cause significant losses for the livestock sector and have serious public health implications. Egypt has been repeatedly affected by RVF epidemics, mainly associated to the importation of animals from sub-Saharan countries, where the disease is endemic. The objective of our study was the improvement of the surveillance and control strategies implemented in Egypt. In order to do that, first we evaluated the legal trade of live animals into and within Egypt. Then, we assessed the risk of Rift Valley Fever virus (RVFV) transmission within the country using a multi-criteria evaluation approach. Finally, we combined the animal trade and the risk of RVFV transmission data to identify those areas and periods in which the introduction of RVFV is more likely. Our results indicate that the main risk of RVFV introduction is posed by the continuous flow of large number of camels coming from Sudan. The risk of RVFV transmission by vectors is restricted to the areas surrounding the Nile river, and does not vary significantly throughout the year. Imported camels are taken to quarantines, where the risk of RVFV transmission by vectors is generally low. Then, they are taken to animal markets or slaughterhouses, many located in populated areas, where the risk of RVFV transmission to animals or humans is much higher. The measures currently implemented (quarantines, vaccination or testing) seem to have a limited effect in reducing the risk of RVFV introduction, and therefore other (risk-based) surveillance strategies are proposed.
+C1 [Napp, Sebastian; Busquets, Nuria; Casal, Jordi] CReSA IRTA, Barcelona, Spain.
+   [Chevalier, Veronique] UPR AGIRs, CIRAD, Montpellier, France.
+   [Calistri, Paolo] United Nations FAO, Food & Agr Org, Rome, Italy.
+   [Calistri, Paolo] IZSAM, Teramo, Italy.
+   [Casal, Jordi] UAB, Barcelona, Spain.
+   [Attia, Mohamed; Abd Elkader, Sohair] Minist Agr & Land Reclamat, Cent Adm Prevent Med, Cairo, Egypt.
+   [Elbassal, Rehab; Hosni, Heba; Bayomy, Shahin] Minist Agr & Land Reclamat, Dept Epidemiol, Cairo, Egypt.
+   [Farrag, Hatem; Hassan, Noura; Tawfik, Rasha] Minist Agr & Land Reclamat, Quarantine & Inspect Dept, Cairo, Egypt.
+RP Napp, S (corresponding author), CReSA IRTA, Barcelona, Spain.
+EM sebastian.napp@irta.es
+RI Calistri, Paolo/E-4157-2015; Busquets, Nuria/T-8431-2017; Casal,
+   Jordi/F-3020-2016
+OI Calistri, Paolo/0000-0001-6004-9373; Casal, Jordi/0000-0002-6909-9366
+FU EUEuropean Union (EU) [FP7-613996]
+FX This study was funded by EU grant FP7-613996 Vmerge and is catalogued by
+   the VMERGE Steering Committee as Vmerge25 (http://www.vmerge.eu). The
+   funders had no role in study design, data collection and analysis,
+   decision to publish, or preparation of the manuscript.
+NR 48
+TC 13
+Z9 13
+U1 0
+U2 3
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006143
+DI 10.1371/journal.pntd.0006143
+PG 25
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700023
+PM 29351273
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Nasstrom, E
+   Jonsson, P
+   Johansson, A
+   Dongol, S
+   Karkey, A
+   Basnyat, B
+   Thieu, NTV
+   Van, TT
+   Thwaites, GE
+   Antti, H
+   Baker, S
+AF Nasstrom, Elin
+   Jonsson, Par
+   Johansson, Anders
+   Dongol, Sabina
+   Karkey, Abhilasha
+   Basnyat, Buddha
+   Nga Tran Vu Thieu
+   Tan Trinh Van
+   Thwaites, Guy E.
+   Antti, Henrik
+   Baker, Stephen
+TI Diagnostic metabolite biomarkers of chronic typhoid carriage
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID SALMONELLA-TYPHI; ENDEMIC AREA; CARRIERS; FEVER; EPIDEMIOLOGY
+AB Background
+   Salmonella Typhi and Salmonella Paratyphi A are the agents of enteric (typhoid) fever; both can establish chronic carriage in the gallbladder. Chronic Salmonella carriers are typically asymptomatic, intermittently shedding bacteria in the feces, and contributing to disease transmission. Detecting chronic carriers is of public health relevance in areas where enteric fever is endemic, but there are no routinely used methods for prospectively identifying those carrying Salmonella in their gallbladder.
+   Methodology/Principal findings
+   Here we aimed to identify biomarkers of Salmonella carriage using metabolite profiling. We performed metabolite profiling on plasma from Nepali patients undergoing cholecystectomy with confirmed S. Typhi or S. Paratyphi A gallbladder carriage (and non-carriage controls) using two-dimensional gas chromatography coupled with time-of-flight mass spectrometry (GCxGC-TOFMS) and supervised pattern recognition modeling. We were able to significantly discriminate Salmonella carriage samples from non-carriage control samples. We were also able to detect differential signatures between S. Typhi and S. Paratyphi A carriers. We additionally compared carriage metabolite profiles with profiles generated during acute infection; these data revealed substantial heterogeneity between metabolites associated with acute enteric fever and chronic carriage. Lastly, we found that Salmonella carriers could be significantly distinguished from non-carriage controls using only five metabolites, indicating the potential of these metabolites as diagnostic markers for detecting chronic Salmonella carriers.
+   Conclusions/Significance
+   Our novel approach has highlighted the potential of using metabolomics to search for diagnostic markers of chronic Salmonella carriage. We suggest further epidemiological investigations of these potential biomarkers in alternative endemic enteric fever settings.
+C1 [Nasstrom, Elin; Jonsson, Par; Antti, Henrik] Umea Univ, Dept Chem, Umea, Sweden.
+   [Johansson, Anders] Umea Univ, Dept Clin Microbiol, Umea, Sweden.
+   [Johansson, Anders] Umea Univ, Lab Mol Infect Med Sweden, Umea, Sweden.
+   [Dongol, Sabina; Karkey, Abhilasha; Basnyat, Buddha] Univ Oxford, Patan Acad Hlth Sci, Clin Res Unit, Kathmandu, Nepal.
+   [Nga Tran Vu Thieu; Tan Trinh Van; Thwaites, Guy E.; Baker, Stephen] Univ Oxford, Hosp Trop Dis, Wellcome Trust Major Overseas Programme, Clin Res Unit, Ho Chi Minh City, Vietnam.
+   [Thwaites, Guy E.; Baker, Stephen] Univ Oxford, Ctr Trop Med & Global Hlth, Oxford, England.
+   [Baker, Stephen] Univ Cambridge, Dept Med, Cambridge, England.
+RP Antti, H (corresponding author), Umea Univ, Dept Chem, Umea, Sweden.; Baker, S (corresponding author), Univ Oxford, Hosp Trop Dis, Wellcome Trust Major Overseas Programme, Clin Res Unit, Ho Chi Minh City, Vietnam.; Baker, S (corresponding author), Univ Oxford, Ctr Trop Med & Global Hlth, Oxford, England.; Baker, S (corresponding author), Univ Cambridge, Dept Med, Cambridge, England.
+EM henrik.antti@umu.se; sbaker@oucru.org
+RI Thwaites, Guy E/R-4993-2019; Johansson, Anders F/D-2928-2012
+OI Thwaites, Guy E/0000-0002-2858-2087; Johansson, Anders
+   F/0000-0003-0548-5943; Nasstrom, Elin/0000-0001-6499-3281
+FU Wellcome Trust of Great BritainWellcome Trust [106158/Z/14/Z]; Bill and
+   Melinda Gates foundationBill & Melinda Gates Foundation; Wellcome
+   TrustWellcome Trust [100087/Z/12/Z]; Royal SocietyRoyal Society of
+   London [100087/Z/12/Z]; Swedish Research CouncilSwedish Research Council
+   [VR-U 2015-03442]
+FX This project was funded by the Wellcome Trust of Great Britain
+   (106158/Z/14/Z) and the Bill and Melinda Gates foundation. SB is a Sir
+   Henry Dale Fellow, jointly funded by the Wellcome Trust and the Royal
+   Society (100087/Z/12/Z). HA is funded by the Swedish Research Council
+   (VR-U 2015-03442). The funders had no role in study design, data
+   collection and analysis, decision to publish, or preparation of the
+   manuscript.
+NR 36
+TC 5
+Z9 6
+U1 0
+U2 7
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006215
+DI 10.1371/journal.pntd.0006215
+PG 15
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700063
+PM 29373578
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Specht, S
+   Pfarr, KM
+   Arriens, S
+   Hubner, MP
+   Klarmann-Schulz, U
+   Koschel, M
+   Sternberg, S
+   Martin, C
+   Ford, L
+   Taylor, MJ
+   Hoerauf, A
+AF Specht, Sabine
+   Pfarr, Kenneth M.
+   Arriens, Sandra
+   Huebner, Marc P.
+   Klarmann-Schulz, Ute
+   Koschel, Marianne
+   Sternberg, Sonja
+   Martin, Coralie
+   Ford, Louise
+   Taylor, Mark J.
+   Hoerauf, Achim
+TI Combinations of registered drugs reduce treatment times required to
+   deplete Wolbachia in the Litomosoides sigmodontis mouse model
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID MACROFILARICIDAL ACTIVITY; BACTERIAL ENDOSYMBIONTS; PULMONARY
+   TUBERCULOSIS; DOXYCYCLINE TREATMENT; FILARIAL NEMATODES; BRUGIA-PAHANGI;
+   TETRACYCLINE; ONCHOCERCIASIS; RIFAPENTINE; RIFAMPICIN
+AB Filarial parasites can be targeted by antibiotic treatment due to their unique endosymbiotic relationship with Wolbachia bacteria. This finding has led to successful treatment strategies in both, human onchocerciasis and lymphatic filariasis. A 4-6 week treatment course using doxycycline results in long-term sterility and safe macrofilaricidal activity in humans. However, current treatment times and doxycycline contraindications in children and pregnant women preclude widespread administration of doxycycline in public health control programs; therefore, the search for shorter anti-wolbachial regimens is a focus of ongoing research. We have established an in vivo model for compound screening, using mice infected with Litomosoides sigmodontis. We could show that gold standard doxycycline treatment did not only deplete Wolbachia, it also resulted in a larval arrest. In this model, combinations of registered antibiotics were tested for their anti-wolbachial activity. Administration of rifamycins in combination with doxycycline for 7 days successfully depleted Wolbachia by > 2 log (> 99% reduction) and thus resulted in a significant reduction of the treatment duration. Using a triple combination of a tetracycline (doxycycline or minocycline), a rifamycin and a fluoroquinolone (moxifloxacin) led to an even greater shortening of the treatment time. Testing all double combinations that could be derived from the triple combinations revealed that the combination of rifapentine (15mg/kg) and moxifloxacin (2 x 200mg/kg) showed the strongest reduction of treatment time in intraperitoneal and also oral administration routes. The rifapentine plus moxifloxacin combination was equivalent to the triple combination with additional doxycycline (> 99% Wolbachia reduction). These investigations suggest that it is possible to shorten anti-wolbachial treatment times with combination treatments in order to achieve the target product profile (TPP) requirements for macrofilaricidal drugs of no more than 7-10 days of treatment.
+C1 [Specht, Sabine; Pfarr, Kenneth M.; Arriens, Sandra; Huebner, Marc P.; Klarmann-Schulz, Ute; Koschel, Marianne; Sternberg, Sonja; Hoerauf, Achim] Univ Hosp Bonn, Inst Med Microbiol Immunol & Parasitol, Bonn, Germany.
+   [Specht, Sabine] Univ Zurich, Vetsuisse Fac, Inst Lab Anim Sci, Zurich, Switzerland.
+   [Pfarr, Kenneth M.; Klarmann-Schulz, Ute; Hoerauf, Achim] German Ctr Infect Res DZIF, Bonn, Germany.
+   [Martin, Coralie] CNRS, MNHN, MCAM, UMR 7245, Paris, France.
+   [Ford, Louise; Taylor, Mark J.] Univ Liverpool Liverpool Sch Trop Med, Dept Parasitol, Liverpool, Merseyside, England.
+RP Specht, S (corresponding author), Univ Hosp Bonn, Inst Med Microbiol Immunol & Parasitol, Bonn, Germany.; Specht, S (corresponding author), Univ Zurich, Vetsuisse Fac, Inst Lab Anim Sci, Zurich, Switzerland.
+EM sabine.specht@uzh.ch
+RI Martin, Coralie/N-6293-2018; martin, coralie/O-3983-2019; Pfarr,
+   Kenneth/X-9175-2018; Hubner, Marc P/W-9529-2018; Hubner, Marc
+   P/O-1684-2019
+OI martin, coralie/0000-0003-3801-2595; Pfarr, Kenneth/0000-0003-3096-2465;
+   Hubner, Marc P/0000-0001-8885-418X; Hubner, Marc P/0000-0001-8885-418X;
+   Taylor, Mark/0000-0003-3396-9275; Ford, Louise/0000-0001-7919-2866
+FU Liverpool School of Tropical Medicine as part of the A-WOL Consortium;
+   Bill and Melinda Gates FoundationBill & Melinda Gates Foundation
+FX This work was funded through a grant from the Liverpool School of
+   Tropical Medicine as part of the A-WOL Consortium funded by the Bill and
+   Melinda Gates Foundation. The funders had no role in study design, data
+   collection and analysis.
+NR 40
+TC 9
+Z9 9
+U1 0
+U2 3
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006116
+DI 10.1371/journal.pntd.0006116
+PG 20
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700016
+PM 29300732
+OA DOAJ Gold, Green Published, Green Accepted
+DA 2020-11-06
+ER
+
+PT J
+AU Tiwari, A
+   Suryawanshi, P
+   Raikwar, A
+   Arif, M
+   Richardus, JH
+AF Tiwari, Anuj
+   Suryawanshi, Pramilesh
+   Raikwar, Akash
+   Arif, Mohammad
+   Richardus, Jan Hendrik
+TI Household expenditure on leprosy outpatient services in the Indian
+   health system: A comparative study
+SO PLOS NEGLECTED TROPICAL DISEASES
+LA English
+DT Article
+ID QUALITY-OF-LIFE; NORTHEAST BRAZIL; ELIMINATION; CARE; BANGLADESH;
+   POVERTY; COST; REHABILITATION; IMPAIRMENT; INEQUALITY
+AB Background
+   Leprosy is a major public health problem in many low and middle income countries, especially in India, and contributes considerably to the global burden of the disease. Leprosy and poverty are closely associated, and therefore the economic burden of leprosy is a concern. However, evidence on patient's expenditure is scarce. In this study, we estimate the expenditure in primary care (outpatient) by leprosy households in two different public health settings.
+   Methodology/Principal findings
+   We performed a cross-sectional study, comparing the Union Territory of Dadra and Nagar Haveli with the Umbergaon block of Valsad, Gujrat, India. A household (HH) survey was conducted between May and October, 2016. We calculated direct and indirect expenditure by zero inflated negative binomial and negative binomial regression. The sampled households were comparable on socioeconomic indicators. The mean direct expenditure was USD 6.5 (95% CI: 2.4-17.9) in Dadra and Nagar Haveli and USD 5.4 (95% CI: 3.8-7.9) per visit in Umbergaon. The mean indirect expenditure was USD 8.7 (95% CI: 7.2-10.6) in Dadra and Nagar Haveli and USD 12.4 (95% CI: 7.0-21.9) in Umbergaon. The age of the leprosy patients and type of health facilities were the major predictors of total expenditure on leprosy primary care. The higher the age, the higher the expenditure at both sites. The private facilities are more expensive than the government facilities at both sites. If the public health system is enhanced, government facilities are the first preference for patients.
+   Conclusions/Significance
+   An enhanced public health system reduces the patient's expenditure and improves the health seeking behaviour. We recommend investing in health system strengthening to reduce the economic burden of leprosy.
+C1 [Tiwari, Anuj; Richardus, Jan Hendrik] Univ Med Ctr Rotterdam, Erasmus MC, Dept Publ Hlth, Rotterdam, Netherlands.
+   [Suryawanshi, Pramilesh; Raikwar, Akash; Arif, Mohammad] India Branch, Netherlands Leprosy Relief, New Delhi, India.
+RP Tiwari, A (corresponding author), Univ Med Ctr Rotterdam, Erasmus MC, Dept Publ Hlth, Rotterdam, Netherlands.
+EM a.tiwari@erasmusmc.nl
+FU Novartis Foundation, Basel, SwitzerlandNovartis
+FX The study was funded by the Novartis Foundation, Basel, Switzerland
+   (http://www.novartisfoundation.org/programs/more/428/leprosy-post-exposu
+   re-prophylaxis-ipep-program). The grant was received by JHR. The funders
+   had no role in study design, data collection and analysis, decision to
+   publish, or preparation of the manuscript.
+NR 49
+TC 10
+Z9 10
+U1 0
+U2 1
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1935-2735
+J9 PLOS NEGLECT TROP D
+JI Plos Neglect. Trop. Dis.
+PD JAN
+PY 2018
+VL 12
+IS 1
+AR e0006181
+DI 10.1371/journal.pntd.0006181
+PG 13
+WC Infectious Diseases; Parasitology; Tropical Medicine
+SC Infectious Diseases; Parasitology; Tropical Medicine
+GA FU7HJ
+UT WOS:000424022700043
+PM 29300747
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Geoghegan, JL
+   Saavedra, AF
+   Duchene, S
+   Sullivan, S
+   Barr, I
+   Holmes, EC
+AF Geoghegan, Jemma L.
+   Saavedra, Aldo F.
+   Duchene, Sebastian
+   Sullivan, Sheena
+   Barr, Ian
+   Holmes, Edward C.
+TI Continental synchronicity of human influenza virus epidemics despite
+   climactic variation
+SO PLOS PATHOGENS
+LA English
+DT Article
+ID UNITED-STATES; EVOLUTION; DETERMINANTS; AUSTRALIA; SPREAD; IMPACT
+AB The factors that determine the pattern and rate of spread of influenza virus at a continental-scale are uncertain. Although recent work suggests that influenza epidemics in the United States exhibit a strong geographical correlation, the spatiotemporal dynamics of influenza in Australia, a country and continent of approximately similar size and climate complexity but with a far smaller population, are not known. Using a unique combination of large-scale laboratory-confirmed influenza surveillance comprising >450,000 entries and genomic sequence data we determined the local-level spatial diffusion of this important human pathogen nationwide in Australia. We used laboratory-confirmed influenza data to characterize the spread of influenza virus across Australia during 2007-2016. The onset of established epidemics varied across seasons, with highly synchronized epidemics coinciding with the emergence of antigenically distinct viruses, particularly during the 2009 A/H1N1 pandemic. The onset of epidemics was largely synchronized between the most populous cities, even those separated by distances of >3000 km and those that experience vastly diverse climates. In addition, by analyzing global phylogeographic patterns we show that the synchronized dissemination of influenza across Australian cities involved multiple introductions from the global influenza population, coupled with strong domestic connectivity, rather than through the distinct radial patterns of geographic dispersal that are driven by work-flow transmission as observed in the United States. In addition, by comparing the spatial structure of influenza A and B, we found that these viruses tended to occupy different geographic regions, and peak in different seasons, perhaps indicative of moderate cross-protective immunity or viral interference effects. The highly synchronized outbreaks of influenza virus at a continental-scale revealed here highlight the importance of coordinated public health responses in the event of the emergence of a novel, human-to-human transmissible, virus.
+C1 [Geoghegan, Jemma L.] Macquarie Univ, Dept Biol Sci, Sydney, NSW, Australia.
+   [Geoghegan, Jemma L.; Holmes, Edward C.] Univ Sydney, Marie Bashir Inst Infect Dis & Biosecur, Sch Life & Environm Sci, Charles Perkins Ctr, Sydney, NSW, Australia.
+   [Geoghegan, Jemma L.; Holmes, Edward C.] Univ Sydney, Sydney Med Sch, Sydney, NSW, Australia.
+   [Saavedra, Aldo F.] Univ Sydney, Ctr Translat Data Sci, Sydney, NSW, Australia.
+   [Duchene, Sebastian] Univ Melbourne, Mol Sci & Biotechnol Inst Bio21, Dept Biochem & Mol Biol, Parkville, Vic, Australia.
+   [Sullivan, Sheena; Barr, Ian] WHO, Collaborating Ctr Reference & Res Influenza, Melbourne, Vic, Australia.
+   [Barr, Ian] Univ Melbourne, Dept Microbiol & Immunol, Parkville, Vic, Australia.
+   [Barr, Ian] Federat Univ Australia, Fac Sci & Technol, Gippsland Campus, Churchill, Vic, Australia.
+RP Geoghegan, JL (corresponding author), Macquarie Univ, Dept Biol Sci, Sydney, NSW, Australia.; Geoghegan, JL; Holmes, EC (corresponding author), Univ Sydney, Marie Bashir Inst Infect Dis & Biosecur, Sch Life & Environm Sci, Charles Perkins Ctr, Sydney, NSW, Australia.; Geoghegan, JL; Holmes, EC (corresponding author), Univ Sydney, Sydney Med Sch, Sydney, NSW, Australia.
+EM jemma.geoghegan@mq.edu.au; edward.holmes@sydney.edu.au
+RI Holmes, Edward/Y-2789-2019
+OI Holmes, Edward/0000-0001-9596-3552; Geoghegan,
+   Jemma/0000-0003-0970-0153; Duchene, Sebastian/0000-0002-2863-0907
+FU Australian Government Department of HealthAustralian
+   GovernmentDepartment of Health & Ageing
+FX The Melbourne WHO Collaborating Centre for Reference and Research on
+   Influenza is supported by the Australian Government Department of
+   Health. The funders had no role in study design, data collection and
+   analysis, decision to publish, or preparation of the manuscript.
+NR 25
+TC 15
+Z9 16
+U1 0
+U2 4
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1553-7366
+EI 1553-7374
+J9 PLOS PATHOG
+JI PLoS Pathog.
+PD JAN
+PY 2018
+VL 14
+IS 1
+AR e1006780
+DI 10.1371/journal.ppat.1006780
+PG 16
+WC Microbiology; Parasitology; Virology
+SC Microbiology; Parasitology; Virology
+GA FU7AB
+UT WOS:000424003200018
+PM 29324895
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Li, H
+   Bradley, KC
+   Long, JS
+   Frise, R
+   Ashcroft, JW
+   Hartgroves, LC
+   Shelton, H
+   Makris, S
+   Johansson, C
+   Cao, B
+   Barclay, WS
+AF Li, Hui
+   Bradley, Konrad C.
+   Long, Jason S.
+   Frise, Rebecca
+   Ashcroft, Jonathan W.
+   Hartgroves, Lorian C.
+   Shelton, Holly
+   Makris, Spyridon
+   Johansson, Cecilia
+   Cao, Bin
+   Barclay, Wendy S.
+TI Internal genes of a highly pathogenic H5N1 influenza virus determine
+   high viral replication in myeloid cells and severe outcome of infection
+   in mice
+SO PLOS PATHOGENS
+LA English
+DT Article
+ID A VIRUS; HUMAN MACROPHAGES; NS1 PROTEIN; RIG-I; PROINFLAMMATORY
+   CYTOKINES; INTERFERON RESPONSE; DENDRITIC CELLS; INNATE IMMUNITY; RNA;
+   HEMAGGLUTININ
+AB The highly pathogenic avian influenza (HPAI) H5N1 influenza virus has been a public health concern for more than a decade because of its frequent zoonoses and the high case fatality rate associated with human infections. Severe disease following H5N1 influenza infection is often associated with dysregulated host innate immune response also known as cytokine storm but the virological and cellular basis of these responses has not been clearly described. We rescued a series of 6: 2 reassortant viruses that combined a PR8 HA/NA pairing with the internal gene segments from human adapted H1N1, H3N2, or avian H5N1 viruses and found that mice infected with the virus with H5N1 internal genes suffered severe weight loss associated with increased lung cytokines but not high viral load. This phenotype did not map to the NS gene segment, and NS1 protein of H5N1 virus functioned as a type I IFN antagonist as efficient as NS1 of H1N1 or H3N2 viruses. Instead we discovered that the internal genes of H5N1 virus supported a much higher level of replication of viral RNAs in myeloid cells in vitro, but not in epithelial cells and that this was associated with high induction of type I IFN in myeloid cells. We also found that in vivo during H5N1 recombinant virus infection cells of haematopoetic origin were infected and produced type I IFN and proinflammatory cytokines. Taken together our data infer that human and avian influenza viruses are differently controlled by host factors in alternative cell types; internal gene segments of avian H5N1 virus uniquely drove high viral replication in myeloid cells, which triggered an excessive cytokine production, resulting in severe immunopathology.
+C1 [Li, Hui] Capital Med Univ, China Japan Friendship Hosp, Beijing, Peoples R China.
+   [Li, Hui; Bradley, Konrad C.; Long, Jason S.; Frise, Rebecca; Ashcroft, Jonathan W.; Hartgroves, Lorian C.; Shelton, Holly; Barclay, Wendy S.] Imperial Coll London, Sect Virol, Dept Med, London, England.
+   [Makris, Spyridon; Johansson, Cecilia] Imperial Coll London, Natl Heart & Lung Inst, Sect Resp Infect, London, England.
+   [Cao, Bin] Capital Med Univ, Dept Resp Med, Beijing, Peoples R China.
+   [Cao, Bin] China Japan Friendship Hosp, Dept Pulm & Crit Care Med, Ctr Resp Dis, Beijing, Peoples R China.
+   [Bradley, Konrad C.] Francis Crick Inst, London, England.
+   [Ashcroft, Jonathan W.] PHE Porton Down, Salisbury, Wilts, England.
+   [Shelton, Holly] Pirbright Inst Guidlford, Woking, Surrey, England.
+RP Barclay, WS (corresponding author), Imperial Coll London, Sect Virol, Dept Med, London, England.; Cao, B (corresponding author), Capital Med Univ, Dept Resp Med, Beijing, Peoples R China.; Cao, B (corresponding author), China Japan Friendship Hosp, Dept Pulm & Crit Care Med, Ctr Resp Dis, Beijing, Peoples R China.
+EM caobin_ben@vip.163.com; w.barclay@imperial.ac.uk
+OI Makris, Spyridon/0000-0001-9243-2369; Ashcroft,
+   Jonathan/0000-0002-6224-4233; Long, Jason/0000-0002-0251-6487; Barclay,
+   Wendy/0000-0002-3948-0895; Johansson, Cecilia/0000-0002-6607-5000;
+   Bradley, Konrad/0000-0001-8761-6219; shelton, Holly/0000-0002-5776-0735
+FU National Science Fund for Distinguished Young ScholarsNational Natural
+   Science Foundation of China (NSFC)National Science Fund for
+   Distinguished Young Scholars [81425001/H0104]; Wellcome TrustWellcome
+   Trust [087039/Z/08Z]; BBSRCBiotechnology and Biological Sciences
+   Research Council (BBSRC) [BB/K002465/1]; National Heart and Lung
+   Institute Foundation [1048073]; Rosetrees TrustRosetrees Trust [M370]
+FX HL was supported by the National Science Fund for Distinguished Young
+   Scholars (81425001/H0104). KCB, RF, LCH and HS were supported by
+   Wellcome Trust https://wellcome.ac.uk/ programme grant (087039/Z/08Z)
+   awarded to WSB. JSL is funded by BBSRC http://www.bbsrc.ac.uk/ sLoLa
+   BB/K002465/1 "Developing Rapid Responses to Emerging Virus Infections of
+   Poultry (DDREVIP) awarded to WSB. SM was supported by a PhD Fellowship
+   from the National Heart and Lung Institute Foundation (registered
+   charity number 1048073). CJ and SM were supported by a grant from the
+   Rosetrees Trust (M370). The funders had no role in study design, data
+   collection and analysis, decision to publish, or preparation of the
+   manuscript.
+NR 81
+TC 6
+Z9 7
+U1 0
+U2 5
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1553-7366
+EI 1553-7374
+J9 PLOS PATHOG
+JI PLoS Pathog.
+PD JAN
+PY 2018
+VL 14
+IS 1
+AR e1006821
+DI 10.1371/journal.ppat.1006821
+PG 25
+WC Microbiology; Parasitology; Virology
+SC Microbiology; Parasitology; Virology
+GA FU7AB
+UT WOS:000424003200037
+PM 29300777
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+PT J
+AU Too, IHK
+   Bonne, I
+   Tan, EL
+   Chu, JJH
+   Alonso, S
+AF Too, Issac Horng Khit
+   Bonne, Isabelle
+   Tan, Eng Lee
+   Chu, Justin Jang Hann
+   Alonso, Sylvie
+TI Prohibitin plays a critical role in Enterovirus 71 neuropathogenesis
+SO PLOS PATHOGENS
+LA English
+DT Article
+ID PROTEIN DISULFIDE-ISOMERASE; MOUTH-DISEASE; MITOCHONDRIAL BIOGENESIS;
+   AXONAL-TRANSPORT; VIRUS-INFECTION; EXPRESSION; AUTOPHAGY;
+   IDENTIFICATION; ACTIN; HAND
+AB A close relative of poliovirus, enterovirus 71 (EV71) is regarded as an important neurotropic virus of serious public health concern. EV71 causes Hand, Foot and Mouth Disease and has been associated with neurological complications in young children. Our limited understanding of the mechanisms involved in its neuropathogenesis has hampered the development of effective therapeutic options. Here, using a two-dimensional proteomics approach combined with mass spectrometry, we have identified a unique panel of host proteins that were differentially and dynamically modulated during EV71 infection of motor-neuron NSC-34 cells, which are found at the neuromuscular junctions where EV71 is believed to enter the central nervous system. Meta-analysis with previously published proteomics studies in neuroblastoma or muscle cell lines revealed minimal overlapping which suggests unique host-pathogen interactions in NSC-34 cells. Among the candidate proteins, we focused our attention on prohibitin (PHB), a protein that is involved in multiple cellular functions and the target of anti-cancer drug Rocaglamide (Roc-A). We demonstrated that cell surface-expressed PHB is involved in EV71 entry into neuronal cells specifically, while membrane-bound mitochondrial PHB associates with the virus replication complex and facilitates viral replication. Furthermore, Roc-A treatment of EV71-infected neuronal cells reduced significantly virus yields. However, the inhibitory effect of Roc-A on PHB in NSC-34 cells was not through blocking the CRAF/MEK/ERK pathway as previously reported. Instead, Roc-A treated NSC-34 cells had lower mitochondria-associated PHB and lower ATP levels that correlated with impaired mitochondria integrity. In vivo, EV71-infected mice treated with Roc-A survived longer than the vehicle-treated animals and had significantly lower virus loads in their spinal cord and brain, whereas virus titers in their limb muscles were comparable to controls. Together, this study uncovers PHB as the first host factor that is specifically involved in EV71 neuropathogenesis and a potential drug target to limit neurological complications.
+C1 [Too, Issac Horng Khit; Chu, Justin Jang Hann; Alonso, Sylvie] Natl Univ Singapore, Yong Loo Lin Sch Med, Dept Microbiol & Immunol, Singapore, Singapore.
+   [Too, Issac Horng Khit; Alonso, Sylvie] Natl Univ Singapore, Life Sci Inst, Immunol Programme, Singapore, Singapore.
+   [Bonne, Isabelle] Natl Univ Singapore, Life Sci Inst, Electron Microscopy Lab, Singapore, Singapore.
+   [Tan, Eng Lee] Natl Univ Singapore, Yong Loo Lin Sch Med, Dept Pediat, Singapore, Singapore.
+   [Tan, Eng Lee] Singapore Polytech, Ctr Biomed & Life Sci, Singapore, Singapore.
+RP Alonso, S (corresponding author), Natl Univ Singapore, Life Sci Inst, Immunol Programme, Singapore, Singapore.
+EM micas@nus.edu.sg
+FU National Medical Research CouncilMedical Research Council UK (MRC) [NM
+   RC/CBRG/0098/2015]
+FX This study was funded by the National Medical Research Council (NM
+   RC/CBRG/0098/2015) awarded to SA. The funders had no role in study
+   design, data collection and analysis, decision to publish, or
+   preparation of the manuscript.
+NR 64
+TC 16
+Z9 16
+U1 1
+U2 9
+PU PUBLIC LIBRARY SCIENCE
+PI SAN FRANCISCO
+PA 1160 BATTERY STREET, STE 100, SAN FRANCISCO, CA 94111 USA
+SN 1553-7366
+EI 1553-7374
+J9 PLOS PATHOG
+JI PLoS Pathog.
+PD JAN
+PY 2018
+VL 14
+IS 1
+AR e1006778
+DI 10.1371/journal.ppat.1006778
+PG 29
+WC Microbiology; Parasitology; Virology
+SC Microbiology; Parasitology; Virology
+GA FU7AB
+UT WOS:000424003200017
+PM 29324904
+OA DOAJ Gold, Green Published
+DA 2020-11-06
+ER
+
+EF
