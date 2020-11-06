@@ -29,6 +29,7 @@ What do I mean by the term "command line" here? Two things, actually: One of the
 
 ![Graph of use cases](poster/mermaid-diagram.svg)
 
+Some example files with bibliographic data are in the `test/data` folder.
 
 
 ### Checking search results
@@ -38,18 +39,24 @@ Search results are ususally exported from databases and then imported in to refe
 
 #### Ovid MEDLINE and Ovid Embase
 
-Count the records in a single export file in Citavi (\*.ovd), Endnote (\*.cgi) or ReferenceManager (\*.ovd) format (Fields: _Complete Reference_). This works for ovd- and cgi-files:
+##### Count the records in a single export file
+
+Export result are in a single file in Citavi (\*.ovd), Endnote (\*.cgi) or ReferenceManager (\*.ovd) format (Fields: _Complete Reference_). This works for ovd- and cgi-files:
 
 ```bash
 grep --count "^DB  - Embase" myproject_EMBASE_2018-12-13_records-combined.ovd
 ```
+
+**Result**:
 
 ```
 3831
 ```
 
 
-After exporting results in portions of the allowed maximum of 1,000 records count the records in each export file:
+##### Count the records in a batch of export files
+
+After exporting results in portions of the allowed maximum of 1,000 records count the records in each of the exported files:
 
 ```bash
 for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.cgi' -print` ; do echo $file;  grep "^DB  - Embase" $file | wc -l ; done
@@ -66,9 +73,14 @@ for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.cgi' -print` ; do ec
 831
 ```
 
-Result: The individual files contain the expected numbers of records with a total of 3831 records.
+**Result**: The individual files contain the expected numbers of records with a total of 3831 records.
 
-Usually, in larger result sets there are duplicate records, i.e. records that carry identical accession numbers. This is in contrast to the database description. First, we check for duplicates _in each export file_. Accession numbers are in the UI field:
+
+##### Check for duplicate records in export files
+
+Usually, in larger result sets there are duplicate records, i.e. records that carry identical accession numbers. This is in contrast to the database documentation.  
+
+First, we check for duplicates _in each export file_. Accession numbers are in the UI field:
 
 ```bash
 for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.ovd' -print` ; do echo $file;  grep "^UI  - " $file | sort | uniq | wc -l ; done
@@ -85,7 +97,7 @@ for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.ovd' -print` ; do ec
 831
 ```
 
-Result: 17 duplicate records were omitted when counting unique accession numbers in the first export file.  
+**Result**: 17 duplicate records were omitted when counting unique accession numbers in the first export file.  
 
 Finally, we count the unique records _accross all export files_. This number of unique records should not be off to far from the total number of records, say at most a few dozen. If the unique records are below the total by 1,000 or more chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
 
@@ -97,61 +109,77 @@ grep --no-filename "^UI  - " myproject_EMBASE_2018-12-13_r*-*.ovd | sort | uniq 
 3813
 ```
 
-Result: In the 3831 records of the search result there are 3813 unique records. We did not fail to export a chunk.
+**Result**: In the 3831 records of the search result there are 3813 unique records. We did not fail to export a chunk.
 
-
-
-#### CINAHL???
 
 
 #### Web of Science (Core Collection)
 
-Count the records in a single export file (export format _Other reference software_, record content _Full record_):
+Export format _Other reference software_, record content _Full record_.
+
+
+##### Count the records in a single export file
 
 ```
-grep --count "^ER$" myproject1_WoS_records.txt
+grep --count "^ER$" test/data/WoS_other_reference_software_records_combined.txt
 ```
 
+**Result**:
+
 ```
-152
+4012
 ```
+
+##### Count the records in a batch of export files
 
 After exporting a larger result set in portions of the allowed maximum of 500 records count the records in each export file:
 
 ```bash
-for file in `find . -name 'myproject_WoS_2018-12-13_r*-*.txt' -print` ; do echo $file;  grep --count "^ER$" $file ; done
+for file in `find . -name 'WoS_other_reference_software_r*-*.txt' -print` ; do echo $file;  grep --count "^ER$" $file ; done
 ```
 
 ```
-./myproject_WoS_2018-12-13_r0001-0500.txt
+./test/data/WoS_other_reference_software_r0001-0500.txt
 500
-./myproject_WoS_2018-12-13_r0501-1000.txt
+./test/data/WoS_other_reference_software_r0501-1000.txt
 500
-./myproject_WoS_2018-12-13_r1001-1500.txt
+./test/data/WoS_other_reference_software_r1001-1500.txt
 500
-./myproject_WoS_2018-12-13_r1501-1584.txt
-84
+./test/data/WoS_other_reference_software_r1501-2000.txt
+500
+./test/data/WoS_other_reference_software_r2001-2500.txt
+500
+./test/data/WoS_other_reference_software_r2501-3000.txt
+500
+./test/data/WoS_other_reference_software_r3001-3500.txt
+500
+./test/data/WoS_other_reference_software_r3501-4000.txt
+500
+./test/data/WoS_other_reference_software_r4001-4012.txt
+12
 ```
 
-Result: The individual files contain the expected numbers of records with a total of 1584 records.
+**Result**: The individual files contain the expected numbers of records with a total of 4012 records.
 
 Then, we count the unique accession numbers of the records _accross all export files_. This number of unique records should be identical to the total number of records. If not chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
 
 ```bash
-grep --no-filename "^UT " myproject_WoS_2018-12-13_r*-*.txt | sort | uniq | wc -l
+grep --no-filename "^UT " test/data/WoS_other_reference_software_r*-*.txt | sort | uniq | wc -l
 ```
 
+**Result**:
+
 ```
-1584
+4012
 ```
 
-Result: In the 1584 records of the search result there are 1584 unique records. We did not fail to export a chunk.
+**Result**: In the 4012 records of the search result there are 4012 unique records. We did not fail to export a chunk.
 
 
 
 #### PubMed
 
-Count the records in an export file in PubMed format (called MEDLINE format in legacy PubMed):
+Count the records in a single export file in PubMed format (was called MEDLINE format in legacy PubMed):
 
 ```bash
 grep --count "^PMID- " medline.txt
@@ -162,17 +190,6 @@ Count the records in an export file in XML format:
 ```bash
 grep -c "^<PubmedArticle>$" medline.xml
 ```
-
-
-### Comparing search results
-
-The `comm` tool compares sorted files FILE1 and FILE2 line by line. We can use this to work on files containing accession numbers from search results.
-
-See 
-
-* https://catonmat.net/set-operations-in-unix-shell-simplified
-* https://www.gnu.org/software/coreutils/manual/html_node/Set-operations.html
-
 
 
 ### Postprocessing search result for easier import
@@ -198,7 +215,7 @@ grep --count "^DB  - Embase" myproject_EMBASE_2018-12-13_records-combined.ovd
 3831
 ```
 
-Result: A total of 3831 records is in the generated file.
+**Result**: A total of 3831 records is in the generated file.
 
 Count the unique records in the file:
 
@@ -210,46 +227,42 @@ grep "^UI  - " myproject_EMBASE_2018-12-13_records-combined.ovd | sort | uniq | 
 3813
 ```
 
-Result: The expected number of unique records is in the file. We are safe to import this file into the reference manager.
+**Result**: The expected number of unique records is in the file. We are safe to import this file into the reference manager.
 
 
 #### Web of Science
+
+Web of Science allows to download no more than 500 records at a time. Therefore, it is particularly helpful to combine the export files.  
+
+Export format:
+
+* Other file format --> Record content: Full Record; File Format: Other reference software (.txt-file)
+* Endnote Desktop --> Record content: Full Record (.ciw-file)
+
+These formats are identical with the exception of a byte-mark at the beginning of the .txt-files.  
 
 Web of Science export files contain a header and footer. As we need to take care of this we cannot just concatenate files as with other formats. But a [small skript](./bin/unite_wos_files) takes care of this:
 
 
 ```bash
-unite_wos_files myproject_WoS_2018-12-13_r*.*.txt > myproject_WoS_2018-12-13_records-combined.txt
+unite_wos_files test/data/WoS_other_reference_software_r*.txt > test/data/WoS_other_reference_software_records_combined.txt
 ```
 
-FIXME: unite_wos_files creates no output
-TODO: Refactor ./bin/unite_wos_files
-
-
-#### Deduplicating search results (partially)
-
-Split a RIS export file into records (with perl):
-
-(From Perl Cookbook, Chapter 6.7. Reading Records with a Pattern Separator)
-
-```bash
-cat huge_CINAHL.ris | perl -e '{ local $/ = undef; @chunks = split(/\nER  -\s*\n/, <>); } print "I read ", scalar(@chunks), " c
-hunks.\n";'
-```
-TODO: Load a list of PMIDs (DOIs or other such numbers) and remove matching records.
-
-Auf dem Weg dahin: 
-
-```bash
-cat huge_CINAHL.ris | perl -e 'my $findme = "NLM31125709"; my $matches = 0; { local $/ = undef; @chunks = split(/\nER  -\s*\n/, <>); foreach (@chunks) { if (m/\Q$findme/) { print "Found ", $findme, "\n"; $matches++; } } } print "I read ", scalar(@chunks), " chunks.\nI found ", $matches, " matches\n";'
-# Use \Q if $findme may contain special chars for a regexp
-```
-
-Auch die perl-Funktion grep ansehen, vielleicht kann man damit viele Pattern überprüfen?
-Siehe die erste Antwort in <https://www.perlmonks.org/?node_id=391416>
+Then check the number of records in the new file as above.
 
 
 ### Building query strings
+
+#### Known record searches by accession numbers or DOIs
+
+Build queries from lists of accession numbers or DOIs. This comes in handy for
+
+* removing records on the host that were found in earlier searches when updating searches, 
+* removing records on the host that were already found in other databases (partial on-the-host deduplication), and
+* known item searches for test sets with know relevant records in order to check search strategies.
+
+For more details see below in the sections _Updating searches_ and _Build reusable scripts_.
+
 
 #### Reverse the order of lines in search strategy
 
@@ -265,6 +278,7 @@ When editing a file in the `vim` editor there basically are two options:
 * Use vim's features: `:g/^/m0`
 
 For more info see <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
+
 
 ### Updating searches
 
@@ -338,7 +352,7 @@ sed\
     -e '$! s/$/ OR /' | \
 sed\
     -e '1 i (' \
-    -e "\$ a ).${OVID_FIELD_LIST}." \
+    -e '\$ a ).ui.' \
 > myproject_MEDLINE_2018-04-25_query.txt
 ```
 
