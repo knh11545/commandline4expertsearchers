@@ -29,7 +29,7 @@ What do I mean by the term "command line" here? Two things, actually: One of the
 
 ![Graph of use cases](poster/mermaid-diagram.svg)
 
-Some example files with bibliographic data are in the `test/data` folder.
+Some example files with bibliographic data are in the `test/data` folder, see the [README.md](test/data/README.md) file there.
 
 
 ### Checking search results
