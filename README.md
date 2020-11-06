@@ -21,13 +21,18 @@ What do I mean by the term "command line" here? Two things, actually: One of the
 * [Openning the software toolbox](https://www.gnu.org/software/coreutils/manual/coreutils.html#Opening-the-software-toolbox): The spirit of combining many small tools to acheive what you need.
 * [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
-Für Webseite mit Doku als mögliche Option weiter ansehen: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
 
+<!--
 Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf der Seite [Kollaboration und RMarkdown](https://user.uni-frankfurt.de/~tstraube/datascience/18_kollaboration_rmarkdown/).
-
+-->
 
 ## Use cases
 
+<!-- GitHub wil not render the Mermaid code; show image instead. -->
+
+![Graph of use cases](poster/mermaid-diagram.svg)
+
+<!--
 ```mermaid
 
 graph TD
@@ -49,7 +54,7 @@ graph TD
   class A,I,E Result;
 
 ```
-
+-->
 
 
 ### Checking search results
