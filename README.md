@@ -22,39 +22,13 @@ What do I mean by the term "command line" here? Two things, actually: One of the
 * [Sh - the POSIX Shell ](https://www.grymoire.com/Unix/Sh.html): Specifics on the POSIC shell. Might help to create more portable scripts.
 
 
-<!--
-Zitieren in Markdown bzw. RMarkdown: Abschnitt "Wissenschaftliches Zitieren" auf der Seite [Kollaboration und RMarkdown](https://user.uni-frankfurt.de/~tstraube/datascience/18_kollaboration_rmarkdown/).
--->
 
 ## Use cases
 
-<!-- GitHub wil not render the Mermaid code; show image instead. -->
+<!-- GitHub wil not render the Mermaid code (now in poster/use_cases.mermaid); show image instead. -->
 
 ![Graph of use cases](poster/mermaid-diagram.svg)
 
-<!--
-```mermaid
-
-graph TD
-  A(Database search) -.->|Export to text file| R[Search results]
-  R --> D(Check search results)
-  D -->|Count records| D1[Record count]
-  D1 --> I
-  D -->|Count non-duplicates| D2[Single-database duplicate count]
-  D2 --> I
-  R ----->|Combine export files| E[Single import file]
-  R -->|Extract| F[Set of accession numbers]
-  F -->|Generate query| Q[Query string for known records]
-  F ----> I
-  Q --> U("Deduplication in update search (NOT)")
-  U --> A
-  A(Database search) -.->|Export to text file| S[Search strategy]
-  S ---->|Reformat| I[Documentation]
-  classDef Result fill:#ffffde,stroke:#aaaa33,stroke-width:4px;
-  class A,I,E Result;
-
-```
--->
 
 
 ### Checking search results
