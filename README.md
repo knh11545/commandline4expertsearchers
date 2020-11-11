@@ -334,9 +334,8 @@ Construct a query string for these PMIDs (or several to do it in batches of say 
 
  * Pipe content of file with PMIDs to `sed` for processing.
  * Delete empty lines or lines containig only whitespace.
- * Add '"' to beginning of each line of the input.
- * Add '"' to end of each line of the input.
-   Whitespace at beginning or end of line will be deleted.
+ * Add '"' to beginning of each line of the input. Whitespace at the beginning of line will be deleted.
+ * Add '"' to end of each line of the input. Whitespace at the end of line will be deleted.
  * Add ' OR ' to end of each line except the last one.
  * Add "(" to beginning of file
  * Add ")" and field specification to end of file
@@ -356,8 +355,8 @@ sed\
 > myproject_MEDLINE_2018-04-25_query.txt
 ```
 
-### Documenting searches
 
+### Documenting searches
 
 #### Document database accession numbers
 
@@ -380,8 +379,18 @@ These text files can also be used for deduplicating search results and especiall
 
 #### Convert Ovid search history to table
 
-Use a vim script.
+Search history/startegy as exported from the host must go into the documentation. Editing this as a nicely formatted table in Word so that it easy to comprehend is a somewhat tedious and error prone process. Therefore, I use a [script](vim/ovd_search-history2tsv.vim) for the `vim`editor.
 
+How to export the search strategy from Ovid: 
+
+* Select a single record, click "Export".
+* Format: _.txt_
+* Fields: Dooes probably not matter. I leave it with my preferred value of _Complete Reference_.
+* Include: _Search History_
+
+Open the text file containing the search strategy in `vim` and then call the script with `:source vim/ovd_search-history2tsv.vim`. This will create a tsv-file the content of which can then easily be copied to e.g. Excel or Word. The script will remove any records following the search strategy and reformat in to a tab separated table while taking care of any annotations.
+
+Work in progress: Do the same with `sed`  on the command line so that no `vim` is needed.
 
 ## Build reusable scripts
 
