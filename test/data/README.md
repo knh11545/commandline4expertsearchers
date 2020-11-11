@@ -16,3 +16,15 @@ TS=(public health) AND (SO=(plos*) OR SO=(bmc*)) AND (PY=2018 OR PY=2019)
 * Export format _Other reference software_, record content _Full record_
 
 
+## Embase (Ovid)
+
+Search for records:
+
+```ovid
+(bmc or plos).jx. and ("2018" or "2019").dp.
+```
+
+* Files: `Embase_citavi_r*-*.ovd`, export format _Citavi_, fields _Complete Reference_
+* Files: `Embase_endnote_r*-*.cgi`, export format _Endnote, fields _Complete Reference_
+
+
