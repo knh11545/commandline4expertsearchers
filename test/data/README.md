@@ -2,18 +2,18 @@ Some example data for testing
 ==============================================================================
 
 
-All bibliographic data in this folder are belived to be under an Open Access license. Licences  may be given with the individual records in the files, as exported from the databases.
+All bibliographic data in this folder are belived to be under an Open Access license. Licences may be given with the individual records in the files, as exported from the databases.
 
-## Web of Science
+## PubMed
 
 Search for records:
 
-```
-TS=(public health) AND (SO=(plos*) OR SO=(bmc*)) AND (PY=2018 OR PY=2019)
+```PubMed
+plos*[ta] AND 2018:2019[dp] AND "public health"[tw]
 ```
 
-* Files: `WoS_other_reference_software_*.txt`
-* Export format _Other reference software_, record content _Full record_
+* File: `PubMed_export.txt`, export format _PubMed_
+* File: `pmid.txt`, export format _PMID_
 
 
 ## Embase (Ovid)
@@ -28,14 +28,15 @@ Search for records:
 * Files: `Embase_endnote_r*-*.cgi`, export format _Endnote, fields _Complete Reference_
 
 
-## PubMed
+## Web of Science
 
 Search for records:
 
-```PubMed
-plos*[ta] AND 2018:2019[dp] AND "public health"[tw]
+```
+TS=(public health) AND (SO=(plos*) OR SO=(bmc*)) AND (PY=2018 OR PY=2019)
 ```
 
-* File: `PubMed_export.txt`, export format _PubMed_
-* File: `pmid.txt`, export format _PMID_
+* Files: `WoS_other_reference_software_*.txt`
+* Export format _Other reference software_, record content _Full record_
+
 
