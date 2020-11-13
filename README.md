@@ -13,7 +13,14 @@ All stuff related to the actual poster incl. the [poster pfd](./poster/Poster_EA
 
 ## General
 
-What do I mean by the term "command line" here? Two things, actually: One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
+Medical librarians/information specialists providing mediated, systematic searches are dealing a lot with text data when developing search strategies, handling search results and documenting the search process. Dedicated software such as reference managers as wells as general word processors are usually employed in these tasks. Yet, a lot of manual work remains and many functions wanted are not or not well supported by these programs. Classic command line tools do not seem to be well known by many expert searchers nowadays but could be candidates for easier, semi-automated workflows. These tools are freely available or even already installed on many computers.
+
+What do I mean by the term "command line" here?  
+
+Two things, actually:
+
+*  One of the [shell programs](https://en.wikipedia.org/wiki/Shell_(computing)) commonly used with Unix-like operating systems that provide the [command line interface](https://en.wikipedia.org/wiki/Command-line_interface) used to interact with the computer (e.g. [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))) and
+*  a basic set of programs expected to exist on every such system. In particular, these are the the [GNU core utilities (Coreutils)](https://www.gnu.org/software/coreutils/) and the non-interactive text editor [sed](https://www.gnu.org/software/sed/).
 
 ### Tutorials for learning the command line
 
@@ -24,6 +31,8 @@ What do I mean by the term "command line" here? Two things, actually: One of the
 
 
 ## Use cases
+
+A number of typical tasks in systematic searching was identified where additional software support was wanted and a solution seemed feasible with limited resources. These tasks and the need arose from the author's own practice and communication with colleagues. Commands to be entered at the command line were developed that work on simple text files containing text data such as query strings, database accession numbers, search results and search strategies exported from search interfaces.
 
 <!-- GitHub wil not render the Mermaid code (now in poster/use_cases.mermaid); show image instead. -->
 
@@ -78,9 +87,9 @@ for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.cgi' -print` ; do ec
 
 ##### Check for duplicate records in export files
 
-Usually, in larger result sets there are duplicate records, i.e. records that carry identical accession numbers. This is in contrast to the database documentation.  
+Usually, in larger result sets there are duplicate records, i.e. records that carry identical accession numbers. This is in contrast to the database documentation ([MEDLINE](http://ospguides.ovid.com/OSPguides/medline.htm#UI), [Embase](http://ospguides.ovid.com/OSPguides/embase.htm#an)).  
 
-First, we check for duplicates _in each export file_. Accession numbers are in the UI field:
+First, we check for duplicates _in each export file_. Accession numbers are in the UI field in the export files for both MEDLINE and Embase:
 
 ```bash
 for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.ovd' -print` ; do echo $file;  grep "^UI  - " $file | sort | uniq | wc -l ; done
@@ -98,6 +107,8 @@ for file in `find . -name 'myproject_EMBASE_2018-12-13_r*-*.ovd' -print` ; do ec
 ```
 
 **Result**: 17 duplicate records were omitted when counting unique accession numbers in the first export file.  
+
+Notice that the field names used in the export files are not necessarily the same as when searching the databases.  
 
 Finally, we count the unique records _accross all export files_. This number of unique records should not be off to far from the total number of records, say at most a few dozen. If the unique records are below the total by 1,000 or more chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
 
@@ -159,7 +170,7 @@ for file in `find . -name 'WoS_other_reference_software_r*-*.txt' -print` ; do e
 12
 ```
 
-**Result**: The individual files contain the expected numbers of records with a total of 4012 records.
+**Result**: The individual files contain the expected numt	ers of records with a total of 4012 records.
 
 Then, we count the unique accession numbers of the records _accross all export files_. This number of unique records should be identical to the total number of records. If not chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
 
@@ -182,7 +193,13 @@ grep --no-filename "^UT " test/data/WoS_other_reference_software_r*-*.txt | sort
 Count the records in a single export file in PubMed format (was called MEDLINE format in legacy PubMed):
 
 ```bash
-grep --count "^PMID- " medline.txt
+grep --count "^PMID- " test/data/PubMed_export.txt
+```
+
+**Result**:
+
+```
+1459
 ```
 
 Count the records in an export file in XML format:
@@ -191,6 +208,11 @@ Count the records in an export file in XML format:
 grep -c "^<PubmedArticle>$" medline.xml
 ```
 
+**Result**:
+
+```
+1459
+```
 
 ### Postprocessing search result for easier import
 
@@ -423,7 +445,7 @@ The [EDirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) provided 
 The new PubMed no longer supports downloading records in XML format. But we can do this with [EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/):
 
 
-1. Save your search results as a list of PMIDs as a file, e.g. pmid.txt.
+1. Save your search results as a list of PMIDs as a file, e.g. [pmid.txt](test/data/pmid.txt).
 2. On the command line with bash run
 
 ```bash
