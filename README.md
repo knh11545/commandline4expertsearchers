@@ -170,7 +170,7 @@ for file in `find . -name 'WoS_other_reference_software_r*-*.txt' -print` ; do e
 12
 ```
 
-**Result**: The individual files contain the expected numt	ers of records with a total of 4012 records.
+**Result**: The individual files contain the expected numbers of records with a total of 4012 records.
 
 Then, we count the unique accession numbers of the records _accross all export files_. This number of unique records should be identical to the total number of records. If not chances a high that we erroneously exported a chunk of records twice (and ommitted another chunck).
 
@@ -214,9 +214,11 @@ grep -c "^<PubmedArticle>$" medline.xml
 1459
 ```
 
+
 ### Postprocessing search result for easier import
 
 Unite search results that had to be exported in chunks into a single file. This saves time and is less prone to errors from repetitive import tasks.
+
 
 #### Ovid MEDLINE and Ovid Embase
 
@@ -253,7 +255,7 @@ Result:
 3002
 ```
 
-Another example from an actual search with duplicate records in the export files:
+Another example from an actual search with duplicate records in the export files (data not in this repository):
 
 ```bash
 cat myproject_EMBASE_2018-12-13_r*-*.ovd > myproject_EMBASE_2018-12-13_records-combined.ovd
@@ -315,7 +317,7 @@ Build queries from lists of accession numbers or DOIs. This comes in handy for
 * removing records on the host that were already found in other databases (partial on-the-host deduplication), and
 * known item searches for test sets with know relevant records in order to check search strategies.
 
-For more details see below in the sections _Updating searches_ and _Build reusable scripts_.
+For more details see below in the sections [Updating searches](#updating-searches) and [Build reusable scripts](#build-reusable-scripts).
 
 
 #### Reverse the order of lines in search strategy
@@ -346,7 +348,9 @@ The approach in general is to work with accession numbers of database records:
 
 Steps 1 and 2 are a matter of seconds when using command line tools.  
 
-Examples are given here for PubMed and Ovid MEDLINE. There are two scripts, [`extract_accession_numbers`](./bin/extract_accession_numbers) and [`an2query`](./bin/an2query) that make this much easier. See below in the section "Build reusable scripts" for more information.
+Examples are given here for PubMed and Ovid MEDLINE.  
+
+Note: There are two scripts, [`extract_accession_numbers`](./bin/extract_accession_numbers) and [`an2query`](./bin/an2query) that make this much easier. See below in the section [Build reusable scripts](#build-reusable-scripts) for more information.
 
 
 #### PubMed
@@ -417,7 +421,7 @@ sed\
 
 Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendors which might be the case when publishing whole database records containing text.
 
-Note: It is possible to use the [extract_accession_numbers](bin/extract_accession_numbers) script that makes this much easier.
+Note: It is possible to use the [extract_accession_numbers](bin/extract_accession_numbers) script that makes this much easier, see [here](#build-reusable-scripts).
 
 Extract PMIDs from Ovid MEDLINE export file into a text file:
 
@@ -446,7 +450,8 @@ How to export the search strategy from Ovid:
 
 Open the text file containing the search strategy in `vim` and then call the script with `:source vim/ovd_search-history2tsv.vim`. This will create a tsv-file the content of which can then easily be copied to e.g. Excel or Word. The script will remove any records following the search strategy and reformat in to a tab separated table while taking care of any annotations.
 
-Work in progress: Do the same with `sed`  on the command line so that no `vim` is needed.
+**TODO**: Work in progress: Do the same with `sed`  on the command line so that no `vim` is needed.
+
 
 ## Build reusable scripts
 
