@@ -28,3 +28,14 @@ Search for records:
 * Files: `Embase_endnote_r*-*.cgi`, export format _Endnote, fields _Complete Reference_
 
 
+## PubMed
+
+Search for records:
+
+```PubMed
+plos*[ta] AND 2018:2019[dp] AND "public health"[tw]
+```
+
+* File: `PubMed_export.txt`, export format _PubMed_
+* File: `pmid.txt`, export format _PMID_
+
