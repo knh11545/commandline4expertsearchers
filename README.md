@@ -222,12 +222,44 @@ Unite search results that had to be exported in chunks into a single file. This 
 
 For the Ovid files we just need to concatenate the individual export files into a single one:
 
+A reproducible example (with Open Access [test data](test/data/README.md) that can be redistributed):
+
+```ovid
+cat Embase_citavi_r*-*.ovd > Embase_citavi_records-combined.ovd
+```
+
+Check the generated file for completeness:
+
+```bash
+grep --count "^DB  - Embase" Embase_citavi_records-combined.ovd
+```
+
+Result:
+
+```
+3002
+```
+
+The same for the records exported in Endnote format:
+
+```bash
+cat Embase_endnote_r*-*.cgi > Embase_endnote_records-combined.cgi
+grep --count "^DB  - Embase" Embase_endnote_records-combined.cgi
+```
+
+Result:
+
+```
+3002
+```
+
+Another example from an actual search with duplicate records in the export files:
 
 ```bash
 cat myproject_EMBASE_2018-12-13_r*-*.ovd > myproject_EMBASE_2018-12-13_records-combined.ovd
 ```
 
-Check the generated file for coḿpleteness:
+Check the generated file for completeness:
 
 ```bash
 grep --count "^DB  - Embase" myproject_EMBASE_2018-12-13_records-combined.ovd
@@ -249,7 +281,7 @@ grep "^UI  - " myproject_EMBASE_2018-12-13_records-combined.ovd | sort | uniq | 
 3813
 ```
 
-**Result**: The expected number of unique records is in the file. We are safe to import this file into the reference manager.
+**Result**: The expected numbers or records and of unique records are in the file. We are safe to import this file into the reference manager.
 
 
 #### Web of Science
@@ -258,8 +290,8 @@ Web of Science allows to download no more than 500 records at a time. Therefore,
 
 Export format:
 
-* Other file format --> Record content: Full Record; File Format: Other reference software (.txt-file)
-* Endnote Desktop --> Record content: Full Record (.ciw-file)
+* Other file format --> Record content: _Full Record_; File Format: _Other reference software_ (.txt-file)
+* Endnote Desktop --> Record content: _Full Record_ (.ciw-file)
 
 These formats are identical with the exception of a byte-mark at the beginning of the .txt-files.  
 
@@ -299,7 +331,7 @@ When editing a file in the `vim` editor there basically are two options:
 * Call `tac`, e.g. `:%!tac` for the wole buffer.
 * Use vim's features: `:g/^/m0`
 
-For more info see <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
+For more info see e.g. <https://vim.fandom.com/wiki/Reverse_order_of_lines>.
 
 
 ### Updating searches
@@ -312,13 +344,14 @@ The approach in general is to work with accession numbers of database records:
 4. search the records of the old search (using the query strings created as above),
 5. NOT the old records out of the new search result.
 
-Steps 1 and 2 are a matter of seconds when using command line tools.
+Steps 1 and 2 are a matter of seconds when using command line tools.  
 
-Examples are given here for PubMed and Ovid MEDLINE. There are two scripts, [`extract_accession_numbers`](./bin/extract_accession_numbers) and [`an2query`](./bin/an2query) that make this easier.
+Examples are given here for PubMed and Ovid MEDLINE. There are two scripts, [`extract_accession_numbers`](./bin/extract_accession_numbers) and [`an2query`](./bin/an2query) that make this much easier. See below in the section "Build reusable scripts" for more information.
+
 
 #### PubMed
 
-Extract the PMIDs from the export files of first search:
+Extract the PMIDs from the export files of the first search:
 
 ```bash
 grep "^PMID- " pubmed-export-set.txt | sed -e 's/^PMID- //' > pubmed-export-set_pmid.txt
@@ -382,8 +415,9 @@ sed\
 
 #### Document database accession numbers
 
-Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendorsi which might be the case when publishing whole database records containing text.
+Extract accesion numbers of database records from exported search result. It may be helpful to document these result sets for various purposes, either just for internal use or better yet as a publicly available piece of research data with the published report. Publishing lists of accessions numbers will not infringe the copyright of database vendors which might be the case when publishing whole database records containing text.
 
+Note: It is possible to use the [extract_accession_numbers](bin/extract_accession_numbers) script that makes this much easier.
 
 Extract PMIDs from Ovid MEDLINE export file into a text file:
 
@@ -418,126 +452,35 @@ Work in progress: Do the same with `sed`  on the command line so that no `vim` i
 
 It is helpful to write down the commands that worked well in a shell script. Such a script is a convenient means to store the functionality for easy reuse. The gory details that are hard to remember are hidden away in the script. Some skripts are contained in the [bin ](./bin/) folder.
 
-Examples:
+You get help on using the individual scripts with:
 
 ```bash
-# Count the records in an exported search result by accession numbers.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | wc -l
+extract_accession_numbers --help
 
-# Extract the accession numbers from an exported search result to a file for purposes of documentation and reuse.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase > ovid_embase_export_uid.txt
+an2query --help
 
-# Extract the accession numbers from an exported search result and build a database query to find these records.
-cat ovid_embase_export.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
-
+unite_wos_files --help
 ```
 
 
-## Use NLM's Entrez Direct (EDirect)
+### Examples
 
-The [EDirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) provided by [NLM's](https://www.nlm.nih.gov/) [NCBI](https://www.ncbi.nlm.nih.gov/) are a set of very powerful tools to be used at the Unix command line. They ...
-
-**This is all still work inprogress!**
-
-
-### Retrieving search results from PubMed
-
-The new PubMed no longer supports downloading records in XML format. But we can do this with [EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/):
-
-
-1. Save your search results as a list of PMIDs as a file, e.g. [pmid.txt](test/data/pmid.txt).
-2. On the command line with bash run
+Count the records in an exported search result by accession numbers:
 
 ```bash
-cat pmid.txt | epost -db pubmed | efetch -format xml > medline.xml
+cat Embase_endnote_records-combined.cgi | extract_accession_numbers --format ovid_embase | wc -l
 ```
 
-This yields the records in XML format in the file medline.xml. This also works for large numbers of records. Downloading in PubMed format (called MEDLINE format in legacy PubMed) is possible, too:
-
+Extract the accession numbers from an exported search result to a file for purposes of documentation and reuse:
 
 ```bash
-cat pmid.txt | epost -db pubmed | efetch -format medline > medline.txt
+cat Embase_endnote_records-combined.cgi | extract_accession_numbers --format ovid_embase > Embase_endnote_records-combined_uid.txt
 ```
 
-
-### Searching for patterns that are not supported by search interfaces
-
-
-#### Use command line tools like grep to post-process a selected number of records (from a more general search) that was downloaded
-
-Example: Find PubMed records that contain information about equally contributing authors.
-
-This information is not searchable in PubMed but the information is contained in the XML format of PubMed records. See [Equal Contribution for Authors in PubMed](https://www.nlm.nih.gov/pubs/techbull/so17/so17_contrib_equal_author_pubmed.html).
+Extract the accession numbers from an exported search result and build a database query to find these records:
 
 ```bash
-esearch -db pubmed -query "Regensburg[AD] AND 2018:2020[DP]" | efetch -format xml > regensburg_2018-2020.xml
-cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID | wc -l
-# 4113
-root@71a097f1c1ef:/edirect# cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep "[Y|N]" | cut -f 1 | wc -l
-# 158
-cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep Y | cut -f 1 | wc -l
-# 42
-root@71a097f1c1ef:/edirect# cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCitation/PMID -block Author -element "@EqualContrib" | grep N | cut -f 1 | wc -l
-# 122
-
+cat Embase_endnote_records-combined.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
 ```
-
-
-
-#### Use local phrase searching using eDirect and a local copy of PubMed
-
-
-### Installation of Entrez Direct
-
-Entrez Direct (EDirect) needs to be installed. This is easy with a Linux or Macintosh system where the prerequisites already are available (a bash shell and Perl). For my Windows 10 PC I found it easiest to go via [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows) and then use the [official NCBI/NLM Docker image for edirect](https://hub.docker.com/r/ncbi/edirect). 
-
-Once Docker for Windows is installed and running open a PowerShell to pull the EDirect image (only once) and start it:
-
-```{PowerShell}
-docker pull ncbi/edirect
-docker run -it --rm ncbi/edirect
-```
-
-To share a directory:
-
-```bash
-```
-
-```bash
-```
-
-### Search and analyze results
-
-
-#### Where could I publish a protocol for a systematic review?
-
-Journals in which many SR protocols are published may be particularly suitable for submission.
-
-* Find PubMed records of protocols of systematic reviews.
-* Extract the journal title.
-* Group by journal, count records and sort by rank.
-
-```bash
-
-esearch -db pubmed -query '("systematic review"[TI]) AND ("protocol"[TI])' | efetch -format xml > SR_protocols.xml
-
-cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
-
-```
-Results:
-
-```
-1253    Medicine
-1022    BMJ open
-1016    Systematic reviews
-504     JBI database of systematic reviews and implementation reports
-89      JBI evidence synthesis
-81      JMIR research protocols
-22      Acta anaesthesiologica Scandinavica
-19      JBI library of systematic reviews
-18      International journal of surgery protocols
-18      Journal of advanced nursing
-```
-
 
 
