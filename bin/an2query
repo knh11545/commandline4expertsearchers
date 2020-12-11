@@ -41,6 +41,7 @@ Database syntax formats and ID types
   pubmed            ID types: pmid, pmcid, doi, lid
   ovid_medline      ID types: pmid, pmcid, doi, pii
   ovid_embase       ID types: an, eu, pmid, doi
+  cochrane_library  ID types: an, doi, tn, none
 
 Examples
 
@@ -218,6 +219,43 @@ case "$syntax" in
 	    -e "\$ a ).${OVID_FIELD_LIST}."
 	;;
 
+    cochrane_library )
+	# Fields to search for in Cochrane Library
+	case "$idtype" in
+	    an )
+		COCHRANE_FIELD_SPEC=":an"
+		;;
+	    doi )
+		COCHRANE_FIELD_SPEC=":doi"
+		;;
+	    tn )
+		COCHRANE_FIELD_SPEC=":tn"
+		;;
+	    none )
+		# No field specification i.a. all fields
+		COCHRANE_FIELD_SPEC=""
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '(' to beginning of each line of the input.
+	#  * Add ')' and field specification to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Join lines
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/(/' \
+	    -e "s/\s*$/)${COCHRANE_FIELD_SPEC}/" \
+	    -e '$! s/$/ OR /' | \
+	tr "\n" " "
+	;;
     * )	
 	echo "ERROR: Unknown database syntax ${syntax}" >&2
 	exit 1
