@@ -491,7 +491,7 @@ For **Ovid Embase**:
 cat Embase_endnote_records-combined.cgi | extract_accession_numbers --format ovid_embase | an2query --syntax ovid_embase --idtype an > query.txt
 ```
 
-For **Cochrane Library** publications by Cochrane can be searched by `an` field. Trials with an accession number from CENTRAL can be searched without filed specifications only (afaik):
+For **Cochrane Library** publications by Cochrane can be searched by `an` field. Trials with an accession number from CENTRAL can be searched without field specifications only (afaik):
 
 ```bash
 cat test/data/Cochrane_Reviews_EndNote.ris | extract_accession_numbers --format cochrane_reviews_endnote_ris | an2query --syntax cochrane_library --idtype an > Cochrane_Reviews_query.txt
@@ -499,4 +499,11 @@ cat test/data/Cochrane_Reviews_EndNote.ris | extract_accession_numbers --format 
 cat test/data/Cochrane_Trials_EndNote.ris | extract_accession_numbers --format cochrane_trials_endnote_ris | an2query --syntax cochrane_library --idtype none > Cochrane_Trials_query.txt
 ```
 
+Find a set of records in the **Citavi** citation manager for batch manipulation:
+
+```bash
+extract_accession_numbers --format ovid_medline < MEDLINE_known-relevant-records-not-found-by-RCT-filter.ovd | an2query --syntax citavi --idtype pmid | xclip
+```
+
+The query string is sent to the system clipboard via the `xclip` tool so that it can be pasted directly into the Citavi quick search dialog. Here we use this to assign a specific group/category to the records. These records need to be checked further (which we will do in Citavi) for tuning a search strategy. Why were these known relevant records not being picked up by a search filter?
 
