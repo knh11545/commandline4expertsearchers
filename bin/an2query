@@ -42,6 +42,7 @@ Database syntax formats and ID types
   ovid_medline      ID types: pmid, pmcid, doi, pii
   ovid_embase       ID types: an, eu, pmid, doi
   cochrane_library  ID types: an, doi, tn, none
+  web_of_science    ID types: an, doi, pmid
   citavi            ID types: doi, pmcid, pmid
 
 Examples
@@ -256,6 +257,43 @@ case "$syntax" in
 	    -e "s/\s*$/)${COCHRANE_FIELD_SPEC}/" \
 	    -e '$! s/$/ OR /' | \
 	tr "\n" " "
+	;;
+
+    web_of_science )
+        # Fields to search for in Web of Science (Core Collection)
+	case "$idtype" in
+	    an )
+		WOS_FIELD_SPEC="UT"
+		;;
+	    doi )
+		WOS_FIELD_SPEC="DO"
+		;;
+	    pmid )
+		WOS_FIELD_SPEC="PMID"
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "<field specification>=(" to beginning of file
+	#  * Add ")" to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e "1 i ${WOS_FIELD_SPEC}=(" \
+	    -e '$ a )'
 	;;
 
     citavi )
