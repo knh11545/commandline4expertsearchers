@@ -45,6 +45,7 @@ Database syntax formats and ID types
   web_of_science      ID types: an, doi, pmid
   citavi              ID types: doi, pmcid, pmid
   ebscohost_psycinfo  ID types: an, pmid, doi
+  ebscohost_cinahl    ID types: an, pmid
 
 Examples
 
@@ -362,6 +363,46 @@ case "$syntax" in
 	    -e 's/\s*$/"/' \
 	    -e '$! s/$/ OR /'
 	;;
+
+    ebscohost_cinahl )
+	# Fields to search for in EBSCOhost PsycInfo
+	case "$idtype" in
+	    an )
+		# Steps: 
+		#  * Delete empty lines or lines containig only whitespace.
+		#  * Add '"' and field specification to beginning of each line of the input.
+		#  * Add '"' to end of each line of the input.
+		#    Whitespace at beginning or end of line will be deleted.
+		#  * Add ' OR ' to end of each line except the last one.
+		sed\
+		    -e '/^\s*$/d' - | \
+		sed\
+		    -e "s/^\s*/AN \"/" \
+		    -e 's/\s*$/"/' \
+		    -e '$! s/$/ OR /'
+		;;
+	    pmid )
+		# Steps: 
+		#  * Delete empty lines or lines containig only whitespace.
+		#  * Add '"', field specification and prefix to PMID to beginning of each line of the input.
+		#  * Add '"' to end of each line of the input.
+		#    Whitespace at beginning or end of line will be deleted.
+		#  * Add ' OR ' to end of each line except the last one.
+		sed\
+		    -e '/^\s*$/d' - | \
+		sed\
+		    -e "s/^\s*/PM \"NLM/" \
+		    -e 's/\s*$/"/' \
+		    -e '$! s/$/ OR /'
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	;;
+
     * )	
 	echo "ERROR: Unknown database syntax ${syntax}" >&2
 	exit 1

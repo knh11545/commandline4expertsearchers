@@ -85,6 +85,9 @@ Export formats
   ebscohost_psycinfo_ris
 		     Export from EBSCOhost PsycInfo as format 'RIS (e.g. CITAVI, EasyBib, EndNote, ProCite, Reference Manager, Zotero)'
 
+  ebscohost_cinahl_ris
+		     Export from EBSCOhost CINAHL as format 'RIS (e.g. CITAVI, EasyBib, EndNote, ProCite, Reference Manager, Zotero)'
+
 
 Examples
 
@@ -162,6 +165,9 @@ case "$export_format" in
 	;;
     ebscohost_psycinfo_ris )
 	grep "^AN  - " - | sed -e 's/^AN  - //' -e 's/\r//g'
+	;;
+    ebscohost_cinahl_ris )
+	grep "^ID  - " - | sed -e 's/^ID  - //' -e 's/\r//g'
 	;;
     * )	
 	echo "ERROR: Unknown export format ${export_format}" >&2
