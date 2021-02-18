@@ -82,6 +82,9 @@ Export formats
                        Other file format --> Record content: Full Record; 
                        File Format: Other reference software (.txt-file)
 
+  ebscohost_psycinfo_ris
+		     Export from EBSCOhost PsycInfo as format 'RIS (e.g. CITAVI, EasyBib, EndNote, ProCite, Reference Manager, Zotero)'
+
 
 Examples
 
@@ -127,35 +130,38 @@ done
 
 
 case "$export_format" in
-   pubmed )
+    pubmed )
 	grep "^PMID- " - | sed -e 's/^PMID- //'
 	;;
-   ovid_medline|ovid_embase )
+    ovid_medline|ovid_embase )
 	grep "^UI  - " - | sed -e 's/^UI  - //' -e 's/\r//g'
 	;;
-   ovid_ris )
+    ovid_ris )
 	grep "^ID  - " - | sed -e 's/^ID  - //' -e 's/\r//g'
 	;;
-   cochrane_reviews_endnote_ris|cochrane_reviews_refman_ris )
+    cochrane_reviews_endnote_ris|cochrane_reviews_refman_ris )
 	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
 	;;
-   cochrane_reviews_plain_text )
+    cochrane_reviews_plain_text )
 	grep "^ID: " - | sed -e 's/^ID: //' -e 's/\r//g'
 	;;
-   cochrane_protocols_endnote_ris|cochrane_protocols_refman_ris )
+    cochrane_protocols_endnote_ris|cochrane_protocols_refman_ris )
 	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
 	;;
-   cochrane_protocols_plain_text )
+    cochrane_protocols_plain_text )
 	grep "^ID: " - | sed -e 's/^ID: //' -e 's/\r//g'
 	;;
-   cochrane_trials_endnote_ris|cochrane_trials_refman_ris )
+    cochrane_trials_endnote_ris|cochrane_trials_refman_ris )
 	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
 	;;
-   cochrane_trials_plain_text )
+    cochrane_trials_plain_text )
 	grep "^ID: " - | sed -e 's/^ID: //' -e 's/\r//g'
 	;;
-   wos_endnote|wos_other )
+    wos_endnote|wos_other )
 	grep "^UT " - | sed -e 's/^UT //' -e 's/\r//g'
+	;;
+    ebscohost_psycinfo_ris )
+	grep "^AN  - " - | sed -e 's/^AN  - //' -e 's/\r//g'
 	;;
     * )	
 	echo "ERROR: Unknown export format ${export_format}" >&2

@@ -38,12 +38,13 @@ Database syntax formats and ID types
 
   Known syntax formats are host and database specific:
 
-  pubmed            ID types: pmid, pmcid, doi, lid
-  ovid_medline      ID types: pmid, pmcid, doi, pii
-  ovid_embase       ID types: an, eu, pmid, doi
-  cochrane_library  ID types: an, doi, tn, none
-  web_of_science    ID types: an, doi, pmid
-  citavi            ID types: doi, pmcid, pmid
+  pubmed              ID types: pmid, pmcid, doi, lid
+  ovid_medline        ID types: pmid, pmcid, doi, pii
+  ovid_embase         ID types: an, eu, pmid, doi
+  cochrane_library    ID types: an, doi, tn, none
+  web_of_science      ID types: an, doi, pmid
+  citavi              ID types: doi, pmcid, pmid
+  ebscohost_psycinfo  ID types: an, pmid, doi
 
 Examples
 
@@ -330,6 +331,37 @@ case "$syntax" in
 	tr "\n" " "
 	;;
 
+    ebscohost_psycinfo )
+	# Fields to search for in EBSCOhost PsycInfo
+	case "$idtype" in
+	    an )
+		EBSCOHOST_FIELD=AN
+		;;
+	    pmid )
+		EBSCOHOST_FIELD=PM
+		;;
+	    doi )
+		EBSCOHOST_FIELD=DI
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' and field specification to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e "s/^\s*/${EBSCOHOST_FIELD} \"/" \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /'
+	;;
     * )	
 	echo "ERROR: Unknown database syntax ${syntax}" >&2
 	exit 1
