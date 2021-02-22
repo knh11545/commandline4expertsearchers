@@ -19,7 +19,7 @@ In this text file there is some irrelevant header stuff followed by the search h
   * `'<,'>` in the visual selection,
   * `v` in all lines NOT matching (reverse of `g` command) the following pattern
     + `^S\d\+ ^I` line starts with S, digit(s), blank and tab character (shown as `^I`) OR (`|`)
-    + `^# ^I` line starts with hash character, balnk and tab,
+    + `^# ^I` line starts with a hash character, a blank and a tab,
   * in normal mode go one line up `k` and join `J` the line below.
 9. Done.
 
