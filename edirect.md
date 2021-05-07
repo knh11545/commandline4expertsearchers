@@ -56,13 +56,15 @@ cat regensburg_2018-2020.xml  | xtract -pattern PubmedArticle -element MedlineCi
 ### Search and analyze results
 
 
-#### Where could I publish a protocol for a systematic review?
+#### Where could I publish a protocol for a systematic review/scoping review/mapping review?
 
 Journals in which many SR protocols are published may be particularly suitable for submission.
 
 * Find PubMed records of protocols of systematic reviews.
 * Extract the journal title.
 * Group by journal, count records and sort by rank.
+
+Date: 2021-05-07
 
 ```bash
 
@@ -74,16 +76,59 @@ cat SR_protocols.xml | xtract -pattern PubmedArticle -element Journal/Title | so
 Results:
 
 ```
-1253    Medicine
-1022    BMJ open
-1016    Systematic reviews
-504     JBI database of systematic reviews and implementation reports
-89      JBI evidence synthesis
-81      JMIR research protocols
-22      Acta anaesthesiologica Scandinavica
-19      JBI library of systematic reviews
-18      International journal of surgery protocols
-18      Journal of advanced nursing
+
+1878    Medicine
+1167    BMJ open
+1071    Systematic reviews
+503     JBI database of systematic reviews and implementation reports
+127     JBI evidence synthesis
+94      JMIR research protocols
+23      Acta anaesthesiologica Scandinavica
+21      Journal of advanced nursing
+20      PloS one
+19      HRB open research
+
+```
+
+How about soping review protocols?
+
+```bash
+
+esearch -db pubmed -query '("scoping review"[TI]) AND ("protocol"[TI])' | efetch -format xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
+
+```
+Results:
+
+```
+
+340     BMJ open
+132     Systematic reviews
+131     JBI database of systematic reviews and implementation reports
+120     JBI evidence synthesis
+34      JMIR research protocols
+8       HRB open research
+4       Acta anaesthesiologica Scandinavica
+3       F1000Research
+3       International journal of environmental research and public health
+3       Methods and protocols
+
+```
+
+And mapping review protocols?
+
+```bash
+
+esearch -db pubmed -query '("mapping review"[TI]) AND ("protocol"[TI])' | efetch -format xml | xtract -pattern PubmedArticle -element Journal/Title | sort-uniq-count-rank | head -10
+
+```
+Results:
+
+```
+
+1       Animal health research reviews
+1       Laboratory animals
+1       Systematic reviews
+
 ```
 
 
