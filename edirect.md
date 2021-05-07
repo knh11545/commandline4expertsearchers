@@ -130,25 +130,3 @@ Results:
 1       Systematic reviews
 
 ```
-
-
-### Installation of Entrez Direct
-
-Entrez Direct (EDirect) needs to be installed. This is easy with a Linux or Macintosh system where the prerequisites already are available (a bash shell and Perl). For my Windows 10 PC I found it easiest to go via [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows) and then use the [official NCBI/NLM Docker image for edirect](https://hub.docker.com/r/ncbi/edirect). 
-
-Once Docker for Windows is installed and running open a PowerShell to pull the EDirect image (only once) and start it:
-
-```{PowerShell}
-docker pull ncbi/edirect
-docker run -it --rm ncbi/edirect
-```
-
-To share a directory:
-
-```bash
-```
-
-```bash
-```
-
-
