@@ -465,6 +465,8 @@ extract_accession_numbers --help
 an2query --help
 
 unite_wos_files --help
+
+check_record_files --help
 ```
 
 
