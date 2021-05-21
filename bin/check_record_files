@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# Check export files from database search results and extract accession numbers
+
+# Author: Helge Knüttel
+# Date: 2021
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Check export files from database search results and extract accession numbers
+
+Options
+
+  --record_files    Pattern matching the record file(s). Enclose in 'single'
+                    quotes to protect from shell expansion. Value will be 
+                    passed to 'find . -name '.
+                    Mandatory option.
+
+  --format          Export format of database search results. Mandatory option.
+  
+  --an_file         Name of file to store extracted accession numbers.
+                    Optional.
+
+Export formats
+
+  The value of this option is passed to the extract_accession_numbers script.
+  Use 'extract_accession_numbers --help' to see known export formats.
+
+Examples
+
+  None yet.
+  
+EOF
+}
+
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing. Try '${0} --help'" >&2
+    exit 1
+fi
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+	--format )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		format="$1"
+		shift
+	    else
+		echo "ERROR: Missing --format argument" >&2
+		exit 1
+	    fi
+	    ;;
+	--record_files )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		record_files="$1"
+		shift
+	    else
+		echo "ERROR: Missing --record_files argument" >&2
+		exit 1
+	    fi
+	    ;;
+	--an_file )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		an_file="$1"
+		shift
+	    else
+		echo "ERROR: Missing --an_file argument" >&2
+		exit 1
+	    fi
+	    ;;
+	-h|--help )
+	    PrintHelp
+	    exit 0
+	    ;;    
+	* )
+	    # unknown argument
+	    unknown_arg=$1
+	    echo "ERROR: Unknown argument ${unknown_arg}" >&2
+	    exit 1
+	    ;;
+    esac
+done
+
+if [ -z ${an_file+x} ] ; then
+    # an_file is unset
+    an_file=''
+fi
+
+
+OLD_IFS="$IFS"
+IFS=$'\n'
+if [ ! -z "$an_file" ] && [ -f "$an_file" ] ; then
+    echo "WARNING: File '$an_file' exists! Aborting now."
+    exit 1
+else
+    for file in $(find . -name "$record_files")
+    do
+        echo "Processing '$file' ..."
+        echo "    File contains $(cat "$file" | extract_accession_numbers --format "$format" | wc -l) accession numbers."
+        echo "    File contains $(cat "$file" | extract_accession_numbers --format "$format" | sort | uniq | wc -l) unique accession numbers."
+	# Write to file if $an_file is not empty
+	if [ ! -z "$an_file" ] ; then
+            echo "    Appending accession numbers to file '$an_file' ..."
+	    cat "$file" | extract_accession_numbers --format "$format" >> "$an_file"
+	fi
+        echo "    Done."
+        echo ""
+    done
+    if [ ! -z "$an_file" ] ; then
+        echo "File '$an_file' contains $(cat "$an_file" | wc -l) accession numbers."
+        echo "File '$an_file' contains $(cat "$an_file" | sort | uniq | wc -l) unique accession numbers."
+    fi
+fi
+IFS=$OLD_IFS
+
