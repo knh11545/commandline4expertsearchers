@@ -230,7 +230,7 @@ case "$syntax" in
 		OVID_FIELD_LIST=pm
 		;;
 	    doi )
-		OVID_FIELD_LIST=do,id
+		OVID_FIELD_LIST=do
 		;;
 	    * )
 	        # unknown argument
