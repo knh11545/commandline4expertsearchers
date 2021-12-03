@@ -47,6 +47,8 @@ Database syntax formats and ID types
   citavi              ID types: doi, pmcid, pmid
   ebscohost_psycinfo  ID types: an, pmid, doi
   ebscohost_cinahl    ID types: an, pmid
+  dimensions          ID types: doi
+  dimensions_api      ID types: doi
 
 Examples
 
@@ -435,6 +437,63 @@ case "$syntax" in
 		exit 1
 		;;
 	esac
+	;;
+
+    dimensions )
+	# Search in [Dimensions](https://app.dimensions.ai/) using DOI search
+	case "$idtype" in
+	    doi )
+		# Nothing to do here
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	;;
+
+    dimensions_api )
+	# Fields to search for in [Dimensions Analytics API](https://app.dimensions.ai/)
+        # using [Dimensions Search Language (DSL)](https://docs.dimensions.ai/dsl/index.html)
+	# Beware: Not yet tested in API!
+	case "$idtype" in
+	    doi )
+		DIMENSIONS_FIELD=doi
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ', ' to end of each line except the last one.
+	#  * Add "search publications where ${DIMENSIONS_FIELD} in [" to beginning of file
+	#  * Add ")" and field specification to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/, /' | \
+	sed\
+	    -e "1 i search publications where ${DIMENSIONS_FIELD} in [" \
+	    -e "\$ a ] return publications"
 	;;
 
     * )	
