@@ -38,7 +38,7 @@ Database syntax formats and ID types
 
   Known syntax formats are host and database specific:
 
-  pubmed              ID types: pmid, pmcid, doi, lid
+  pubmed              ID types: pmid, pmcid, doi, aid, lid
   pmc                 ID types: pmid, pmcid, doi
   ovid_medline        ID types: pmid, pmcid, doi, pii
   ovid_embase         ID types: an, eu, pmid, doi
@@ -112,16 +112,20 @@ case "$syntax" in
 	case "$idtype" in
 	    pmid )
 		PUBMED_FIELD=UID
+		QUOTE=""
 		;;
 	    pmcid )
 		PUBMED_FIELD=PMCID
+		QUOTE=""
 		;;
-	    doi )
+	    doi|aid )
 		PUBMED_FIELD=AID
+		QUOTE='"'
 		;;
 	    lid )
 		# Location ID
 		PUBMED_FIELD=LID
+		QUOTE='"'
 		;;
 	    * )
 	        # unknown argument
@@ -131,15 +135,15 @@ case "$syntax" in
 	esac
 	# Steps: 
 	#  * Delete empty lines or lines containig only whitespace.
-	#  * Add '"' to beginning of each line of the input.
-	#  * Add '"' and field specification to end of each line of the input.
+	#  * Add ${QUOTE} to beginning of each line of the input.
+	#  * Add ${QUOTE} and field specification to end of each line of the input.
 	#    Whitespace at beginning or end of line will be deleted.
 	#  * Add ' OR ' to end of each line except the last one.
 	sed\
 	    -e '/^\s*$/d' - | \
 	sed\
-	    -e 's/^\s*/"/' \
-	    -e "s/\s*$/\"\[${PUBMED_FIELD}\]/" \
+	    -e "s/^\s*/${QUOTE}/" \
+	    -e "s/\s*$/${QUOTE}\[${PUBMED_FIELD}\]/" \
 	    -e '$! s/$/ OR /'
 	;;
 
