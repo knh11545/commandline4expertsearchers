@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Intersection of unsorted files
+#
+# See <https://www.gnu.org/software/coreutils/manual/html_node/Set-operations.html>
+
+# Author: Helge Knüttel
+# Date: 2022
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Write the intersection of unsorted files to STDOUT.
+
+  This means applying the set operation AND to the files, like
+    <file1> AND <file2>
+
+  The following code is executed:
+
+    sort <file1> | uniq > <buffer>
+    sort <file2> | uniq >> <buffer>
+    sort <buffer> | uniq -d
+
+  Entire lines are considered as the key. Both files may contain duplicates.
+  
+
+Usage
+
+  AND <file1> <file2>
+
+  AND -h | --help
+  
+
+Example
+
+  cat file1
+1
+2
+3
+1 
+
+  cat file2
+3
+4
+
+  AND file1 file2
+3
+
+EOF
+}
+
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing. Try '${0} --help'" >&2
+    exit 1
+fi
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+    PrintHelp
+    exit 0
+fi
+
+file1="$1"
+shift
+if [ $# -gt 0 ]
+then
+	file2="$1"
+else
+	echo "ERROR: Missing argument <file2>" >&2
+exit 1
+fi
+
+buffer=$(mktemp)
+sort "$file1" | uniq > "$buffer"
+sort "$file2" | uniq >> "$buffer"
+sort "$buffer" | uniq -d
+rm "$buffer"
+
