@@ -2,7 +2,7 @@
 # Extract accession numbers from database search results
 
 # Author: Helge Knüttel
-# Date: 2020
+# Date: 2020-2022
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -46,10 +46,8 @@ Export formats
   cochrane_reviews_endnote_ris
                      Export from Cochrane Library (Reviews) as format 'RIS (EndNote)'
 
-
   cochrane_reviews_refman_ris
                      Export from Cochrane Library (Reviews) as format 'RIS (Reference Manager)'
-
 
   cochrane_reviews_plain_text
                      Export from Cochrane Library (Reviews) as format 'Plain text'
@@ -57,10 +55,8 @@ Export formats
   cochrane_protocols_endnote_ris
                      Export from Cochrane Library (Protocols) as format 'RIS (EndNote)'
 
-
   cochrane_protocols_refman_ris
                      Export from Cochrane Library (Protocols) as format 'RIS (Reference Manager)'
-
 
   cochrane_protocols_plain_text
                      Export from Cochrane Library (Protocols) as format 'Plain text'
@@ -68,12 +64,14 @@ Export formats
   cochrane_trials_endnote_ris
                      Export from Cochrane Library (Trials) as format 'RIS (EndNote)'
 
-
   cochrane_trials_refman_ris
                      Export from Cochrane Library (Trials) as format 'RIS (Reference Manager)'
 
   cochrane_trials_plain_text
                      Export from Cochrane Library (Trials) as format 'Plain text'
+
+  cochrane_clinical_answers_endnote_ris
+                     Export from Cochrane Library (Clinical Answers) as format 'RIS (EndNote)'
 
   wos_endnote        Export from Web of Science Core Collection as: 
                        Endnote Desktop --> Record content: Full Record (.ciw-file)
@@ -90,6 +88,15 @@ Export formats
 
   ictrp
 		     Export from WHO ICTRP as format 'XML'
+
+  clinicaltrials_gov_txt
+		     Export from ClinicalTrials.gov as format 'txt'
+
+  clinicaltrials_gov_tsv
+		     Export from ClinicalTrials.gov as format 'TSV'
+
+  clinicaltrials_gov_xml
+		     Export from ClinicalTrials.gov as format 'XML'
 
 
 Examples
@@ -163,6 +170,9 @@ case "$export_format" in
     cochrane_trials_plain_text )
 	grep "^ID: " - | sed -e 's/^ID: //' -e 's/\r//g'
 	;;
+    cochrane_clinical_answers_endnote_ris )
+	grep "^DO  -  " - | sed -e 's/^DO  -  //' -e 's/\r$//g'
+	;;
     wos_endnote|wos_other )
 	grep "^UT " - | sed -e 's/^UT //' -e 's/\r//g'
 	;;
@@ -174,6 +184,15 @@ case "$export_format" in
 	;;
     ictrp )
 	grep "^    <TrialID>" - | sed -e 's/^    <TrialID>//' -e 's/\s*$//'
+	;;
+    clinicaltrials_gov_txt )
+	grep "^  NCT Number:" - | sed -e 's/^  NCT Number:\s\+//' -e 's/\s*$//'
+	;;
+    clinicaltrials_gov_tsv )
+	cut -f2 - | tail -n+2
+	;;
+    clinicaltrials_gov_xml )
+	grep "^    <nct_id>" - | sed -e 's/^    <nct_id>//' -e 's/<\/nct_id>\s*$//'
 	;;
     * )	
 	echo "ERROR: Unknown export format ${export_format}" >&2
