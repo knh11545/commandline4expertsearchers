@@ -88,6 +88,9 @@ Export formats
   ebscohost_cinahl_ris
 		     Export from EBSCOhost CINAHL as format 'RIS (e.g. CITAVI, EasyBib, EndNote, ProCite, Reference Manager, Zotero)'
 
+  ictrp
+		     Export from WHO ICTRP as format 'XML'
+
 
 Examples
 
@@ -168,6 +171,9 @@ case "$export_format" in
 	;;
     ebscohost_cinahl_ris )
 	grep "^ID  - " - | sed -e 's/^ID  - //' -e 's/\r//g'
+	;;
+    ictrp )
+	grep "^    <TrialID>" - | sed -e 's/^    <TrialID>//' -e 's/\s*$//'
 	;;
     * )	
 	echo "ERROR: Unknown export format ${export_format}" >&2
