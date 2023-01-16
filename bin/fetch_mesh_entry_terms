@@ -15,12 +15,23 @@ PrintHelp() {
 
   cat >&2 << "EOF"
 
-Fetch entry terms of MeSH headings as identified by MeSH Unique ID
+Fetch entry terms of MeSH headings
 
-  Each MeSH Unique ID must be on an individual line.
+  MeSH headings will be searched in the [MESH] field as a default but may be 
+  identified by MeSH Unique ID by using option '--uid', too.
+
+  Each Entry Term/MeSH Unique ID must be on an individual line.
   
-  Input is not checked for correct MeSH Unique IDs but whitespace at beginning 
+  Input is not checked for correctness but whitespace at beginning 
   or end of lines as well as empty lines will be deleted.
+
+  Output is Entry Terms of the MeSH headings given as input. This may be
+  used to collect synonyms for text word searches. 
+
+  As default the list of Entry Terms found will be sorted and "cleaned", 
+  i.e. Entry Terms with commas will be deleted as these are permutations 
+  ususally not used in search strategies. This behaviour may be turned off
+  with the option '--raw'.
 
   Input is read from STDIN. Output is written to STDOUT.
 
@@ -30,23 +41,46 @@ Fetch entry terms of MeSH headings as identified by MeSH Unique ID
 
 Options
 
+  --uid             Input is MeSH UniqueIDs rather than Entry Terms.
+
   --noexplode       Do not explode MeSH heading. The default is to explode. Optional
+
+  --raw             Do not sort and "clean" Entry Terms. Optional.
 
   -h, --help        Print this help message and exit.
   
+
+Usage
+
+  fetch_mesh_entry_terms [--uid] [--noexplode] [--raw]
+
+  fetch_mesh_entry_terms -h | --help
+
+
 EOF
 
 }
 
 #
-# Initialise variables/configuration
+# Configuration
+#
+# Print debug output to STDERR
+print_debug=false
+#
+# End of configuration
+#
+
+#
+# Initialise variables
 #
 # Default is to explode MeSH headings 
 explode=true
-# Print debug output to STDERR
-print_debug=true
+# Default search field
+search_field=MESH
 # Separator between Entry Terms printed
 sep="\n"
+# Clean output
+clean_output=true
 
 err() {
   echo "$*" >&2
@@ -64,21 +98,29 @@ debug() {
 while [ "$#" -gt 0 ]
 do
   case "$1" in
+    --uid )
+      search_field=MHUI
+      shift
+      ;;
     --noexplode )
       explode=false
       shift
       ;;
-  -h|--help )
-      PrintHelp
-      exit 0
-      ;;    
-  * )
-      # unknown argument
-      unknown_arg="$1"
-      err "ERROR: Unknown argument ${unknown_arg}"
-      exit 1
+    --raw )
+      clean_output=false
+      shift
       ;;
-    esac
+    -h|--help )
+        PrintHelp
+        exit 0
+        ;;    
+    * )
+        # unknown argument
+        unknown_arg="$1"
+        err "ERROR: Unknown argument ${unknown_arg}"
+        exit 1
+        ;;
+  esac
 done
 
 #
@@ -97,7 +139,7 @@ sed \
   -e '/^\s*$/d' -  | \
 sed \
   -e 's/^\s*/"/' \
-  -e 's/\s*$/"[MHUI]/' \
+  -e "s/\s*$/\"[${search_field}]/" \
   -e '$! s/$/ OR/' | \
 paste -s -d " " -  # | \
 # sed \
@@ -139,7 +181,17 @@ fi
 # extract the entry terms.
 #
 debug "Fetching MeSH entries to extract Entry Terms ..."
-esearch -db mesh -query "$query_string" \
+entry_terms=$(esearch -db mesh -query "$query_string" \
     | esummary \
     | xtract -pattern DS_MeshTerms -sep "${sep}" -element string
+  )
+
+#
+# Sort and "clean" Entry Terms if requested, print results
+#
+if [ "$clean_output" = "true" ]; then
+  echo "${entry_terms}" | sort | grep -v ',' -
+else
+  echo "${entry_terms}"
+fi
 
