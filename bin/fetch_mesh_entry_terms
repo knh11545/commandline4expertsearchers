@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+# Fetch entry terms of MeSH headings
+
+# Author: Helge Knüttel
+# Date: 2023
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat >&2 << "EOF"
+
+Fetch entry terms of MeSH headings as identified by MeSH Unique ID
+
+  Each MeSH Unique ID must be on an individual line.
+  
+  Input is not checked for correct MeSH Unique IDs but whitespace at beginning 
+  or end of lines as well as empty lines will be deleted.
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+  This script depends on the Entrez Direct (EDirect) utilities, see
+  <https://www.ncbi.nlm.nih.gov/books/NBK179288/>
+
+
+Options
+
+  --noexplode       Do not explode MeSH heading. The default is to explode. Optional
+
+  -h, --help        Print this help message and exit.
+  
+EOF
+
+}
+
+#
+# Initialise variables/configuration
+#
+# Default is to explode MeSH headings 
+explode=true
+# Print debug output to STDERR
+print_debug=true
+# Separator between Entry Terms printed
+sep="\n"
+
+err() {
+  echo "$*" >&2
+}
+
+debug() {
+  if [ "$print_debug" = "true" ]; then
+    echo "$*" >&2
+  fi
+}
+
+
+
+# Read command line arguments
+while [ "$#" -gt 0 ]
+do
+  case "$1" in
+    --noexplode )
+      explode=false
+      shift
+      ;;
+  -h|--help )
+      PrintHelp
+      exit 0
+      ;;    
+  * )
+      # unknown argument
+      unknown_arg="$1"
+      err "ERROR: Unknown argument ${unknown_arg}"
+      exit 1
+      ;;
+    esac
+done
+
+#
+# Build query string for noexplode-search with MeSH Unique IDs
+#
+# Steps:
+#  * Delete empty lines or lines containig only whitespace.
+#  * Add '"' to beginning of each line of the input.
+#  * Add '"' and field specification to end of each line of the input.
+#    Whitespace at beginning or end of line will be deleted.
+#  * Add ' OR ' to end of each line except the last one.
+#  * Join lines with paste
+
+query_string=$(
+sed \
+  -e '/^\s*$/d' -  | \
+sed \
+  -e 's/^\s*/"/' \
+  -e 's/\s*$/"[MHUI]/' \
+  -e '$! s/$/ OR/' | \
+paste -s -d " " -  # | \
+# sed \
+  # -e 's/^/"/' \
+  # -e 's/$/"/'
+)
+
+debug "Query string (noexplode): ${query_string}"
+
+# NCBI's eutils DTDs are available from here: <https://eutils.ncbi.nlm.nih.gov/eutils/dtd/>
+# As of writing this script this DTD was the most recent one:
+# <https://eutils.ncbi.nlm.nih.gov/eutils/dtd/20141023/esummary_mesh.dtd>
+
+#
+# Build query string for explode-search.
+#
+# To explode the MeSH entries in all trees:
+# Search MeSH database by MeSH Unique IDs, fetch document summaries in 
+# XML format and build new query string based on the extracted Tree Numbers.
+# Search string created consists of truncated Tree Numbers.
+# We deduplicate the list of tree numbers before building the query string.
+#
+if [ "$explode" = "true" ]; then
+  debug "Fetching Tree numbers for explode search ..."
+  query_string=$(esearch -db mesh -query "$query_string" \
+    | esummary \
+    | xtract -pattern DS_IdxLinks -sep "\n" -element TreeNum \
+    | sort -u \
+    | sed -e 's/$/*[TN]/' -e '$! s/$/ OR/' \
+    | paste -s -d " " - # \
+    # | sed -e 's/^/"/' -e 's/$/"/'
+  )
+  debug "Query string (explode): ${query_string}"
+fi
+
+
+#
+# Search MeSH database, fetch document summaries in XML format and 
+# extract the entry terms.
+#
+debug "Fetching MeSH entries to extract Entry Terms ..."
+esearch -db mesh -query "$query_string" \
+    | esummary \
+    | xtract -pattern DS_MeshTerms -sep "${sep}" -element string
+
