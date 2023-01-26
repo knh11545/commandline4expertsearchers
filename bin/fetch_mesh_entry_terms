@@ -28,10 +28,13 @@ Fetch entry terms of MeSH headings
   Output is Entry Terms of the MeSH headings given as input. This may be
   used to collect synonyms for text word searches. 
 
-  As default the list of Entry Terms found will be sorted and "cleaned", 
-  i.e. Entry Terms with commas will be deleted as these are permutations 
-  ususally not used in search strategies. This behaviour may be turned off
-  with the option '--raw'.
+  By default the list of Entry Terms found will be sorted. This behaviour 
+  may be turned off with the option '--nosort'.
+
+  Optionally, Entry Terms that contain commas can be deleted. Often, these 
+  are permutations that ususally are not used in search strategies. But be
+  aware of chemical names that may contain commas! This behaviour can be
+  switched on with the option '--nocommas'.
 
   Input is read from STDIN. Output is written to STDOUT.
 
@@ -45,14 +48,16 @@ Options
 
   --noexplode       Do not explode MeSH heading. The default is to explode. Optional
 
-  --raw             Do not sort and "clean" Entry Terms. Optional.
+  --nosort          Do not sort Entry Terms. Optional.
+
+  --nocommas        Delete Entry Terms that contain commas. Optional.
 
   -h, --help        Print this help message and exit.
   
 
 Usage
 
-  fetch_mesh_entry_terms [--uid] [--noexplode] [--raw]
+  fetch_mesh_entry_terms [--uid] [--noexplode] [--nosort] [--nocommas]
 
   fetch_mesh_entry_terms -h | --help
 
@@ -79,8 +84,10 @@ explode=true
 search_field=MESH
 # Separator between Entry Terms printed
 sep="\n"
-# Clean output
-clean_output=true
+# Default is to sort output
+sort_output=true
+# Default is to not remove Entry Terms with commas
+delete_commas=false
 
 err() {
   echo "$*" >&2
@@ -106,8 +113,12 @@ do
       explode=false
       shift
       ;;
-    --raw )
-      clean_output=false
+    --nosort )
+      sort_output=false
+      shift
+      ;;
+    --nocommas )
+      delete_commas=true
       shift
       ;;
     -h|--help )
@@ -187,11 +198,23 @@ entry_terms=$(esearch -db mesh -query "$query_string" \
   )
 
 #
-# Sort and "clean" Entry Terms if requested, print results
+# Sort Entry Terms if set.
 #
-if [ "$clean_output" = "true" ]; then
-  echo "${entry_terms}" | sort | grep -v ',' -
+if [ "$sort_output" = "true" ]; then
+  output=$(echo "${entry_terms}" | sort)
 else
-  echo "${entry_terms}"
+  output="${entry_terms}"
 fi
+
+#
+# Delete Entry Terms that contain commas if set.
+#
+if [ "$delete_commas" = "true" ]; then
+  output=$(echo "${output}" | grep -v ',' -)
+fi
+
+#
+# Send results to STDOUT
+#
+echo "${output}"
 
