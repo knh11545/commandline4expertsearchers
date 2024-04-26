@@ -2,7 +2,7 @@
 # Fetch entry terms of MeSH headings
 
 # Author: Helge Knüttel
-# Date: 2023
+# Date: 2023-2024
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -15,7 +15,7 @@ PrintHelp() {
 
   cat >&2 << "EOF"
 
-Fetch entry terms of MeSH headings
+fetch_mesh_entry_terms - Fetch entry terms of MeSH headings
 
   MeSH headings will be searched in the [MESH] field as a default but may be 
   identified by MeSH Unique ID by using option '--uid', too.
@@ -28,8 +28,8 @@ Fetch entry terms of MeSH headings
   Output is Entry Terms of the MeSH headings given as input. This may be
   used to collect synonyms for text word searches. 
 
-  By default the list of Entry Terms found will be sorted. This behaviour 
-  may be turned off with the option '--nosort'.
+  By default the list of Entry Terms found will be sorted and deduplicated.
+  This behaviour may be turned off with the option '--nosort'.
 
   Optionally, Entry Terms that contain commas can be deleted. Often, these 
   are permutations that ususally are not used in search strategies. But be
@@ -42,7 +42,7 @@ Fetch entry terms of MeSH headings
   <https://www.ncbi.nlm.nih.gov/books/NBK179288/>
 
 
-Options
+OPTIONS
 
   --uid             Input is MeSH UniqueIDs rather than Entry Terms.
 
@@ -52,15 +52,28 @@ Options
 
   --nocommas        Delete Entry Terms that contain commas. Optional.
 
+  -d, --debug       Print additional information to STDERR. Optional.
+
   -h, --help        Print this help message and exit.
   
 
-Usage
+USAGE
 
-  fetch_mesh_entry_terms [--uid] [--noexplode] [--nosort] [--nocommas]
+  fetch_mesh_entry_terms [--uid] [--noexplode] [--nosort] [--nocommas] [-d | --debug]
 
   fetch_mesh_entry_terms -h | --help
 
+
+EXAMPLES
+
+  Fetch entry terms for a MeSH Main Heading (Descriptor):
+
+    echo "Dental Alloys" | fetch_mesh_entry_terms
+
+  Entry terms for subheadings (Qualifiers) can be identified and fetched by 
+  their MeSH Unique ID:
+
+    echo "Q000494" | fetch_mesh_entry_terms --uid
 
 EOF
 
@@ -69,8 +82,6 @@ EOF
 #
 # Configuration
 #
-# Print debug output to STDERR
-print_debug=false
 #
 # End of configuration
 #
@@ -88,6 +99,8 @@ sep="\n"
 sort_output=true
 # Default is to not remove Entry Terms with commas
 delete_commas=false
+# Default is to not print debug output to STDERR
+print_debug=false
 
 err() {
   echo "$*" >&2
@@ -119,6 +132,10 @@ do
       ;;
     --nocommas )
       delete_commas=true
+      shift
+      ;;
+    -d|--debug )
+      print_debug=true
       shift
       ;;
     -h|--help )
@@ -199,9 +216,9 @@ entry_terms=$(esearch -db mesh -query "$query_string" \
 
 #
 # Sort Entry Terms if set.
-#
+# We also deduplicate when sorting.
 if [ "$sort_output" = "true" ]; then
-  output=$(echo "${entry_terms}" | sort)
+  output=$(echo "${entry_terms}" | sort | uniq)
 else
   output="${entry_terms}"
 fi
