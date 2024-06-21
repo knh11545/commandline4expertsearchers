@@ -1,0 +1,216 @@
+#!/usr/bin/env bash
+# Check update status of MeSH headings
+
+# Author: Helge Knüttel
+# Date: 2023-2024
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat >&2 << "EOF"
+
+check_mesh_update_status - Check update status of MeSH headings
+
+  MeSH headings will be searched in the [MESH] field as a default but may be 
+  identified by MeSH Unique ID by using option '--uid', too.
+
+  Each Entry Term/MeSH Unique ID must be on an individual line.
+  
+  Input is not checked for correctness but whitespace at beginning 
+  or end of lines as well as empty lines will be deleted.
+
+  Output is a table of the MeSH headings amended by information 
+  on update dates and previous indexing. Fields of the output are
+  separated by tab characters (TSV-format).
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+  This script depends on the Entrez Direct (EDirect) utilities, see
+  <https://www.ncbi.nlm.nih.gov/books/NBK179288/>
+
+
+OPTIONS
+
+  --uid             Input is MeSH UniqueIDs rather than MeSH Headings.
+
+  --noexplode       Do not explode MeSH heading. The default is to explode. Optional
+
+  --nosort          Do not sort Entry Terms. Optional.
+
+
+  -d, --debug       Print additional information to STDERR. Optional.
+
+  -h, --help        Print this help message and exit.
+  
+
+USAGE
+
+  check_mesh_update_status [--uid] [--noexplode] [--nosort] [-d | --debug]
+
+  check_mesh_update_status -h | --help
+
+
+EXAMPLES
+
+  Check a MeSH Main Heading (Descriptor):
+
+    echo "Dental Alloys" | check_mesh_update_status
+
+  Subheadings (Qualifiers) can be identified and fetched by 
+  their MeSH Unique ID:
+
+    echo "Q000494" | check_mesh_update_status --uid
+
+EOF
+
+}
+
+#
+# Configuration
+#
+#
+# End of configuration
+#
+
+#
+# Initialise variables
+#
+# Default is to explode MeSH headings 
+explode=true
+# Default search field
+search_field=MESH
+# Separator between Entry Terms printed
+sep="\n"
+# Default is to sort output
+sort_output=true
+# Default is to not print debug output to STDERR
+print_debug=false
+
+err() {
+  echo "$*" >&2
+}
+
+debug() {
+  if [ "$print_debug" = "true" ]; then
+    echo "$*" >&2
+  fi
+}
+
+
+
+# Read command line arguments
+while [ "$#" -gt 0 ]
+do
+  case "$1" in
+    --uid )
+      search_field=MHUI
+      shift
+      ;;
+    --noexplode )
+      explode=false
+      shift
+      ;;
+    --nosort )
+      sort_output=false
+      shift
+      ;;
+    -d|--debug )
+      print_debug=true
+      shift
+      ;;
+    -h|--help )
+        PrintHelp
+        exit 0
+        ;;    
+    * )
+        # unknown argument
+        unknown_arg="$1"
+        err "ERROR: Unknown argument ${unknown_arg}"
+        exit 1
+        ;;
+  esac
+done
+
+#
+# Build query string for noexplode-search with MeSH Unique IDs
+#
+# Steps:
+#  * Delete empty lines or lines containig only whitespace.
+#  * Add '"' to beginning of each line of the input.
+#  * Add '"' and field specification to end of each line of the input.
+#    Whitespace at beginning or end of line will be deleted.
+#  * Add ' OR ' to end of each line except the last one.
+#  * Join lines with paste
+
+query_string=$(
+sed \
+  -e '/^\s*$/d' -  | \
+sed \
+  -e 's/^\s*/"/' \
+  -e "s/\s*$/\"[${search_field}]/" \
+  -e '$! s/$/ OR/' | \
+paste -s -d " " -  # | \
+# sed \
+  # -e 's/^/"/' \
+  # -e 's/$/"/'
+)
+
+debug "Query string (noexplode): ${query_string}"
+
+# NCBI's eutils DTDs are available from here: <https://eutils.ncbi.nlm.nih.gov/eutils/dtd/>
+# As of writing this script this DTD was the most recent one:
+# <https://eutils.ncbi.nlm.nih.gov/eutils/dtd/20141023/esummary_mesh.dtd>
+
+#
+# Build query string for explode-search.
+#
+# To explode the MeSH entries in all trees:
+# Search MeSH database by MeSH Unique IDs, fetch document summaries in 
+# XML format and build new query string based on the extracted Tree Numbers.
+# Search string created consists of truncated Tree Numbers.
+# We deduplicate the list of tree numbers before building the query string.
+#
+if [ "$explode" = "true" ]; then
+  debug "Fetching Tree numbers for explode search ..."
+  query_string=$(esearch -db mesh -query "$query_string" \
+    | esummary \
+    | xtract -pattern DS_IdxLinks -sep "\n" -element TreeNum \
+    | sort -u \
+    | sed -e 's/$/*[TN]/' -e '$! s/$/ OR/' \
+    | paste -s -d " " - # \
+    # | sed -e 's/^/"/' -e 's/$/"/'
+  )
+  debug "Query string (explode): ${query_string}"
+fi
+
+
+#
+# Search MeSH database, fetch document summaries in XML format and 
+# extract the entry terms.
+#
+debug "Fetching MeSH entries to extract Entry Terms ..."
+entry_terms=$(esearch -db mesh -query "$query_string" \
+    | esummary \
+    | xtract -pattern DocumentSummary -element DS_MeshTerms -first string -def "-" -element DS_YearIntroduced DS_EntryDate DS_RevisionDate -pfx "https://www.ncbi.nlm.nih.gov/mesh/" -element Id -block DS_PreviousIndexing -sep " | " -element string
+  )
+
+#
+# Sort Entry Terms if set.
+# We also deduplicate when sorting.
+if [ "$sort_output" = "true" ]; then
+  output=$(echo "${entry_terms}" | sort | uniq)
+else
+  output="${entry_terms}"
+fi
+
+#
+# Send results to STDOUT
+#
+echo "${output}"
+
