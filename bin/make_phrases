@@ -1,0 +1,154 @@
+#!/usr/bin/env bash
+# Make phrases from terms
+
+# Author: Helge Knüttel
+# Date: 2024
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat >&2 << "EOF"
+
+make_phrases - Make phrases from terms
+
+  Each line from file2 is appended to every line from file1. Lines from file1
+  will be used repeatedly for every line from file2.
+
+  Empty lines in either files are ignored.
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+OPTIONS
+
+  -s, --sep         Set separator between terms. Default is a blank character.
+                    Optional.
+
+  --pfx, --prefix   Prefix. Default is empty string. Optional.
+
+  --sfx, --suffix   Suffix. Default is empty string. Optional.
+
+  -d, --debug       Print additional information to STDERR. Optional.
+
+  -h, --help        Print this help message and exit.
+  
+
+USAGE
+
+  make_phrases [-s | --sep <separator>] [--pfx | --prefix <prefix>] [--sfx | --suffix <suffix>] [-d | --debug] <file1> <file2>
+
+  make_phrases -h | --help
+
+
+EOF
+
+}
+
+#
+# Configuration
+#
+#
+# End of configuration
+#
+
+#
+# Initialise variables
+#
+# Separator between input fileds
+sep=" "
+# Prefix added to the output lines
+prefix=""
+# Suffix added to the output lines
+suffix=""
+# Default is to not print debug output to STDERR
+print_debug=false
+
+err() {
+  echo "$*" >&2
+}
+
+debug() {
+  if [ "$print_debug" = "true" ]; then
+    echo "$*" >&2
+  fi
+}
+
+
+
+if [ "$#" -eq 0 ]; then
+  err "ERROR: Arguments missing"
+  PrintHelp
+  exit 1
+fi
+
+# Read command line arguments
+while [ "$#" -gt 0 ]
+do
+  case "$1" in
+    -s|--sep|--separator )
+      shift
+      sep="$1"
+      shift
+      ;;
+    --pfx|--prefix )
+      shift
+      prefix="$1"
+      shift
+      ;;
+    --sfx|--suffix )
+      shift
+      suffix="$1"
+      shift
+      ;;
+    -d|--debug )
+      print_debug=true
+      shift
+      ;;
+    -h|--help )
+        PrintHelp
+        exit 0
+        ;;    
+    * )
+        if [ "$#" -lt 2 ]; then
+          err "ERROR: Arguments missing"
+          exit 1
+        elif [ "$#" -gt 2 ]; then
+          err "ERROR: Surplus argument(s)"
+          exit 1
+        else
+          file1="$1"
+          shift
+          file2="$1"
+          shift
+        fi
+        ;;
+  esac
+done
+
+# Make sure we can read from a regular file
+if ! test -f "$file1" -a -r "$file1" ; then
+  err "ERROR: Cannnot read from regular file: $file1"
+  exit 1
+fi
+
+# Make sure we can read from a regular file
+if ! test -f "$file2" -a -r "$file2" ; then
+  err "ERROR: Cannnot read from regular file: $file2"
+  exit 1
+fi
+
+# Create output
+while IFS="\n" read -r term1; do
+  while IFS="\n" read -r term2; do
+    # No output for empty input lines
+    if test -n "$term1" -a -n "$term2" ; then
+      echo "${prefix}${term1}${sep}${term2}${suffix}"
+    fi
+  done < "$file2"
+done < "$file1"
+
