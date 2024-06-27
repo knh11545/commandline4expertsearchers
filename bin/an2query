@@ -2,7 +2,7 @@
 # Convert a list of database accession numbers or other IDs into a search string
 
 # Author: Helge Knüttel
-# Date: 2020
+# Date: 2020-2024
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -49,6 +49,7 @@ Database syntax formats and ID types
   ebscohost_cinahl    ID types: an, pmid
   dimensions          ID types: doi
   dimensions_api      ID types: doi
+  lens                ID types: an (= lens), pmid, pmcid, doi, core, openalex, magid 
 
 Examples
 
@@ -80,7 +81,7 @@ do
 		exit 1
 	    fi
 	    ;;
-	--idtype )
+	--idtype|--id_type )
 	    shift
 	    if [ $# -gt 0 ]
 	    then
@@ -498,6 +499,61 @@ case "$syntax" in
 	sed\
 	    -e "1 i search publications where ${DIMENSIONS_FIELD} in [" \
 	    -e "\$ a ] return publications"
+	;;
+
+    lens )
+	# Fields to search for in lens.org
+	case "$idtype" in
+	    pmid )
+		LENS_FIELD=ids.pmid
+		;;
+	    pmcid )
+		LENS_FIELD=ids.pmcid
+		;;
+	    doi )
+		LENS_FIELD=ids.doi
+		;;
+	    an|lens )
+	        LENS_FIELD=lens_id
+		;;
+	    openalex )
+	        LENS_FIELD=ids.openalex
+		;;
+	    core )
+	        LENS_FIELD=ids.core
+		;;
+	    magid )
+	        LENS_FIELD=ids.magid
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#  * Delete whitespace at beginning or end of each line.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "(" and field specification to beginning of file
+	#  * Add ")" to end of file
+        #  * Join into one line
+        #  * Remove whitespace after/before brackets. Lens.org is picky, here.
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e "1 i ${LENS_FIELD}:(" \
+	    -e '$ a )' | \
+        tr "\n" " " | \
+        sed\
+            -e 's/(\s*/(/g' \
+            -e 's/\s*)/)/g'
 	;;
 
     * )	
