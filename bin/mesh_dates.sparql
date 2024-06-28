@@ -1,0 +1,33 @@
+# Fetch the date fields plus some other info for MeSH UIDs
+# See https://id.nlm.nih.gov/mesh/query
+# See https://id.nlm.nih.gov/mesh/swagger/ui#/sparql/sparqlQuery
+# 
+# Do not send this comment to the SPARQL endpoint!
+#
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX meshv: <http://id.nlm.nih.gov/mesh/vocab#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX mesh2024: <http://id.nlm.nih.gov/mesh/2024/>
+PREFIX mesh2023: <http://id.nlm.nih.gov/mesh/2023/>
+PREFIX mesh2022: <http://id.nlm.nih.gov/mesh/2022/>
+
+SELECT * 
+FROM <http://id.nlm.nih.gov/mesh>
+WHERE {
+
+  ?descriptor rdfs:label ?label ;
+              meshv:identifier ?uid ;
+              meshv:active ?active ;
+              meshv:dateRevised ?dateRevised ;
+              meshv:dateEstablished ?dateEstablished ;
+              meshv:dateCreated ?dateCreated ;
+              meshv:historyNote ?historyNote ;
+              meshv:publicMeSHNote ?publicMeSHNote .
+  FILTER ( ?uid IN ('D015242', 'D020902') ) .
+} 
+ORDER BY ?label
+
