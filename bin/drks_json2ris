@@ -19,8 +19,16 @@ Convert JSON file(s) exported from DRKS <https://www.drks.de/search> to a dedupl
 
 USAGE
 
-    drks_json2ris [FILES...]
+    drks_json2ris [OPTIONS] [FILES...]
 
+
+OPTIONS
+
+    -d,--retrieved_date      Retrieved date field for the RIS file
+                             (YYYY-MM-DD). Optional.
+
+
+DESCRIPTION
 
     If no files are given input is read from STDIN.
 
@@ -35,6 +43,7 @@ EOF
 # Read command line arguments
 
 json_files=-
+retrieved_date=
 
 while [ $# -gt 0 ]
 do
@@ -42,6 +51,11 @@ do
 	-h|--help )
 	    PrintHelp
 	    exit 0
+	    ;;    
+	-d|--retrieved_date )
+	    shift
+            retrieved_date=$1
+	    shift
 	    ;;    
 	* )
 	    json_files=$*
@@ -53,7 +67,7 @@ done
 
 # Convert JSON files to RIS with jq
 
-jq --raw-output --null-input '
+jq --raw-output --null-input --arg retrieved_date "$retrieved_date" '
 # Join array elements of all input files into a single array.
 # It is necessary to invoke jq with the -n command-line option,
 # otherwise the first entity will be lost.
@@ -65,6 +79,10 @@ unique_by(.drksId)[] |
 "TI  - " + (.trialDescriptions[0].title | gsub("[\\n\\t]"; " ")),
 "PY  - " + .registrationDrks[0:4], "AB  - " + (.trialDescriptions[0].scientificSummary | gsub("[\\n\\t]"; " ")),
 "UR  - https://www.drks.de/search/de/trial/" + .drksId + "/details",
+"RD  - " + $retrieved_date,
+"DB  - DRKS - Deutsches Register Klinischer Studien",
+"DP  - Bundesinstitut für Arzneimittel und Medizinprodukte (BfArM)",
+"AN  - " + .drksId,
 "ER  - ",
 ""
 ' $json_files
