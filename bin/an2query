@@ -2,7 +2,7 @@
 # Convert a list of database accession numbers or other IDs into a search string
 
 # Author: Helge Knüttel
-# Date: 2020-2024
+# Date: 2020-2025
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -38,7 +38,7 @@ Database syntax formats and ID types
 
   Known syntax formats are host and database specific:
 
-  pubmed              ID types: pmid, pmcid, doi, aid, lid
+  pubmed              ID types: an, pmid, uid, pmcid, doi, aid, lid
   pmc                 ID types: pmid, pmcid, doi
   ovid_medline        ID types: pmid, pmcid, doi, pii
   ovid_embase         ID types: an, eu, pmid, doi
@@ -108,10 +108,10 @@ done
 
 case "$syntax" in
 
-    pubmed )
+    pubmed|PubMed )
 	# Fields to search for in PubMed
 	case "$idtype" in
-	    pmid )
+	    pmid|an|uid )
 		PUBMED_FIELD=UID
 		QUOTE=""
 		;;
@@ -119,7 +119,7 @@ case "$syntax" in
 		PUBMED_FIELD=PMCID
 		QUOTE=""
 		;;
-	    doi|aid )
+	    doi|DOI|aid )
 		PUBMED_FIELD=AID
 		QUOTE='"'
 		;;
@@ -134,19 +134,34 @@ case "$syntax" in
 		exit 1
 		;;
 	esac
-	# Steps: 
-	#  * Delete empty lines or lines containig only whitespace.
-	#  * Add ${QUOTE} to beginning of each line of the input.
-	#  * Add ${QUOTE} and field specification to end of each line of the input.
-	#    Whitespace at beginning or end of line will be deleted.
-	#  * Add ' OR ' to end of each line except the last one.
-	sed\
-	    -e '/^\s*$/d' - | \
-	sed\
-	    -e "s/^\s*/${QUOTE}/" \
-	    -e "s/\s*$/${QUOTE}\[${PUBMED_FIELD}\]/" \
-	    -e '$! s/$/ OR /'
-	;;
+        # There is a special syntax for PMIDs that allows for more records to
+        # be used in a query.
+        if [ "${PUBMED_FIELD}" = "UID" ]
+        then
+            # Steps:
+	    #  * Delete empty lines or lines containig only whitespace.
+            #  * Delete carriage returns.
+            #  * Join lines with comma as delimiter.
+            #  * Append 
+            sed -e '/^\s*$/d' - | \
+            tr -d '\r' | \
+            paste -s -d',' - | \
+            sed -e "s/$/[UID]/"
+        else
+            # Steps: 
+            #  * Delete empty lines or lines containig only whitespace.
+            #  * Add ${QUOTE} to beginning of each line of the input.
+            #  * Add ${QUOTE} and field specification to end of each line of the input.
+            #    Whitespace at beginning or end of line will be deleted.
+            #  * Add ' OR ' to end of each line except the last one.
+            sed\
+                -e '/^\s*$/d' - | \
+            sed\
+                -e "s/^\s*/${QUOTE}/" \
+                -e "s/\s*$/${QUOTE}\[${PUBMED_FIELD}\]/" \
+                -e '$! s/$/ OR /'
+        fi
+        ;;
 
     pmc )
 	# Fields to search for in PubMed Central
