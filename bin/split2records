@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+# Split input file into records and write these to individual files
+
+# Author: Helge Knüttel
+# Date: 2025
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Split input file into records and write these to individual files
+
+  Input must be in a known bibliographic format. Currently only RIS is supported.
+  
+  Input is read from STDIN.
+
+  Output is written to individual files containing one record each. 
+
+
+Options
+
+  --format          Format of input file. Mandatory option.
+  
+  --prefix          Prefix for output file names. Default is xx.
+  
+  --suffix          Suffix for output file names. Default is no suffix.
+  
+
+The following formats are supported:
+
+  RIS
+
+
+Examples
+
+  cat input.txt | split2records --format RIS --suffix .ris --prefix record_
+  
+EOF
+}
+
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing. Try '${0} --help'" >&2
+    exit 1
+fi
+
+# Default: No prefix, no suffix
+prefix=""
+suffix=""
+
+format=""
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+	--format )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		format="$1"
+		shift
+	    else
+		echo "ERROR: Missing --format argument" >&2
+		exit 1
+	    fi
+	    ;;
+	--prefix )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		prefix="$1"
+		shift
+	    else
+		echo "ERROR: Missing --prefix argument" >&2
+		exit 1
+	    fi
+	    ;;
+	--suffix )
+	    shift
+	    if [ $# -gt 0 ]
+	    then
+		suffix="$1"
+		shift
+	    else
+		echo "ERROR: Missing --suffix argument" >&2
+		exit 1
+	    fi
+	    ;;
+	-h|--help )
+	    PrintHelp
+	    exit 0
+	    ;;    
+	* )
+	    # unknown argument
+	    unknown_arg=$1
+	    echo "ERROR: Unknown argument ${unknown_arg}" >&2
+	    exit 1
+	    ;;
+    esac
+done
+
+if [ -z "$format" ]
+then
+   echo "ERROR: Mandatory option --format missing" >&2
+   exit 1
+fi
+
+case "$format" in
+
+    RIS|ris )
+        if [ -z "$prefix" ]
+        then
+            # Use default prefix
+            prefix_cmd=""
+        else
+            prefix_cmd="--prefix=${prefix}"
+        fi
+        if [ -z "$suffix" ]
+        then
+            # Use default suffix
+            suffix_cmd=""
+        else
+            suffix_cmd="--suffix-format=_%06d${suffix}"
+        fi
+        chunks=$(mktemp)
+        csplit "$prefix_cmd" "$suffix_cmd" --digits=6 --elide-empty-files - '/^ER  - /+1' '{*}' > "$chunks"
+        n_files=$(cat "$chunks" | wc -l)
+        rm "$chunks"
+        echo "${n_files} output files written" >&2
+        # FIXME: Known issue: input file content after the last end-of-record marker
+        # is written to a separate output file 
+        ;;
+
+esac
+
+
