@@ -36,6 +36,12 @@ fetch_mesh_entry_terms - Fetch entry terms of MeSH headings
   aware of chemical names that may contain commas! This behaviour can be
   switched on with the option '--nocommas'.
 
+  Optionally, only the descriptors (preferred terms) can be returned.  Cave:
+  There is no indication of what entry term is the preferred term (descriptor)
+  in the XML.  As a workaround we extract the first element in the list under
+  the assumption that this is the descriptor.
+  Use with caution and check empirically whether that assumption holds true!
+
   Input is read from STDIN. Output is written to STDOUT.
 
   This script depends on the Entrez Direct (EDirect) utilities, see
@@ -52,6 +58,8 @@ OPTIONS
 
   --nocommas        Delete Entry Terms that contain commas. Optional.
 
+  --descriptors     Fetch descriptors (preferred terms) only. Optional.
+
   -d, --debug       Print additional information to STDERR. Optional.
 
   -h, --help        Print this help message and exit.
@@ -59,7 +67,7 @@ OPTIONS
 
 USAGE
 
-  fetch_mesh_entry_terms [--uid] [--noexplode] [--nosort] [--nocommas] [-d | --debug]
+  fetch_mesh_entry_terms [--uid] [--noexplode] [--nosort] [--nocommas] [--descriptors] [-d | --debug]
 
   fetch_mesh_entry_terms -h | --help
 
@@ -99,6 +107,8 @@ sep="\n"
 sort_output=true
 # Default is to not remove Entry Terms with commas
 delete_commas=false
+# Default is to fetch all entry terms, not just descriptors
+descriptors_only=false
 # Default is to not print debug output to STDERR
 print_debug=false
 
@@ -122,16 +132,20 @@ do
       search_field=MHUI
       shift
       ;;
-    --noexplode )
+    --noexplode|--no_explode|--no-explode )
       explode=false
       shift
       ;;
-    --nosort )
+    --nosort|--no_sort|--no-sort )
       sort_output=false
       shift
       ;;
-    --nocommas )
+    --nocommas|--no_commas|--no-commas )
       delete_commas=true
+      shift
+      ;;
+    --descriptors|--descriptors_only|--descriptors-only )
+      descriptors_only=true
       shift
       ;;
     -d|--debug )
@@ -205,14 +219,24 @@ fi
 
 
 #
-# Search MeSH database, fetch document summaries in XML format and 
-# extract the entry terms.
+# Search MeSH database, fetch document summaries in XML format.
 #
-debug "Fetching MeSH entries to extract Entry Terms ..."
-entry_terms=$(esearch -db mesh -query "$query_string" \
-    | esummary \
-    | xtract -pattern DS_MeshTerms -sep "${sep}" -element string
+debug "Fetching MeSH entries ..."
+mesh_records=$(esearch -db mesh -query "$query_string" \
+    | esummary
   )
+
+#
+# Extract the entry terms.
+#
+if [ "$descriptors_only" = "true" ]; then
+  # There is no indication of what entry term is the preferred term (descriptor) in the XML.
+  # As a workaround we extract the first element in the list under the assumption that this is the descriptor.
+  # TODO: Check empirically whetheer that assumption holds true!
+  entry_terms=$(echo "${mesh_records}" | xtract -pattern DS_MeshTerms -sep "${sep}" -first string)
+else
+  entry_terms=$(echo "${mesh_records}" | xtract -pattern DS_MeshTerms -sep "${sep}" -element string)
+fi
 
 #
 # Sort Entry Terms if set.
