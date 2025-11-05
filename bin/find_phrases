@@ -1,0 +1,234 @@
+#!/usr/bin/env bash
+# Find phrases matching a proximity statement
+
+# Author: Helge Knüttel
+# Date: 2025
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat >&2 << "EOF"
+
+find_phrases - Find phrases matching a proximity statement
+
+  Find text phrases in input that contain two terms within a specified number
+  of words from each other. Terms are in the order as specified.
+  Terms may be truncated by using an ending asterisk character. When doing so
+  enclose the term in quotes to prevent shell expansion of the asterisk.
+
+  Adjacency operator must be zero or a positive integer. It is the
+  maximum number of words between the terms.
+
+  Upppercase letters are translated to lowercase , i.e. case is 
+  ignored in patterns and output is lowercase.
+
+  Input is read from STDIN. Output is written to STDOUT.
+
+OPTIONS
+
+  -c, --clean       Clean phrases, i.e. replace all non-alphanumeric 
+                    characters with spaces and collapse whitespace.
+                    This is not perfect. There may still be many strange 
+                    characters some of which may be invisible. This 
+                    can lead to seemingly duplicate phrases when using
+                    the --summary option.
+
+  -s, --summary     Print a summary with counts of phrases found instead of
+                    listing all phrases. Optional.
+
+  -n, --num-sort    Sort summary output in reverse numeric order, i.e. 
+                    most frequent phrases come firt.
+
+  -d, --debug       Print additional information to STDERR. Optional.
+
+  -h, --help        Print this help message and exit.
+  
+
+USAGE
+
+  find_phrases [-c | --clean] [-s | --summary] [-n | --num-sort] [-d | --debug] <TERM1> <MAX_WORDS_BETWEEN> <TERM2>
+
+  find_phrases -h | --help
+
+
+EXAMPLES
+
+  echo "The quick brown fox jumps over the lazy dog" | find_phrases the 1 dog
+  echo "The quick brown fox jumps over the lazy dog" | find_phrases the 1 "do*"
+  echo "The quick brown fox jumps over the lazy dog" | find_phrases the 1 fox
+  echo "The quick brown fox jumps over the lazy dog" | find_phrases the 3 fox
+
+  Find the 10 most frequent phrases in a text file:
+
+    cat air_polish.txt | find_phrases -c -s -n air 3 "polish*" | head
+
+  Find phrases where a term consists of more than one word (i.e. it is a 
+  phrase itself) by filtering the output:
+
+    cat air_polish.txt | find_phrases --clean air 3 "polish*" | grep "air powder" | sort | uniq -c | sort --reverse --numeric-sort
+     
+
+KNOWN BUGS
+
+  When a second pattern starts within the specified word distance only the 
+  first pattern is returned.
+
+  When increasing word distance in some cases fewer occurences of phrases 
+  may be found. This may have to do with the way non-greedy phrases are built.
+
+  Works only when the terms are words, i.e. not phrases with whitespace.
+
+  There may be more bugs. Use at your own risk.
+
+EOF
+
+}
+
+#
+# Configuration
+#
+#
+# End of configuration
+#
+
+#
+# Initialise variables
+#
+# Defaulr is not to clean phrases
+clean_phrases=false
+# Default is to not print summary information
+print_summary=false
+# Default is to not sort by number of phrase occurences
+numeric_sort=false
+# Default is to not print debug output to STDERR
+print_debug=false
+term1=""
+term2=""
+words_between=""
+term1_truncation=""
+term2_truncation=""
+
+err() {
+  echo "$*" >&2
+}
+
+debug() {
+  if [ "$print_debug" = "true" ]; then
+    echo "$*" >&2
+  fi
+}
+
+
+
+if [ "$#" -eq 0 ]; then
+  err "ERROR: Arguments missing"
+  PrintHelp
+  exit 1
+fi
+
+# Read command line arguments
+while [ "$#" -gt 0 ]
+do
+  case "$1" in
+    -c|--clean )
+      clean_phrases=true
+      shift
+      ;;
+    -s|--summary )
+      print_summary=true
+      shift
+      ;;
+    -n|--num-sort )
+      numeric_sort=true
+      shift
+      ;;
+    -d|--debug )
+      print_debug=true
+      shift
+      ;;
+    -h|--help )
+        PrintHelp
+        exit 0
+        ;;    
+    * )
+        if [ "$#" -lt 3 ]; then
+          err "ERROR: Arguments missing"
+          exit 1
+        elif [ "$#" -gt 3 ]; then
+          err "ERROR: Surplus argument(s)"
+          exit 1
+        else
+          term1="$1"
+          debug "Term1 as parameter: ${term1}"
+          shift
+          words_between="$1"
+          debug "Max. words between: ${words_between}"
+          shift
+          term2="$1"
+          debug "Term2 as parameter: ${term2}"
+          shift
+        fi
+        ;;
+  esac
+done
+
+# Check for truncation of term1
+if [[ "$term1" == *'*' ]] ; then
+  # Remove asterisk
+  term1="${term1/%\*/}"
+  debug "Term1: ${term1}"
+  debug "Term1 will be truncated"
+  # Set truncation pattern
+  term1_truncation="\w*"
+fi
+
+# Check for truncation of term2
+if [[ "$term2" == *'*' ]] ; then
+  # Remove asterisk
+  term2="${term2/%\*/}"
+  debug "Term2: ${term2}"
+  debug "Term2 will be truncated"
+  # Set truncation pattern
+  term2_truncation="\w*"
+fi
+
+# Check for valid adjacency operator
+if ! [[ "$words_between" -ge 0 ]] ; then
+  err "ERROR: Adjacency must be zero or a positive integer."
+  exit 1
+fi
+
+# Set word distance for look ahead
+if [[ "$words_between" -eq 0 ]] ; then
+  look_ahead_distance=0
+else
+  # This word distance is used to check for a second occurance of term1 before term2
+  look_ahead_distance=$((${words_between} - 1))
+fi
+
+# Convert STDIN to lowercase and find phrases
+phrases=$(cat | tr '[:upper:]' '[:lower:]' | grep -P --only-matching \
+  "(\b${term1}${term1_truncation}\W+)(?!(\w+\W+){0,${look_ahead_distance}}?${term1})(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\w*" -)
+
+if [ "$clean_phrases" = true ] ; then
+  # Beware: The "dash" in the following translation is not a regular one!
+  phrases=$(echo "$phrases" | tr --squeeze-repeats '[:punct:]‐' ' ' | sed -e 's/^\s+//' -e 's/\s+$//')
+fi
+
+if [ "$print_summary" = "true" ] ; then
+    if [ "$numeric_sort" = "true" ] ; then
+      echo "$phrases" | sort | uniq -c | sort --reverse --numeric-sort
+    else
+      echo "$phrases" | sort | uniq -c
+    fi
+else
+  # Print all phrases
+  echo "$phrases"
+fi
+
