@@ -25,25 +25,28 @@ find_phrases - Find phrases matching a proximity statement
   Adjacency operator must be zero or a positive integer. It is the
   maximum number of words between the terms.
 
-  Upppercase letters are translated to lowercase , i.e. case is 
-  ignored in patterns and output is lowercase.
+  Case is ignored in patterns.
 
   Input is read from STDIN. Output is written to STDOUT.
 
 OPTIONS
 
-  -c, --clean       Clean phrases, i.e. replace all non-alphanumeric 
+  -c, --clean       Clean phrases: Make all letters lowercase.
+                    Also replace all non-alphanumeric 
                     characters with spaces and collapse whitespace.
                     This is not perfect. There may still be many strange 
                     characters some of which may be invisible. This 
                     can lead to seemingly duplicate phrases when using
-                    the --summary option.
+                    the -s/--summary option. Optional.
 
   -s, --summary     Print a summary with counts of phrases found instead of
                     listing all phrases. Optional.
 
   -n, --num-sort    Sort summary output in reverse numeric order, i.e. 
-                    most frequent phrases come firt.
+                    most frequent phrases come first. Optional. Use of
+                    this option is only relevant in combination with the
+                    option -s/--summary.
+                    Requires an installation of the Entrez Direct utilities.
 
   -d, --debug       Print additional information to STDERR. Optional.
 
@@ -76,11 +79,10 @@ EXAMPLES
 
 KNOWN BUGS
 
-  When a second pattern starts within the specified word distance only the 
-  first pattern is returned.
-
   When increasing word distance in some cases fewer occurences of phrases 
   may be found. This may have to do with the way non-greedy phrases are built.
+
+  The reverse numeric sort sometimes looses line patterns.
 
   Works only when the terms are words, i.e. not phrases with whitespace.
 
@@ -204,28 +206,43 @@ if ! [[ "$words_between" -ge 0 ]] ; then
   exit 1
 fi
 
-# Set word distance for look ahead
-if [[ "$words_between" -eq 0 ]] ; then
-  look_ahead_distance=0
-else
-  # This word distance is used to check for a second occurance of term1 before term2
-  look_ahead_distance=$((${words_between} - 1))
+if [[ "$numeric_sort" == "true" ]] ; then
+  # Check availability of sort-uniq-count-rank script
+  if [[ -x sort-uniq-count-rank ]] ; then
+    err "sort-uniq-count-rank not found."
+    err "Need Entrez Direct utilities installed for option -n/--num-sort. Exiting."
+    exit 1
+  fi
 fi
 
+# Set word distance for look ahead
+# Did not work as expected: Currently not used.
+# if [[ "$words_between" -eq 0 ]] ; then
+#   look_ahead_distance=0
+# else
+#   # This word distance is used to check for a second occurance of term1 before term2
+#   look_ahead_distance=$((${words_between} - 1))
+# fi
 # Convert STDIN to lowercase and find phrases
-phrases=$(cat | tr '[:upper:]' '[:lower:]' | grep -P --only-matching \
-  "(\b${term1}${term1_truncation}\W+)(?!(\w+\W+){0,${look_ahead_distance}}?${term1})(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\w*" -)
+# phrases=$(cat | tr '[:upper:]' '[:lower:]' | grep -P --only-matching --ignore-case \
+#   "(\b${term1}${term1_truncation}\W+)(?!(\w+\W+){0,${look_ahead_distance}}?${term1})(\w+\W+){0,${words_between}}?${term2}${term2_truncation}" -)
+
+# Convert STDIN to lowercase and find phrases
+# Also shorten phrases where the start term occurs more than once.
+phrases=$(cat | grep -P --only-matching --ignore-case \
+    "(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" - | \
+    sed -E -e "s/${term1}${term1_truncation}.*(${term1}${term1_truncation})/\1/ig")
 
 if [ "$clean_phrases" = true ] ; then
   # Beware: The "dash" in the following translation is not a regular one!
-  phrases=$(echo "$phrases" | tr --squeeze-repeats '[:punct:]‐' ' ' | sed -e 's/^\s+//' -e 's/\s+$//')
+  phrases=$(echo "$phrases" | tr '[:upper:]' '[:lower:]' | tr --squeeze-repeats '[:punct:]‐' ' ' | sed -e 's/^\s+//' -e 's/\s+$//' -e 's/\s+/ /g')
 fi
 
 if [ "$print_summary" = "true" ] ; then
     if [ "$numeric_sort" = "true" ] ; then
-      echo "$phrases" | sort | uniq -c | sort --reverse --numeric-sort
+      echo "$phrases" | sort-uniq-count-rank
     else
-      echo "$phrases" | sort | uniq -c
+      echo "$phrases" | sort -s | uniq -c
     fi
 else
   # Print all phrases
