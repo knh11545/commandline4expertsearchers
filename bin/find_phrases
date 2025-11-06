@@ -48,6 +48,10 @@ OPTIONS
                     option -s/--summary.
                     Requires an installation of the Entrez Direct utilities.
 
+  -r, --replace     Replace non-matching words by a placeholder. This may
+                    reduce the diversity of the phrases and help to find which 
+                    words are matched by truncation. Optional.
+
   -d, --debug       Print additional information to STDERR. Optional.
 
   -h, --help        Print this help message and exit.
@@ -74,7 +78,7 @@ EXAMPLES
   Find phrases where a term consists of more than one word (i.e. it is a 
   phrase itself) by filtering the output:
 
-    cat air_polish.txt | find_phrases --clean air 3 "polish*" | grep "air powder" | sort | uniq -c | sort --reverse --numeric-sort
+    cat air_polish.txt | find_phrases --clean air 3 "polish*" | grep "air powder" | sort | uniq -c | sort --reverse
      
 
 KNOWN BUGS
@@ -108,6 +112,8 @@ clean_phrases=false
 print_summary=false
 # Default is to not sort by number of phrase occurences
 numeric_sort=false
+# Default is to not replace non-matching words with a placeholder
+replace_nonmatching=false
 # Default is to not print debug output to STDERR
 print_debug=false
 term1=""
@@ -148,6 +154,10 @@ do
       ;;
     -n|--num-sort )
       numeric_sort=true
+      shift
+      ;;
+    -r|--replace )
+      replace_nonmatching=true
       shift
       ;;
     -d|--debug )
@@ -206,7 +216,7 @@ if ! [[ "$words_between" -ge 0 ]] ; then
   exit 1
 fi
 
-if [[ "$numeric_sort" == "true" ]] ; then
+if [[ "$numeric_sort" = "true" ]] ; then
   # Check availability of sort-uniq-count-rank script
   if [[ -x sort-uniq-count-rank ]] ; then
     err "sort-uniq-count-rank not found."
@@ -227,15 +237,20 @@ fi
 # phrases=$(cat | tr '[:upper:]' '[:lower:]' | grep -P --only-matching --ignore-case \
 #   "(\b${term1}${term1_truncation}\W+)(?!(\w+\W+){0,${look_ahead_distance}}?${term1})(\w+\W+){0,${words_between}}?${term2}${term2_truncation}" -)
 
-# Convert STDIN to lowercase and find phrases
-# Also shorten phrases where the start term occurs more than once.
-phrases=$(cat | grep -P --only-matching --ignore-case \
-    "(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" - | \
-    sed -E -e "s/${term1}${term1_truncation}.*(${term1}${term1_truncation})/\1/ig")
+# Read STDIN and find phrases.
+phrases=$(cat | grep -P --only-matching --ignore-case --text \
+  "(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" - )
+ 
+# Shorten phrases where the start term occurs more than once, i.e. find the shortest matching phrases.
+phrases=$(echo "$phrases" | sed -E -e "s/${term1}${term1_truncation}.*(${term1}${term1_truncation})/\1/ig")
 
 if [ "$clean_phrases" = true ] ; then
   # Beware: The "dash" in the following translation is not a regular one!
   phrases=$(echo "$phrases" | tr '[:upper:]' '[:lower:]' | tr --squeeze-repeats '[:punct:]‐' ' ' | sed -e 's/^\s+//' -e 's/\s+$//' -e 's/\s+/ /g')
+fi
+
+if [ "$replace_nonmatching" = "true" ] ; then
+  phrases=$(echo "$phrases" | perl -pe "s/(?!(${term1}${term1_truncation}|${term2}${term2_truncation})\W)\b\w+\b/#/g" )
 fi
 
 if [ "$print_summary" = "true" ] ; then
