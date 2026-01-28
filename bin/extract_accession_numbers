@@ -43,6 +43,8 @@ Export formats
                       - Format: RIS
 		      - Fields: Complete Reference
 
+  europepmc_ris     Export from Europe PMC as format 'RIS (EndNote, Mendeley, Refworks)'
+
   cochrane_reviews_endnote_ris
                      Export from Cochrane Library (Reviews) as format 'RIS (EndNote)'
 
@@ -151,6 +153,9 @@ case "$export_format" in
 	;;
     ovid_ris )
 	grep "^ID  - " - | sed -e 's/^ID  - //' -e 's/\r//g'
+	;;
+    europepmc_ris|europe_pmc_ris )
+	grep "^AN  - " - | sed -e 's/^AN  - //' -e 's/\r//g'
 	;;
     cochrane_reviews_endnote_ris|cochrane_reviews_refman_ris )
 	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
