@@ -2,7 +2,7 @@
 # Find phrases matching a proximity statement
 
 # Author: Helge Knüttel
-# Date: 2025
+# Date: 2025-2026
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -21,6 +21,9 @@ find_phrases - Find phrases matching a proximity statement
   of words from each other. Terms are in the order as specified.
   Terms may be truncated by using an ending asterisk character. When doing so
   enclose the term in quotes to prevent shell expansion of the asterisk.
+
+  Either of the terms (but not both) may be specified as a single asterisk
+  character in which case any word will be matched.
 
   Adjacency operator must be zero or a positive integer. It is the
   maximum number of words between the terms.
@@ -79,7 +82,11 @@ EXAMPLES
   phrase itself) by filtering the output:
 
     cat air_polish.txt | find_phrases --clean air 3 "polish*" | grep "air powder" | sort | uniq -c | sort --reverse
+
+  Show a term in context, i.e. with (up to) 3 words after it or before it: 
      
+    cat air_polish.txt | find_phrases air 2 "*" | less
+    cat air_polish.txt | find_phrases "*" 2 air | less
 
 KNOWN BUGS
 
@@ -116,6 +123,8 @@ numeric_sort=false
 replace_nonmatching=false
 # Default is to not print debug output to STDERR
 print_debug=false
+# Default is not to just show context of a term
+show_context=false
 term1=""
 term2=""
 words_between=""
@@ -191,7 +200,11 @@ do
 done
 
 # Check for truncation of term1
-if [[ "$term1" == *'*' ]] ; then
+if [[ "$term1" == '*' ]] ; then
+  # We search for any word
+  show_context=true
+  debug "Term1 will match any word"
+elif [[ "$term1" == *'*' ]] ; then
   # Remove asterisk
   term1="${term1/%\*/}"
   debug "Term1: ${term1}"
@@ -201,7 +214,11 @@ if [[ "$term1" == *'*' ]] ; then
 fi
 
 # Check for truncation of term2
-if [[ "$term2" == *'*' ]] ; then
+if [[ "$term2" == '*' ]] ; then
+  # We search for any word
+  show_context=true
+  debug "Term2 will match any word"
+elif [[ "$term2" == *'*' ]] ; then
   # Remove asterisk
   term2="${term2/%\*/}"
   debug "Term2: ${term2}"
@@ -237,12 +254,29 @@ fi
 # phrases=$(cat | tr '[:upper:]' '[:lower:]' | grep -P --only-matching --ignore-case \
 #   "(\b${term1}${term1_truncation}\W+)(?!(\w+\W+){0,${look_ahead_distance}}?${term1})(\w+\W+){0,${words_between}}?${term2}${term2_truncation}" -)
 
-# Read STDIN and find phrases.
-phrases=$(cat | grep -P --only-matching --ignore-case --text \
-  "(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" - )
+if [ "$show_context" = false ] ; then
+  # Search for pattern with term1 amd term 2 defined
+  grep_pattern="(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" 
+  debug "grep pattern: ${grep_pattern}"
+  # Read STDIN and find phrases.
+  # phrases=$(cat | grep -P --only-matching --ignore-case --text \
+  #   "(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${words_between}}?${term2}${term2_truncation}\b" - )
+  phrases=$(cat | grep -P --only-matching --ignore-case --text "$grep_pattern" - )
  
-# Shorten phrases where the start term occurs more than once, i.e. find the shortest matching phrases.
-phrases=$(echo "$phrases" | sed -E -e "s/${term1}${term1_truncation}.*(${term1}${term1_truncation})/\1/ig")
+  # Shorten phrases where the start term occurs more than once, i.e. find the shortest matching phrases.
+  phrases=$(echo "$phrases" | sed -E -e "s/${term1}${term1_truncation}.*(${term1}${term1_truncation})/\1/ig")
+else
+  # Show context of just one defined term
+  context=$((words_between+1))
+  if [[ "$term1" == '*' ]] ; then
+    # Term1 matches any word
+    grep_pattern="(\w+\W+){0,${context}}?${term2}${term2_truncation}\b" 
+  else
+    # Term2 matches any word
+    grep_pattern="(\b${term1}${term1_truncation}\W+)(\w+\W+){0,${context}}" 
+  fi
+  phrases=$(cat | grep -P --only-matching --ignore-case --text "$grep_pattern" - )
+fi
 
 if [ "$clean_phrases" = true ] ; then
   # Beware: The "dash" in the following translation is not a regular one!
