@@ -43,6 +43,7 @@ Database syntax formats and ID types
   ovid_medline        ID types: pmid, pmcid, doi, pii
   ovid_embase         ID types: an, eu, pmid, doi
   cochrane_library    ID types: an, doi, tn, none
+  clinicaltrials.gov  ID types: an (= nctid)
   web_of_science      ID types: an, doi, pmid
   citavi              ID types: doi, pmcid, pmid
   ebscohost_psycinfo  ID types: an, pmid, doi
@@ -315,6 +316,21 @@ case "$syntax" in
 	    -e "s/\s*$/)${COCHRANE_FIELD_SPEC}/" \
 	    -e '$! s/$/ OR /' | \
 	tr "\n" " "
+	;;
+
+    clinicaltrials.gov )
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "AREA[NCTId](" to beginning of file
+	#  * Add ")" to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e '1 i AREA[NCTId](' \
+	    -e "\$ a )"
 	;;
 
     web_of_science )
