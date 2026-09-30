@@ -2,7 +2,7 @@
 # Extract accession numbers from database search results
 
 # Author: Helge Knüttel
-# Date: 2020-2022
+# Date: 2020-2026
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -46,13 +46,19 @@ Export formats
   europepmc_ris     Export from Europe PMC as format 'RIS (EndNote, Mendeley, Refworks)'
 
   cochrane_reviews_endnote_ris
-                     Export from Cochrane Library (Reviews) as format 'RIS (EndNote)'
+                     Export from Cochrane Library (Reviews) as format 'RIS (EndNote)'.
+                     For Cochrane reviews the DOIs are extracted which is a
+                     change from earlier versions of this script.
 
   cochrane_reviews_refman_ris
-                     Export from Cochrane Library (Reviews) as format 'RIS (Reference Manager)'
+                     Export from Cochrane Library (Reviews) as format 'RIS (Reference Manager)'.
+                     For Cochrane reviews the DOIs are extracted which is a
+                     change from earlier versions of this script.
 
   cochrane_reviews_plain_text
-                     Export from Cochrane Library (Reviews) as format 'Plain text'
+                     Export from Cochrane Library (Reviews) as format 'Plain text'.
+                     For Cochrane reviews the DOIs are extracted which is a
+                     change from earlier versions of this script.
 
   cochrane_protocols_endnote_ris
                      Export from Cochrane Library (Protocols) as format 'RIS (EndNote)'
@@ -158,10 +164,10 @@ case "$export_format" in
 	grep "^AN  - " - | sed -e 's/^AN  - //' -e 's/\r//g'
 	;;
     cochrane_reviews_endnote_ris|cochrane_reviews_refman_ris )
-	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
+	grep "^DO  -  " - | sed -e 's/^DO  -  //' -e 's/\r//g'
 	;;
     cochrane_reviews_plain_text )
-	grep "^ID: " - | sed -e 's/^ID: //' -e 's/\r//g'
+	grep "^DOI: " - | sed -e 's/^DOI: //' -e 's/\r//g'
 	;;
     cochrane_protocols_endnote_ris|cochrane_protocols_refman_ris )
 	grep "^AN  -  " - | sed -e 's/^AN  -  //' -e 's/\r//g'
