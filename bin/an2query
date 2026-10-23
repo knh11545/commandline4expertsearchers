@@ -2,7 +2,7 @@
 # Convert a list of database accession numbers or other IDs into a search string
 
 # Author: Helge Knüttel
-# Date: 2020-2025
+# Date: 2020-2026
 
 # Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
 set -o errexit  # exit when a command fails
@@ -42,6 +42,7 @@ Database syntax formats and ID types
   pmc                 ID types: pmid, pmcid, doi
   ovid_medline        ID types: pmid, pmcid, doi, pii
   ovid_embase         ID types: an, eu, pmid, doi
+  ovid_psycinfo       ID types: an, pmid, doi
   cochrane_library    ID types: an, doi, tn, none
   clinicaltrials.gov  ID types: an (= nctid)
   web_of_science      ID types: an, doi, pmid
@@ -248,6 +249,44 @@ case "$syntax" in
 		;;
 	    eu )
 		OVID_FIELD_LIST=eu
+		;;
+	    pmid )
+		OVID_FIELD_LIST=pm
+		;;
+	    doi )
+		OVID_FIELD_LIST=do
+		;;
+	    * )
+	        # unknown argument
+		echo "ERROR: Unknown idtype ${idtype}" >&2
+		exit 1
+		;;
+	esac
+	# Steps: 
+	#  * Delete empty lines or lines containig only whitespace.
+	#  * Add '"' to beginning of each line of the input.
+	#  * Add '"' to end of each line of the input.
+	#    Whitespace at beginning or end of line will be deleted.
+	#  * Add ' OR ' to end of each line except the last one.
+	#  * Add "(" to beginning of file
+	#  * Add ")" and field specification to end of file
+	sed\
+	    -e '/^\s*$/d' - | \
+	sed\
+	    -e 's/^\s*/"/' \
+	    -e 's/\s*$/"/' \
+	    -e '$! s/$/ OR /' | \
+	sed\
+	    -e '1 i (' \
+	    -e "\$ a ).${OVID_FIELD_LIST}."
+	;;
+
+    ovid_psycinfo )
+	# Fields to search for in Ovid Embase
+	# This is the part in between the periods in a search statement.
+	case "$idtype" in
+	    an )
+		OVID_FIELD_LIST=an
 		;;
 	    pmid )
 		OVID_FIELD_LIST=pm
